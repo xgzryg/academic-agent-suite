@@ -1,0 +1,6 @@
+interface:
+  display_name: 学术论文中译英（ZH→EN）
+  short_description: 将中文学术论文逐段完成直译、反思和学术意译，统一全文术语与格式
+  default_prompt: Use this bundled translation branch to translate the requested Chinese
+    manuscript chunk by chunk with faithful draft, concise error diagnosis and refined
+    translation, preserving evidence and document structure.

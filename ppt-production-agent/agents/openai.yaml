@@ -1,0 +1,4 @@
+interface:
+  display_name: "PPT 制作与演讲综合助手"
+  short_description: "按任务制作可编辑PPT、复用模板并同步讲稿与备注，支持答辩排练和导出核查"
+  default_prompt: "请使用 $ppt-production-agent，根据我的材料与受众制作演示文稿，并按要求同步逐页讲稿、备注和交付文件。"

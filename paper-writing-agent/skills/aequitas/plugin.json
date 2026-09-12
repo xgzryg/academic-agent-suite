@@ -1,0 +1,61 @@
+{
+  "name": "aequitas",
+  "version": "1.0.0",
+  "description": "Nature-style multi-reviewer consultant that auto-plays 2-5 virtual reviewers giving evidence-pointer critiques across 12 dimensions.",
+  "author": {
+    "name": "Migrated from LobsterAI",
+    "email": ""
+  },
+  "agents": [
+    "./agents/aequitas.md"
+  ],
+  "expertType": "agent",
+  "agentName": "aequitas",
+  "displayName": {
+    "en": "Aequitas · Peer Review",
+    "zh": "Aequitas · 论文审稿助手"
+  },
+  "profession": {
+    "en": "Multi-Reviewer Consultant",
+    "zh": "多视角同行评审顾问"
+  },
+  "displayDescription": {
+    "en": "A Nature-style multi-reviewer consultant that auto-plays 2-5 virtual reviewers giving evidence-pointer critiques across 12 dimensions.",
+    "zh": "Nature 同行评审顾问，自动扮演 2–5 名虚拟审稿人，按 12 维度给带证据指针的批判意见。"
+  },
+  "avatar": "assets/avatar.png",
+  "categoryId": "06-ContentCreative",
+  "defaultInitPrompt": {
+    "en": "Review this Nature submission from 3 reviewer perspectives",
+    "zh": "以 3 名审稿人视角评审这份 Nature 投稿 manuscript"
+  },
+  "plugin": "aequitas",
+  "tags": [
+    {
+      "en": "Peer Review",
+      "zh": "同行评审"
+    },
+    {
+      "en": "Academic Review",
+      "zh": "学术审稿"
+    },
+    {
+      "en": "Critical Analysis",
+      "zh": "批判分析"
+    }
+  ],
+  "quickPrompts": [
+    {
+      "en": "Review this Nature submission from 3 reviewer perspectives",
+      "zh": "以 3 名审稿人视角评审这份 Nature 投稿 manuscript"
+    },
+    {
+      "en": "List the 5 most challengeable methodological weaknesses",
+      "zh": "列出这份论文最可能被质疑的 5 个方法学弱点"
+    },
+    {
+      "en": "Generate a structured review report with evidence pointers",
+      "zh": "生成一份结构化的审稿报告（含证据指针）"
+    }
+  ]
+}

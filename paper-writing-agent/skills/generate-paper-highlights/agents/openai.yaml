@@ -1,0 +1,6 @@
+interface:
+  display_name: Generate Paper Highlights
+  short_description: 从论文标题、摘要和结果中生成清晰、可信的投稿 Highlights
+  default_prompt: Use this bundled highlights branch to produce distinct evidence-supported
+    Highlights under the user's or verified journal limits, clearly labeling any working
+    default or provisional output.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "论文写作综合助手"
+  short_description: "整合论文写作润色、创新性检索及可按轮数启用的双代理审稿返修"
+  default_prompt: "请使用 $paper-writing-agent，根据我的论文材料选择内置写作、检索或审稿返修分支；需要循环时按我指定的轮数和目标执行。"

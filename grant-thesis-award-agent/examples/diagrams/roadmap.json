@@ -1,0 +1,20 @@
+{
+  "type": "roadmap",
+  "title": "合成演示：研究流程与并行评价",
+  "nodes": [
+    {"id": "question", "label": "研究问题与预设目标", "row": 0, "col": 1, "role": "input"},
+    {"id": "source_a", "label": "合成来源 A：资料整理", "row": 1, "col": 0, "role": "input"},
+    {"id": "source_b", "label": "合成来源 B：方法准备", "row": 1, "col": 2, "role": "input"},
+    {"id": "analysis", "label": "按既定方案开展分析", "row": 2, "col": 1},
+    {"id": "quality", "label": "评价维度一：结果质量", "row": 3, "col": 0, "role": "evaluation"},
+    {"id": "robustness", "label": "评价维度二：稳健性", "row": 3, "col": 2, "role": "evaluation"}
+  ],
+  "edges": [
+    {"source": "question", "target": "source_a", "type": "flow"},
+    {"source": "question", "target": "source_b", "type": "flow"},
+    {"source": "source_a", "target": "analysis", "type": "flow"},
+    {"source": "source_b", "target": "analysis", "type": "flow"},
+    {"source": "analysis", "target": "quality", "type": "flow"},
+    {"source": "analysis", "target": "robustness", "type": "flow"}
+  ]
+}

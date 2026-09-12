@@ -1,0 +1,224 @@
+{
+  "name": "paper-writing-agent",
+  "version": "1.1.3",
+  "internal_skill_count": 48,
+  "routes": [
+    {
+      "slug": "academic-literature-search",
+      "function": "学术检索、引用身份核验与多数据库补充；记录已查/未查来源"
+    },
+    {
+      "slug": "academic-peer-review",
+      "function": "同行预审与期刊校准"
+    },
+    {
+      "slug": "aequitas",
+      "function": "按可见材料开展多视角审稿，定位实质问题、证据与最小修正"
+    },
+    {
+      "slug": "calder-code-reviewer",
+      "function": "审核论文代码的复现、数据划分、泄漏、公平性和结果一致性"
+    },
+    {
+      "slug": "code-review-academic",
+      "function": "学术代码审计；内置6组只读学术代码审计参考规范"
+    },
+    {
+      "slug": "editorial-correspondence",
+      "function": "审稿状态与接收后校样/制作进度询问信；提供可复制主题与正文"
+    },
+    {
+      "slug": "generate-paper-highlights",
+      "function": "Highlights"
+    },
+    {
+      "slug": "journal-if-lookup",
+      "function": "按期刊名、缩写或ISSN查询随包2025索引或用户指定数据；记录年份与来源，必要时联网核验现行指标"
+    },
+    {
+      "slug": "literature-workflow-orchestrator",
+      "function": "组织检索、筛选、精读、证据整理和综述阶段的衔接"
+    },
+    {
+      "slug": "litorchestrator",
+      "function": "文献任务总调度，按问题选用包内检索、阅读、下载及引用功能"
+    },
+    {
+      "slug": "nature-polishing",
+      "function": "按语言、论文类型及章节选择Nature风格润色资源，保护研究事实"
+    },
+    {
+      "slug": "nature-reader",
+      "function": "论文全文、图表、补充材料与公式精读，标明实际阅读范围"
+    },
+    {
+      "slug": "nature-response",
+      "function": "Nature风格逐条回应、修订策略及正文/回复一致性检查"
+    },
+    {
+      "slug": "nature-review-studio",
+      "function": "应用现有聚合审稿规则；生成同步Word/Markdown报告，提取任务内材料"
+    },
+    {
+      "slug": "nature-reviewer",
+      "function": "区分重大/次要意见、证据位置与真实阻塞；支持分开审稿再综合"
+    },
+    {
+      "slug": "nature-shared",
+      "function": "供Nature分支共享术语、结构、统计、图表和数据可用性写作资源"
+    },
+    {
+      "slug": "nature-statistics",
+      "function": "核查统计方法与结果报告的完整性、准确性和证据边界"
+    },
+    {
+      "slug": "nature-writing",
+      "function": "按论文类型、章节和语言路由Nature写作框架及主文/补充材料组织"
+    },
+    {
+      "slug": "paper-compression",
+      "function": "精简与缩写"
+    },
+    {
+      "slug": "paper-discussion",
+      "function": "讨论"
+    },
+    {
+      "slug": "paper-documents",
+      "function": "Word创建编辑与修订"
+    },
+    {
+      "slug": "paper-graphical-abstract",
+      "function": "图形摘要"
+    },
+    {
+      "slug": "paper-introduction",
+      "function": "前言框架、综述与正文"
+    },
+    {
+      "slug": "paper-literature-reading",
+      "function": "检索、精读、Review证据与思维导图"
+    },
+    {
+      "slug": "paper-methods",
+      "function": "方法章节"
+    },
+    {
+      "slug": "paper-novelty-assessment",
+      "function": "PubMed宽窄查询、种子近邻和逐篇比较，判断创新主张的证据支持"
+    },
+    {
+      "slug": "paper-pdf",
+      "function": "PDF提取与页面核验"
+    },
+    {
+      "slug": "paper-research-artifacts",
+      "function": "表格、定量图、PPT与交互解释；明暗主题、移动目录和长页导航的精读HTML"
+    },
+    {
+      "slug": "paper-results-legends",
+      "function": "结果与图注"
+    },
+    {
+      "slug": "paper-review-revision-loop",
+      "function": "显式开启真实审稿/返修子agent往返，保存版本、问题状态和最终再审"
+    },
+    {
+      "slug": "paper-reviewer-response",
+      "function": "返修与逐条回复"
+    },
+    {
+      "slug": "paper-study-design",
+      "function": "研究设计和图表规划"
+    },
+    {
+      "slug": "paper-title-abstract-conclusion",
+      "function": "标题、摘要、结论与关键词"
+    },
+    {
+      "slug": "paper-topic-discovery",
+      "function": "选题与语料主题分析"
+    },
+    {
+      "slug": "paper-workspace-operations",
+      "function": "工作区、恢复、代码修复与宿主工具"
+    },
+    {
+      "slug": "peer-review",
+      "function": "补充科研设计、方法、统计、图表和论证的批判性评价"
+    },
+    {
+      "slug": "polish-academic-manuscript",
+      "function": "全文精细润色"
+    },
+    {
+      "slug": "proofread-journal-manuscripts",
+      "function": "Proof校对"
+    },
+    {
+      "slug": "pubmed-database",
+      "function": "实际执行PubMed检索、完整摘要获取和Similar Articles近邻查询"
+    },
+    {
+      "slug": "rebuttal-writing",
+      "function": "解析审稿意见、组织逐条回应，区分已完成修改与待办分析"
+    },
+    {
+      "slug": "recommend-sci-journals-report",
+      "function": "选刊和HTML报告"
+    },
+    {
+      "slug": "ref-downloader",
+      "function": "解析与核验参考文献，按实际访问条件下载可取得全文并报告缺项"
+    },
+    {
+      "slug": "reproducibility-checklist",
+      "function": "依据实际材料检查数据、代码、环境、方法和可复现性报告"
+    },
+    {
+      "slug": "rewrite-academic-overlap",
+      "function": "重复表达改写"
+    },
+    {
+      "slug": "translate-academic-manuscript-zh-to-en",
+      "function": "中译英"
+    },
+    {
+      "slug": "veritas-agent",
+      "function": "核对当前稿、图表、统计、引用和审稿意见，整合返修稿与逐条回应"
+    },
+    {
+      "slug": "wordpolish-academic",
+      "function": "调用两个内置学术文风子技能，压缩模板表达并保留作者声音和事实"
+    },
+    {
+      "slug": "write-journal-cover-letter",
+      "function": "投稿附信"
+    }
+  ],
+  "nested_support_skill_count": 2,
+  "active_entry_count": 51,
+  "scope_note": "Counts include the package root, 48 immediate skills/*/SKILL.md entries and two nested academic writing support skills. Audit references are not active skill entries.",
+  "features": [
+    "bundled-review-revision-agents",
+    "explicit-real-subagent-loop",
+    "pubmed-novelty-evidence",
+    "nature-writing-polishing",
+    "academic-wordpolish",
+    "editorial-status-and-production-inquiries",
+    "responsive-paper-reading-html"
+  ],
+  "runtime_dependencies": {
+    "bundled_skills": "All adopted agent and skill dependencies are located inside this package.",
+    "host": "An AI host with file access; real subagent delegation is required for the optional review-revision loop.",
+    "libraries": "Python and task-specific public libraries are provided by the host environment; see references/dependencies.md.",
+    "literature": "PubMed and other live literature services require network access and any applicable user access rights.",
+    "journal_data": "A 2025 local journal metrics snapshot is bundled as journals_index.json with its 2025IF.xlsx source workbook. Users may override it with an explicitly authorized --data-file; current metrics still require date-aware verification.",
+    "bundled_journal_data": {
+      "index": "skills/journal-if-lookup/data/journals_index.json",
+      "source_workbook": "skills/journal-if-lookup/data/2025IF.xlsx",
+      "release_year": "2025",
+      "rows": 22643
+    }
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: 期刊论文可追溯校对
+  short_description: 先核验并锁定 PDF 或 Word 原文，再生成可追溯校对报告
+  default_prompt: 使用此内置分支，通过页面与原文核验完成可追溯校对并生成Word报告。默认逐节展示后等待；用户已明确要求全文自动时连续完成。

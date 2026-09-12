@@ -1,0 +1,10 @@
+{
+  "type": "timeline",
+  "title": "合成演示：项目里程碑",
+  "events": [
+    {"id": "start", "date": "2030-01-01", "label": "计划开始", "description": "明确问题、输入和预期交付物。"},
+    {"id": "analysis", "date": "2030-03-01", "label": "计划进入分析阶段", "description": "按已确定方法处理资料并保留过程记录。"},
+    {"id": "review", "date": "2030-08-01", "label": "计划进入结果检查阶段", "description": "核对结果、证据和文稿对应关系。"},
+    {"id": "draft", "date": "2030-09-30", "label": "预期形成工作稿", "description": "这是演示用的未来安排，不表示成果已经完成。"}
+  ]
+}

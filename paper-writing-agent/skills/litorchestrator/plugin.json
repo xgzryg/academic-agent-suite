@@ -1,0 +1,61 @@
+{
+  "name": "litorchestrator",
+  "version": "1.0.0",
+  "description": "Academic literature workflow orchestrator that chains retrieval, screening, reading and review-writing tools end to end.",
+  "author": {
+    "name": "Migrated from LobsterAI",
+    "email": ""
+  },
+  "agents": [
+    "./agents/litorchestrator.md"
+  ],
+  "expertType": "agent",
+  "agentName": "litorchestrator",
+  "displayName": {
+    "en": "LitOrchestrator · Literature Review",
+    "zh": "LitOrchestrator · 文献综述助手"
+  },
+  "profession": {
+    "en": "Literature Review Orchestrator",
+    "zh": "文献综述调度官"
+  },
+  "displayDescription": {
+    "en": "An academic literature workflow orchestrator that chains retrieval, screening, reading and review-writing tools, focusing on the whole pipeline.",
+    "zh": "学术文献全流程调度官，串联检索、筛选、精读与综述写作工具，自己不写论文而专注于编排整条流水线。"
+  },
+  "avatar": "assets/litorchestrator.png",
+  "categoryId": "04-DataAI",
+  "defaultInitPrompt": {
+    "en": "Retrieve top-cited papers on this topic from last 3 years and outline a review",
+    "zh": "帮我从 PubMed 检索某主题的近三年高引文献并做综述大纲"
+  },
+  "plugin": "litorchestrator",
+  "tags": [
+    {
+      "en": "Literature Review",
+      "zh": "文献综述"
+    },
+    {
+      "en": "Retrieval Orchestration",
+      "zh": "检索调度"
+    },
+    {
+      "en": "Research Pipeline",
+      "zh": "科研流程"
+    }
+  ],
+  "quickPrompts": [
+    {
+      "en": "Retrieve top-cited papers on this topic from last 3 years and outline a review",
+      "zh": "帮我从 PubMed 检索某主题的近三年高引文献并做综述大纲"
+    },
+    {
+      "en": "Cluster these PDFs by theme and extract key findings",
+      "zh": "把这批 PDF 按主题聚类并提取关键发现"
+    },
+    {
+      "en": "Generate a submission-ready literature review draft",
+      "zh": "生成一份可投稿的文献综述初稿"
+    }
+  ]
+}

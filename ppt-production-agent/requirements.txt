@@ -1,0 +1,17 @@
+# Public Python dependencies. Installing this file is an explicit user action.
+# Core: native PPTX generation, editable SVG conversion, templates, PPTX notes.
+python-pptx
+Pillow
+
+# Optional feature libraries, included here for a full Python feature setup.
+# Word reading and DOCX speaker notes; lxml is also used by document operations.
+python-docx
+lxml
+# PDF text extraction and page rendering.
+pypdf
+pypdfium2
+# Updating data workbooks in template charts.
+openpyxl
+
+# A model-enabled host, fonts, browser and Office/LibreOffice are external.
+# PubMed metadata tools use the Python standard library plus network access.

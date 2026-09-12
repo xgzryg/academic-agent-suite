@@ -1,0 +1,6 @@
+interface:
+  display_name: "基金、毕业论文与奖项申报助手"
+  short_description: "整合基金论证、毕业论文、科技奖申报、科研图形与预审修订的学术写作助手"
+  default_prompt: "请使用 $grant-thesis-award-agent，依据我的真实材料和当前模板完成本次学术写作任务，自动调用所需包内技能，并交付可编辑成果与具体待补项。"
+policy:
+  allow_implicit_invocation: true

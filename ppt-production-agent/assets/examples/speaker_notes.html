@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>让复杂材料变成清楚的演示 · 演讲稿</title><style>
+:root{color-scheme:light;--ink:#172438;--muted:#5e6e83;--accent:#146779;--line:#dce5eb;--paper:#fff;--wash:#f2f5f7}
+*{box-sizing:border-box}body{margin:0;background:var(--wash);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;line-height:1.65}
+header{padding:24px clamp(18px,4vw,56px) 18px;background:var(--paper);border-bottom:1px solid var(--line)}
+h1{font-size:clamp(22px,3vw,34px);line-height:1.25;margin:0 0 8px}header p{margin:4px 0;color:var(--muted);font-size:13px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:18px}
+button,select{border:1px solid #b8cbd4;background:white;color:var(--ink);border-radius:8px;padding:9px 13px;font:inherit;font-size:14px;cursor:pointer;min-height:42px}
+button:hover{background:#e9f3f5}button:focus-visible,select:focus-visible{outline:3px solid #31889a;outline-offset:2px}
+button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+button:disabled{opacity:.4;cursor:default}.clock{margin-left:auto;font-variant-numeric:tabular-nums;background:#edf4f6;padding:6px 12px;border-radius:8px}
+main{max-width:1050px;margin:22px auto;padding:0 18px}.notice{color:#7e4318;background:#fff3e4;padding:12px 16px;border-radius:10px;margin-bottom:16px}
+.slide{padding:clamp(22px,4vw,46px);background:white;border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 35px #18233308}
+.slide[hidden]{display:none}.slide h2{font-size:clamp(23px,3vw,34px);line-height:1.35;margin:0 0 12px}.meta{font-size:13px;color:var(--muted);margin-bottom:25px;font-variant-numeric:tabular-nums}
+.notes{white-space:pre-wrap;overflow-wrap:anywhere;font-size:22px;line-height:1.9}.cues{font-size:25px;line-height:1.8;padding-left:1.2em}.empty{font-size:17px;color:#87511c}
+details{margin-top:24px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:14px}details li{overflow-wrap:anywhere}
+body[data-mode="cards"] .notes{display:none}body[data-mode="script"] .cues{display:none}
+body[data-mode="all"] .slide{margin-bottom:20px}body[data-mode="all"] .cues{font-size:17px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:18px}
+@media(max-width:620px){.clock{margin-left:0;width:100%}.toolbar button{flex:1 1 100px;white-space:nowrap}.toolbar select{width:100%;order:-1}.notes{font-size:19px}.cues{font-size:22px}}
+@media print{header .toolbar,footer,.notice{display:none}body{background:white}main{padding:0;margin:0;max-width:none}.slide,.slide[hidden]{display:block!important;break-before:page;box-shadow:none;border:0;border-radius:0}.notes{display:block!important}.cues{display:block!important;font-size:12pt}.slide:first-child{break-before:auto}details{display:block}.notes{font-size:12pt}header{padding:0 0 10px}}
+</style></head><body data-mode="script">
+<header><h1>让复杂材料变成清楚的演示</h1><p>离线演讲稿 · 内容来自当前 JSON / PPTX 备注。键盘 ← → 或空格翻页。</p>
+<p id="timing-summary"></p><div class="toolbar">
+<button id="prev" type="button" aria-label="上一页">← 上一页</button><select id="jump" aria-label="跳转页面"></select><button id="next" type="button" aria-label="下一页">下一页 →</button>
+<button id="script-mode" type="button" aria-pressed="true">分页讲稿</button><button id="cards-mode" type="button" aria-pressed="false">提示卡</button><button id="all-mode" type="button" aria-pressed="false">全文</button>
+<button id="start" type="button">开始计时</button><button id="reset" type="button">重置计时</button><span class="clock" aria-live="off">练习总计 <b id="total-clock">00:00</b> · 本页 <b id="page-clock">00:00</b></span>
+</div></header><main><div id="missing" class="notice" hidden></div><div id="slides"></div></main>
+<footer>文字估时与实际练习计时分别显示。未提供的稿件不补写；计时仅在当前浏览器页面运行。</footer>
+<script id="deck-data" type="application/json">{"title": "让复杂材料变成清楚的演示", "slides": [{"id": "s01", "title": "让复杂材料变成清楚的演示", "notes": "这套演示展示从材料到页面、再到实际讲述的完整过程。我们会用简单的合成内容说明结构、图表和备注如何保持对应。这里的数字仅用于测试对象生成，不代表科研结果。", "cues": ["简短停顿后进入下一页"], "sources": [], "duration_seconds": 40.0, "timing": {"chinese_characters": 70, "english_words": 0, "number_tokens": 0, "estimated_seconds": 24, "basis": "storyboard_plan", "scheduled_seconds": 40.0, "start_seconds": 0, "end_seconds": 40.0}}, {"id": "s02", "title": "三个问题组织一次演示", "notes": "可以先用三个问题检查演示的方向。第一个问题决定内容取舍，第二个问题约束事实与图表，第三个问题决定时长和节奏。页数只是这些决定的结果，不应该成为凑内容的目标。", "cues": ["简短停顿后进入下一页"], "sources": [], "duration_seconds": 40.0, "timing": {"chinese_characters": 72, "english_words": 0, "number_tokens": 0, "estimated_seconds": 24, "basis": "storyboard_plan", "scheduled_seconds": 40.0, "start_seconds": 40.0, "end_seconds": 80.0}}, {"id": "s03", "title": "从信息堆叠到逐页主张", "notes": "接下来进入内容组织。我们不需要把所有原文搬上屏幕，而要确定每页承担的解释任务。保留下来的细节，应当能帮助听众理解本页的主张。", "cues": ["简短停顿后进入下一页"], "sources": [], "duration_seconds": 40.0, "timing": {"chinese_characters": 57, "english_words": 0, "number_tokens": 0, "estimated_seconds": 20, "basis": "storyboard_plan", "scheduled_seconds": 40.0, "start_seconds": 80.0, "end_seconds": 120.0}}, {"id": "s04", "title": "屏幕文案与口语稿各有职责", "notes": "屏幕文案负责让听众快速看见结构，口语稿则负责把这些信息串起来。遇到图表时，先说明横纵轴，再说明关键比较，最后解释它支持什么结论。不要一边展示长段落，一边逐字朗读。", "cues": ["简短停顿后进入下一页"], "sources": [], "duration_seconds": 40.0, "timing": {"chinese_characters": 73, "english_words": 0, "number_tokens": 0, "estimated_seconds": 25, "basis": "storyboard_plan", "scheduled_seconds": 40.0, "start_seconds": 120.0, "end_seconds": 160.0}}, {"id": "s05", "title": "让内容与展示保持一致", "notes": "左右两栏是同一内容的不同表达方式。页面保留便于扫读的信息，讲述补上逻辑与意义。两者应保持事实一致，同时避免重复堆叠同一段文字。", "cues": ["简短停顿后进入下一页"], "sources": [], "duration_seconds": 40.0, "timing": {"chinese_characters": 58, "english_words": 0, "number_tokens": 0, "estimated_seconds": 21, "basis": "storyboard_plan", "scheduled_seconds": 40.0, "start_seconds": 160.0, "end_seconds": 200.0}}, {"id": "s06", "title": "把检查职责落实到具体对象", "notes": "这张表格把抽象的质量要求分配给具体对象。标题看表达，图表看证据，备注看对应关系。示例中的状态只是演示表格功能，真实任务仍应依据实际检查更新。", "cues": ["简短停顿后进入下一页"], "sources": [], "duration_seconds": 40.0, "timing": {"chinese_characters": 64, "english_words": 0, "number_tokens": 0, "estimated_seconds": 22, "basis": "storyboard_plan", "scheduled_seconds": 40.0, "start_seconds": 200.0, "end_seconds": 240.0}}, {"id": "s07", "title": "可编辑图表保留原始数值", "notes": "这是一张原生 PowerPoint 图表，可以继续修改类别与数据。三组数值十二、二十四和十七都是明确标注的合成数据。真实研究中，图表必须来自用户提供的数据，不能为了视觉效果改变数字。", "cues": ["简短停顿后进入下一页"], "sources": ["合成数据，仅供软件功能验证"], "duration_seconds": 40.0, "timing": {"chinese_characters": 72, "english_words": 1, "number_tokens": 0, "estimated_seconds": 25, "basis": "storyboard_plan", "scheduled_seconds": 40.0, "start_seconds": 240.0, "end_seconds": 280.0}}, {"id": "s08", "title": "一次完整制作的四个阶段", "notes": "这条时间线描述一套演示的生产顺序。先理解材料和目的，再安排每页的解释任务，然后同步制作页面与口语稿。最后打开实际生成的文件核查，而不是只看代码是否运行结束。", "cues": ["简短停顿后进入下一页"], "sources": [], "duration_seconds": 40.0, "timing": {"chinese_characters": 72, "english_words": 0, "number_tokens": 0, "estimated_seconds": 24, "basis": "storyboard_plan", "scheduled_seconds": 40.0, "start_seconds": 280.0, "end_seconds": 320.0}}, {"id": "s09", "title": "原图需要等比展示并核对身份", "notes": "这张图片原始比例为二比一。它被等比放入页面，四周空白不影响内容完整性。对于科研图，除比例之外还要核对图号、坐标、单位和图例；不能把模板中不相关的图直接用于新研究。", "cues": ["简短停顿后进入下一页"], "sources": ["本包生成的合成图像"], "duration_seconds": 40.0, "timing": {"chinese_characters": 73, "english_words": 0, "number_tokens": 0, "estimated_seconds": 25, "basis": "storyboard_plan", "scheduled_seconds": 40.0, "start_seconds": 320.0, "end_seconds": 360.0}}, {"id": "s10", "title": "把质量判断落到实际成品", "notes": "这一页强调实际成品的重要性。一个文件能打开，并不说明文字没有被遮住，图例没有丢失，或者讲稿仍然对应当前页面。这些都需要回到最终文件核对。", "cues": ["简短停顿后进入下一页"], "sources": [], "duration_seconds": 40.0, "timing": {"chinese_characters": 62, "english_words": 0, "number_tokens": 0, "estimated_seconds": 22, "basis": "storyboard_plan", "scheduled_seconds": 40.0, "start_seconds": 360.0, "end_seconds": 400.0}}, {"id": "s11", "title": "用三个动作结束准备", "notes": "最后回到三个具体动作：核对证据，保持同步，查看真实页面。如果后续又修改了正文或顺序，就检查受影响的部分。准备充分的演示应该能够继续编辑，也能够被实际讲清楚。", "cues": ["简短停顿后进入下一页"], "sources": [], "duration_seconds": 40.0, "timing": {"chinese_characters": 70, "english_words": 0, "number_tokens": 0, "estimated_seconds": 24, "basis": "storyboard_plan", "scheduled_seconds": 40.0, "start_seconds": 400.0, "end_seconds": 440.0}}, {"id": "s12", "title": "留出讨论空间", "notes": "示例到这里结束。接下来可以用真实材料替换故事板，或围绕内容取舍和图表表达展开讨论。任何新的问题都应根据当前材料回答，缺少证据时直接说明需要补充什么。", "cues": ["简短停顿后进入下一页"], "sources": [], "duration_seconds": 40.0, "timing": {"chinese_characters": 69, "english_words": 0, "number_tokens": 0, "estimated_seconds": 23, "basis": "storyboard_plan", "scheduled_seconds": 40.0, "start_seconds": 440.0, "end_seconds": 480.0}}], "timing": {"zh_characters_per_minute": 230.0, "english_words_per_minute": 130.0, "pause_seconds_per_nonempty_slide": 5.0, "scheduled_seconds": 480.0, "estimated_seconds": 279, "label": "Text timing is an estimate, not a measured rehearsal. Planned durations come from the supplied storyboard."}}</script>
+<script>
+"use strict";
+const deck = JSON.parse(document.getElementById("deck-data").textContent);
+const $ = id => document.getElementById(id);
+const format = seconds => {const n=Math.max(0,Math.round(seconds)); return String(Math.floor(n/60)).padStart(2,"0")+":"+String(n%60).padStart(2,"0")};
+let index=0, mode="script", running=false, last=0, total=0, page=0;
+function elem(tag, cls, text){const node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node}
+const missing=[];
+const cards=deck.slides.map((slide,i)=>{
+ const node=elem("article","slide");node.dataset.slideId=slide.id;
+ node.append(elem("h2","",(i+1)+". "+(slide.title||"未提供标题")));
+ const t=slide.timing;node.append(elem("div","meta","ID "+slide.id+" · "+format(t.start_seconds)+"–"+format(t.end_seconds)+" · "+(t.basis==="storyboard_plan"?"故事板计划":"文字估计")+" "+format(t.scheduled_seconds)));
+ node.append(elem("div",slide.notes?"notes":"notes empty",slide.notes||"缺少原始备注／口语稿，未自动补写。"));
+ const cues=elem("ul","cues");
+ if(slide.cues.length)slide.cues.forEach(c=>cues.append(elem("li","",c)));else cues.append(elem("li","empty","未提供提示卡。可切回分页讲稿阅读原备注。"));
+ node.append(cues);
+ if(slide.sources.length){const details=elem("details");details.append(elem("summary","","来源与依据"));const list=elem("ul");slide.sources.forEach(s=>list.append(elem("li","",s)));details.append(list);node.append(details)}
+ if(!slide.notes)missing.push(i+1);
+ $("slides").append(node);const option=elem("option","",(i+1)+". "+(slide.title||"未提供标题"));option.value=i;$("jump").append(option);return node;
+});
+if(missing.length){$("missing").hidden=false;$("missing").textContent="缺少原始备注／口语稿："+missing.join("、")+" 页。缺项已保留，未自动补写。"}
+$("timing-summary").textContent="计划合计 "+format(deck.timing.scheduled_seconds)+"；文字估时 "+format(deck.timing.estimated_seconds)+"（中文 "+deck.timing.zh_characters_per_minute+" 字/分钟，英文 "+deck.timing.english_words_per_minute+" 词/分钟，单页停顿 "+deck.timing.pause_seconds_per_nonempty_slide+" 秒；不含未记录的互动与问答）。";
+function tick(){const now=performance.now();if(running){const delta=now-last;total+=delta;page+=delta}last=now;$("total-clock").textContent=format(total/1000);$("page-clock").textContent=format(page/1000)}
+function show(){document.body.dataset.mode=mode;cards.forEach((c,i)=>{c.hidden=mode!=="all"&&i!==index});$("jump").value=index;$("prev").disabled=index===0;$("next").disabled=index===cards.length-1;["script","cards","all"].forEach(m=>$(m+"-mode").setAttribute("aria-pressed",String(mode===m)))}
+function navigate(to){const next=Math.max(0,Math.min(cards.length-1,to));if(next!==index){tick();index=next;page=0;$("page-clock").textContent="00:00"}show();if(mode==="all")cards[index].scrollIntoView({block:"start"})}
+$("prev").onclick=()=>navigate(index-1);$("next").onclick=()=>navigate(index+1);$("jump").onchange=e=>navigate(Number(e.target.value));
+["script","cards","all"].forEach(m=>$(m+"-mode").onclick=()=>{mode=m;show()});
+$("start").onclick=()=>{tick();running=!running;last=performance.now();$("start").textContent=running?"暂停计时":(total>0?"继续计时":"开始计时")};
+$("reset").onclick=()=>{running=false;total=0;page=0;last=performance.now();tick();$("start").textContent="开始计时"};
+document.addEventListener("keydown",e=>{if(e.target.closest("button,input,select,textarea"))return;if(e.key==="ArrowRight"||e.key==="PageDown"||e.code==="Space"){e.preventDefault();navigate(index+1)}else if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();navigate(index-1)}});
+show();setInterval(tick,250);
+</script></body></html>

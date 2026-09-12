@@ -1,0 +1,10 @@
+{
+  "type": "gantt",
+  "title": "合成演示：项目计划",
+  "tasks": [
+    {"id": "prepare", "label": "资料整理与方法准备", "start": "2030-01-01", "end": "2030-02-28"},
+    {"id": "analysis", "label": "按预设方案分析", "start": "2030-03-01", "end": "2030-06-30", "depends_on": ["prepare"]},
+    {"id": "document", "label": "同步记录过程与方法", "start": "2030-03-01", "end": "2030-07-31", "depends_on": ["prepare"]},
+    {"id": "review", "label": "检查结果并形成工作稿", "start": "2030-08-01", "end": "2030-09-30", "depends_on": ["analysis", "document"]}
+  ]
+}

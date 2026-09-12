@@ -1,0 +1,4 @@
+interface:
+  display_name: SCI 论文降重改写
+  short_description: 整段或局部论文降重，严格保留数据、引文、逻辑与科学含义
+  default_prompt: 使用此内置改写分支处理已授权论文内容，严格保留科学含义与受保护信息；局部模式不改变标记外任何文本。

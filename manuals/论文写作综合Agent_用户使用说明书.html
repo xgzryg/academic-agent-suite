@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="论文写作综合 agent v1.1.3 用户使用说明：安装、功能、调用示例、连续写作、审稿返修循环与任务恢复。">
+<title>论文写作综合 agent · v1.1.3 使用说明</title>
+<style>
+:root{--ink:#172e34;--muted:#5d7074;--paper:#f6f7f3;--card:#fff;--line:#dbe3df;--teal:#166956;--teal-soft:#e8f2ec;--gold:#e4b75c;--shadow:0 12px 36px #18392e0a;--radius:18px;--nav:242px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:26px}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;font-size:15px;line-height:1.85}button,input,select,textarea{font:inherit}button,a,input,select,textarea,summary{outline-offset:4px}a{color:var(--teal);text-underline-offset:4px}button{cursor:pointer}button:disabled{cursor:default}h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{line-height:1.35}h1{font-size:clamp(32px,4vw,51px);letter-spacing:-1.5px;margin-bottom:18px}h2{font-size:28px;letter-spacing:-.6px;margin-bottom:16px}h3{font-size:19px;margin-bottom:12px}h4{font-size:16px;margin-bottom:8px}p{margin-bottom:14px}ul,ol{padding-left:1.45em;margin-top:8px;margin-bottom:16px}li+li{margin-top:5px}code{font:13px/1.65 Consolas,"SFMono-Regular",monospace;background:#edf1ee;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.85 Consolas,"Microsoft YaHei",monospace;color:#e9f2ec}pre code{font:inherit;background:none;padding:0;color:inherit}small,.small{font-size:12px;color:var(--muted)}[hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.skip{position:absolute;left:12px;top:-100px;z-index:99;background:#fff;padding:12px}.skip:focus{top:12px}
+.side{position:fixed;inset:0 auto 0 0;width:var(--nav);background:#142e31;color:#edf4ef;padding:32px 23px;overflow:auto;z-index:20}.brand{display:block;font-weight:700;font-size:18px;color:#fff;text-decoration:none;line-height:1.6}.brand-sub{margin:10px 0 28px;font-size:12px;letter-spacing:1.5px;color:#a7beb5}.side nav{display:grid;gap:5px}.side nav a{color:#cbdcd5;text-decoration:none;padding:10px 12px;border-radius:9px;font-size:13px;line-height:1.55;display:flex;gap:12px}.side nav a span{opacity:.55;font-size:11px;padding-top:2px}.side nav a:hover,.side nav a.current{background:#26494a;color:#fff}.side-foot{margin-top:35px;padding-top:20px;border-top:1px solid #365152;color:#b5c9c1;font-size:12px}.side-foot button{color:#dfebe5;border:1px solid #597670;border-radius:8px;background:none;padding:7px 14px;margin-top:12px}.mobile-top{display:none}.main{margin-left:var(--nav);padding:40px clamp(24px,4.5vw,76px) 65px;max-width:1680px}.hero{background:#e8efe6;border:1px solid #d6e2d6;border-radius:24px;padding:40px;position:relative;overflow:hidden;box-shadow:var(--shadow)}.hero:after{content:"";position:absolute;width:250px;height:250px;border:1px solid #aac4b570;right:-80px;top:-105px;border-radius:50%;box-shadow:0 0 0 38px #aac4b51c,0 0 0 77px #aac4b516;pointer-events:none}.kicker{color:var(--teal);text-transform:uppercase;letter-spacing:2px;font-weight:700;font-size:11px;margin-bottom:20px}.hero p{max-width:770px;color:#435e58;font-size:16px}.hero strong{color:var(--ink)}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:9px;background:var(--teal);color:#fff;text-decoration:none;border:1px solid var(--teal);font-weight:600;font-size:13px;line-height:1.6}.button.secondary{color:var(--teal);background:#fff;border-color:#c3d4c9}.button:hover{filter:brightness(.95)}.hero-stats{display:flex;gap:32px;flex-wrap:wrap;margin-top:28px;padding-top:22px;border-top:1px solid #c6d5c9}.hero-stats div{font-size:12px;color:#5b7066}.hero-stats b{display:block;color:#243f35;font-size:21px;line-height:1.4}.section{margin-top:58px;scroll-margin-top:26px}.section-head{display:flex;align-items:baseline;gap:15px}.section-no{color:#81998d;font:13px Consolas,monospace;letter-spacing:1px}.lead{font-size:16px;color:var(--muted);max-width:920px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);min-width:0}.card p:last-child{margin-bottom:0}.card .label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:10px}.step-number{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--teal-soft);color:var(--teal);font-weight:700;margin-bottom:13px}.note{border-left:4px solid var(--teal);border-radius:0 9px 9px 0;background:var(--teal-soft);padding:16px 20px;margin:20px 0;color:#30564c}.note.amber{background:#fbf1dc;border-color:#c79235;color:#6b522d}.note p:last-child{margin-bottom:0}.prompt{position:relative;background:#19363b;border-radius:12px;padding:43px 20px 20px;margin:14px 0 0}.prompt .copy{position:absolute;right:10px;top:8px;border:1px solid #6d8986;border-radius:6px;padding:3px 11px;color:#dcebe4;background:#28464b;font-size:11px;line-height:1.7}.prompt .copy:hover{background:#365956}.prompt-label{position:absolute;top:10px;left:20px;color:#99b8aa;font-size:10px;letter-spacing:1px}.table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:14px;margin:18px 0}table{border-collapse:collapse;width:100%;text-align:left;font-size:13px}th,td{padding:14px 17px;vertical-align:top;border-bottom:1px solid var(--line)}th{color:#496259;background:#eaf0e9;font-size:12px}tr:last-child td{border-bottom:0}td:first-child{font-weight:600;min-width:125px}.pill{display:inline-block;font-size:11px;line-height:1.7;padding:3px 10px;background:var(--teal-soft);border-radius:6px;color:var(--teal);font-weight:600}.workflow{counter-reset:flow;display:grid;gap:0;margin-top:24px}.flow-item{position:relative;padding:0 0 23px 54px;counter-increment:flow}.flow-item:before{content:counter(flow,decimal-leading-zero);position:absolute;left:0;top:0;width:33px;height:33px;display:grid;place-items:center;border-radius:50%;background:#dce9e0;color:var(--teal);font:12px Consolas,monospace;z-index:1}.flow-item:after{content:"";position:absolute;left:16px;top:32px;bottom:0;border-left:1px solid #bfd1c6}.flow-item:last-child:after{display:none}.flow-item h3{font-size:17px;margin-bottom:5px}.flow-item p{color:var(--muted);margin-bottom:4px}.flow-item .checkpoint{font-size:12px;color:#805b1c;background:#fcf0d6;border-radius:5px;padding:2px 8px;display:inline-block}.loop-controls{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:18px 0}.loop-controls input{flex:1;max-width:360px;min-width:160px;accent-color:var(--teal)}.loop-controls output{font-size:25px;font-weight:700;color:var(--teal)}.loop-strip{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0 15px}.loop-node{border:1px solid #bfd4c8;border-radius:8px;padding:8px 12px;background:#f2f7f0;font-size:12px}.loop-node.review{background:#e4eef2;border-color:#c4d8e1;color:#2a5264}.loop-arrow{color:#789485}.status-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.status-item{padding:13px 15px;border:1px solid var(--line);border-radius:10px}.status-item b{display:block;font-size:13px}.status-item span{font-size:12px;color:var(--muted)}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.field{display:grid;gap:6px;min-width:0}.field.wide{grid-column:1/-1}.field label,.field .field-label{font-size:12px;font-weight:600;color:#51675d}.field input,.field select,.field textarea{width:100%;min-width:0;background:#fafcf9;border:1px solid #cbd8cf;border-radius:8px;padding:9px 11px;color:var(--ink);font-size:13px}.field textarea{resize:vertical;min-height:83px}.checks{display:flex;gap:15px;flex-wrap:wrap;margin-top:16px}.checks label{font-size:13px;display:flex;gap:7px;align-items:center}.checks input{accent-color:var(--teal)}.generated{background:#19363b;color:#e9f2ec;width:100%;min-height:330px;border:0;resize:vertical;font:13px/1.9 Consolas,"Microsoft YaHei",monospace}.builder-hint{font-size:12px;color:var(--muted);margin-top:12px}.filter-tools{background:#fff;border:1px solid var(--line);border-radius:15px;padding:20px;margin:20px 0}.search-row{display:flex;gap:10px}.search-row input{flex:1;min-width:0;border:1px solid #cbd8cf;border-radius:8px;padding:10px 13px;font-size:14px}.small-btn{padding:8px 13px;border:1px solid #cbd8cf;background:#f9fbf7;border-radius:8px;color:var(--teal);font-size:12px;white-space:nowrap}.filters{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}.filter{border:1px solid #d9e2d9;background:#f6f8f3;color:#556b5f;font-size:12px;padding:5px 11px;border-radius:20px}.filter.active{background:var(--teal);color:#fff;border-color:var(--teal)}.results-meta{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:13px;font-size:12px;color:var(--muted)}.feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;align-items:start}.feature{border:1px solid var(--line);border-radius:14px;background:#fff;min-width:0;overflow:hidden}.feature summary{padding:20px 21px;cursor:pointer;list-style:none;position:relative}.feature summary::-webkit-details-marker{display:none}.feature summary:after{content:"+";position:absolute;right:19px;top:21px;color:#8fa698;font-size:20px}.feature[open] summary:after{content:"−"}.feature summary h3{font-size:16px;padding-right:20px;margin:8px 0}.feature summary p{font-size:13px;color:var(--muted);margin:0}.feature summary .pill{font-size:10px}.feature-body{padding:0 21px 21px;border-top:1px solid #edf1ec}.feature-body h4{font-size:12px;color:var(--teal);margin:15px 0 5px}.feature-body p,.feature-body li{font-size:13px}.feature-body ul{margin-bottom:10px;padding-left:18px}.feature .prompt{padding-left:15px;padding-right:15px}.feature pre{font-size:12px}.feature-num{float:right;color:#9aada2;font:11px Consolas,monospace;margin:5px 19px 0 0}.empty{padding:30px;background:#fff;border:1px dashed #a8c2b1;border-radius:12px;text-align:center}.faq{background:#fff;border:1px solid var(--line);border-radius:12px;margin:10px 0}.faq summary{padding:16px 20px;cursor:pointer;font-weight:600;font-size:14px}.faq>div{padding:0 20px 18px;color:var(--muted);font-size:13px}.faq p:last-child{margin-bottom:0}.footer{margin-top:55px;border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:12px}.toast{position:fixed;bottom:24px;left:calc(50% + 100px);transform:translateX(-50%);background:#173f37;color:#fff;border-radius:9px;padding:11px 20px;z-index:50;box-shadow:0 5px 22px #0002;font-size:13px;max-width:85vw}.privacy{font-size:12px;color:#688071}.print-title,.generated-print{display:none}
+@media(min-width:1500px){.main{padding-left:72px;padding-right:72px}}
+@media(max-width:1100px){:root{--nav:206px}.side{padding:28px 17px}.main{padding:28px 28px 55px}.hero{padding:30px}.grid.three{grid-template-columns:1fr}.card{padding:21px}.feature-grid{grid-template-columns:1fr}}
+@media(max-width:760px){:root{--nav:0px}html{scroll-padding-top:80px}.mobile-top{display:flex;position:sticky;top:0;z-index:30;align-items:center;justify-content:space-between;gap:12px;padding:12px 17px;background:#142e31;color:#fff}.mobile-top b{font-size:14px}.mobile-top button{background:#2b494b;color:#fff;border:1px solid #6f8983;padding:4px 12px;border-radius:7px;font-size:12px}.side{display:none;width:255px;top:53px;padding:25px 18px;box-shadow:20px 0 50px #142e3133}.side.open{display:block}.main{margin:0;padding:20px 16px 40px}.hero{padding:28px 23px;border-radius:18px}h1{font-size:34px;letter-spacing:-1px}h2{font-size:24px}.hero p{font-size:14px}.hero-stats{gap:23px}.hero-stats b{font-size:19px}.grid,.form-grid,.status-list{grid-template-columns:1fr}.field.wide{grid-column:auto}.section{margin-top:43px;scroll-margin-top:77px}.card{padding:20px}.search-row{flex-wrap:wrap}.search-row input{flex-basis:100%}.search-row button{flex:1}.results-meta{align-items:start;flex-direction:column}.toast{left:50%}.table-wrap{font-size:12px}th,td{padding:11px 12px}.loop-controls{gap:12px}.footer{gap:6px}.feature summary{padding:18px}.feature-body{padding:0 18px 18px}.hero-actions .button{flex:1;white-space:nowrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media print{html{scroll-behavior:auto}body{background:#fff;color:#000;font-size:11px;line-height:1.65}.side,.mobile-top,.hero-actions,.copy,.filter-tools,.builder-tools,.no-print,.toast{display:none!important}.main{margin:0;max-width:none;padding:0}.hero{background:#fff;border:1px solid #ccc;padding:20px;box-shadow:none}.hero:after{display:none}h1{font-size:29px}h2{font-size:22px}.section{margin-top:30px}.grid,.grid.three,.feature-grid,.form-grid,.status-list{display:block}.card,.feature,.faq{box-shadow:none;margin-bottom:10px;break-inside:avoid}.feature[hidden]{display:block!important}.feature-body{display:block!important}.feature summary{padding:12px 17px}.feature summary:after{display:none}.feature summary p{font-size:11px}.feature-body p,.feature-body li,pre{font-size:10px}.prompt{background:#f3f3f3;border:1px solid #ddd;padding:26px 12px 12px}.prompt-label{color:#444}pre,.generated{color:#111}.generated{background:#fff;height:auto;min-height:280px}.note{background:#f5f5f5;border-color:#888}a{color:#111;text-decoration:none}.table-wrap{overflow:visible}th,td{padding:8px}h2,h3{break-after:avoid}.footer{margin-top:20px}.privacy{color:#555}#generatedPrompt{display:none}.generated-print{display:block;color:#111;white-space:pre-wrap;overflow-wrap:anywhere}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到正文</a>
+<div class="mobile-top"><b>论文写作综合 agent</b><button id="menuToggle" aria-controls="sidebar" aria-expanded="false">目录</button></div>
+<aside class="side" id="sidebar">
+<a class="brand" href="#start">论文写作<br>综合 agent</a><div class="brand-sub">USER GUIDE / v1.1.3</div>
+<nav aria-label="说明书目录">
+<a href="#start"><span>01</span>快速开始</a><a href="#install"><span>02</span>安装与检查</a><a href="#invoke"><span>03</span>如何下达任务</a><a href="#workflow"><span>04</span>从结果到完整论文</a><a href="#automation"><span>05</span>连续执行与恢复</a><a href="#loop"><span>06</span>审稿—返修循环</a><a href="#builder"><span>07</span>生成任务指令</a><a href="#features"><span>08</span>全部功能查询</a><a href="#recipes"><span>09</span>常用任务模板</a><a href="#environment"><span>10</span>运行条件</a><a href="#faq"><span>11</span>常见问题</a>
+</nav>
+<div class="side-foot">单文件 · 可离线阅读<br>示例指令可一键复制<br><button class="print-btn">打印 / 另存 PDF</button></div>
+</aside>
+<main class="main" id="main">
+<section id="start" class="hero">
+<div class="kicker">从第一条指令，到最后一轮再审</div>
+<h1>让论文工作<br>按步骤连续完成。</h1>
+<p>这份说明书带你完成安装、准备材料、调用功能，并把写作、润色、审稿与返修串成清楚的工作流程。通常只需告诉 <strong>$paper-writing-agent</strong> 你的目标，它会选择需要的功能。</p>
+<div class="hero-actions"><a class="button" href="#install">开始安装 <span aria-hidden="true">↗</span></a><a class="button secondary" href="#builder">生成我的任务指令</a><a class="button secondary" href="#features">查询全部功能</a></div>
+<div class="hero-stats"><div><b>1 个入口</b>自然语言调用</div><div><b>48 + 2</b>功能与内部支持</div><div><b>按目标停止</b>可设返修轮数</div></div>
+</section>
+<div class="note"><strong>v1.1.3 新增与增强：</strong> <a href="#feature-50">审稿状态与接收后制作进度的询问信草稿</a>，以及<a href="#feature-44">带明暗主题、移动端目录和长页导航的自包含 HTML 阅读页</a>。这两项均可从同一个主入口用自然语言调用。</div>
+<div class="note"><strong>第一次使用，先做一个小任务。</strong> 给出一段真实文字，请它润色并解释修改。确认能读取材料、保存文件后，再启动完整论文流程。本文中的路径、主题与目标期刊示例，请替换为你的实际信息。</div>
+<div class="grid three">
+<article class="card"><div class="label">已有研究结果</div><h3>组织成一篇论文</h3><p>准备结果表、图表和方法说明。从材料核对与大纲开始，确认后连续完成章节、摘要及整稿核查。</p><a href="#workflow">查看完整写作路径 →</a></article>
+<article class="card"><div class="label">已有完整稿件</div><h3>修好再进入投稿</h3><p>按需要选择润色、压缩、引用核验、选刊或模拟审稿。你可以只改一个章节，也可以指定完整链条。</p><a href="#recipes">使用现成模板 →</a></article>
+<article class="card"><div class="label">已有评语或需预审</div><h3>把审稿与改稿衔接起来</h3><p>单次返修可同步准备回复；开启循环后，不同实例分别审稿与返修，最后一稿也要再审。</p><a href="#loop">了解轮数和停止条件 →</a></article>
+</div>
+
+<section class="section" id="install"><div class="section-head"><span class="section-no">02</span><h2>安装与检查</h2></div><p class="lead">把一个完整文件夹放入宿主实际使用的 skills 目录。内部功能不需要逐个安装。</p>
+<div class="grid"><article class="card"><span class="step-number">1</span><h3>解压并检查层级</h3><p>安装包文件名为 <code>paper-writing-agent-v1.1.3.zip</code>。解压后找到 <code>paper-writing-agent</code> 文件夹，主 <code>SKILL.md</code> 应在该文件夹第一层。</p><div class="prompt"><span class="prompt-label">正确的安装结构</span><pre>目标 skills 目录/
+└─ paper-writing-agent/
+   ├─ SKILL.md
+   ├─ INSTALL.md
+   ├─ skills/
+   ├─ references/
+   └─ scripts/</pre></div><p class="small" style="margin-top:12px">避免多套一层同名目录，或只复制 SKILL.md 而漏掉内部文件。</p></article>
+<article class="card"><span class="step-number">2</span><h3>放入当前宿主的目录</h3><p>先确认当前应用或账户实际读取哪个 skills 目录，再放入整个文件夹。Windows 上可能是 <code>D:\Codex\.codex\skills</code> 或其他配置位置，不要只凭示例猜路径。</p><p>若已有同名安装，先确认旧版身份并做好备份，再按宿主方式处理旧安装、腾出目标位置后放入新版。不要把新版嵌套在旧版里面。</p><p class="small">安装脚本拒绝覆盖同名目标；本说明书不会替你修改任何安装或配置。</p></article>
+<article class="card"><span class="step-number">3</span><h3>刷新发现并试调用</h3><p>按宿主提供的方式刷新技能，或开启新任务。输入下面的指令，让宿主检查当前入口和包内路由是否可读。</p><div class="prompt"><span class="prompt-label">安装后检查</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent。
+先检查当前是否可以读取主入口、安装说明和包内功能路由，确认版本是否为 v1.1.3。
+然后说明如何提交我的第一份稿件；本次不修改任何论文。</pre></div></article>
+<article class="card"><span class="step-number">4</span><h3>用一个片段确认输出</h3><p>把真实段落贴入指令，指定保存位置。这个小任务能确认文件读取、调用和交付方式。</p><div class="prompt"><span class="prompt-label">第一次真实任务</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，润色下面这段论文文字，保持原语言。
+保留全部数字、引用和科学含义，给出修改稿和必要的修改说明。
+本次只处理这一个段落，不扩展成全文任务。
+【在这里粘贴真实段落】</pre></div></article></div>
+<details class="faq"><summary>可选：使用 Python 安装脚本</summary><div><p>已有可用 Python 时，可从任意目录执行。<code>--destination</code> 指向 <strong>skills 父目录</strong>，不是最后的 <code>paper-writing-agent</code> 子目录。先试运行，再实际复制。请先改成自己的路径。</p><div class="prompt"><span class="prompt-label">命令示例 · 请替换路径</span><button class="copy">复制</button><pre>python "D:\工具包\paper-writing-agent\scripts\install.py" --destination "D:\Codex\.codex\skills" --dry-run
+python "D:\工具包\paper-writing-agent\scripts\install.py" --destination "D:\Codex\.codex\skills"</pre></div><p style="margin-top:12px">脚本只复制一个文件夹，不安装 Python 库、不配置账户、不注册定时任务。手动解压安装不要求先有 Python。</p></div></details>
+</section>
+
+<section class="section" id="invoke"><div class="section-head"><span class="section-no">03</span><h2>如何下达任务</h2></div><p class="lead">不必背功能名。说明“做什么、依据什么、改到哪里、何时算完成”通常更有效。</p>
+<div class="table-wrap"><table><thead><tr><th>建议说清</th><th>为什么需要</th><th>可以这样写</th></tr></thead><tbody>
+<tr><td>目标与范围</td><td>确定只改片段，还是串联多个阶段。</td><td>只润色 Discussion；不要改 Methods 和统计结果。</td></tr>
+<tr><td>当前材料</td><td>区分本研究事实、当前稿和学习文风的范文。</td><td>manuscript.docx 是主稿；results.xlsx 是结果依据；example.pdf 仅供学习结构。</td></tr>
+<tr><td>不可改内容</td><td>保护数字、术语、方法与人工决定。</td><td>保留 HR、95% CI、P 值、协变量、现有引用和全部不利结果。</td></tr>
+<tr><td>产物与位置</td><td>直接得到能继续使用的文件。</td><td>输出英文 Word 和逐条修改说明，保存到 D:\论文项目\输出。</td></tr>
+<tr><td>执行方式</td><td>减少重复确认，同时保留必要的作者决定。</td><td>按已确认大纲连续完成；缺失关键方法参数时列明，先做不受影响部分。</td></tr>
+<tr><td>联网与审稿范围</td><td>决定检索方式、审稿者能看到什么。</td><td>允许公共文献检索；审稿只看正文和补充材料，不看作者内部笔记。</td></tr>
+</tbody></table></div>
+<div class="prompt"><span class="prompt-label">可复用的任务简报</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent。
+任务：［本次要完成的工作］。
+项目与当前主稿：［项目路径 / 主稿文件］。
+事实依据：［结果表、图表、方法记录］；风格参考：［可选，仅学习表达］。
+允许修改：［范围］；必须保留：［数值、术语、引用、方法和作者决定］。
+输出：［语言、格式、文件夹］。
+联网：［允许公共文献检索 / 仅用已提供资料］。
+执行：复用已有确认，自动选择必要功能并完成指定范围；缺关键事实时列出具体缺项。
+完成标准：［可核查的目标］。</pre></div>
+<div class="note"><strong>需要指定某项功能时，用中文直接说明即可。</strong> 例如“使用多视角审稿”“做 PubMed 创新性评估”“按 Nature Communications 风格润色”。仍使用同一个主入口，无需切换多个角色或单独注册内部技能。</div>
+<h3 style="margin-top:25px">几种容易混淆的任务</h3><div class="table-wrap"><table><thead><tr><th>任务</th><th>主要改变</th><th>典型调用</th></tr></thead><tbody><tr><td>翻译</td><td>语言；保持内容完整、结构与含义。</td><td>中文全文译为英文，不省略任何段落。</td></tr><tr><td>润色</td><td>语法、表达与衔接；默认保留结构。</td><td>只提高英文可读性，保留结论边界。</td></tr><tr><td>精简</td><td>篇幅；需要明确字数或压缩范围。</td><td>压缩至 3,500 词，保留全部关键结果和引用。</td></tr><tr><td>重复表达改写</td><td>指定表达的组织方式；保留引用义务。</td><td>只改方括号标出的句子，其他内容不变。</td></tr><tr><td>Proof 校样核查</td><td>校样错误与排版相关问题。</td><td>自动连续核查整份 Proof，输出逐项问题报告。</td></tr><tr><td>审稿 / 返修</td><td>审稿提出问题；返修修改实际工作稿并回应。</td><td>先审稿；若需要反复改，明确开启循环。</td></tr></tbody></table></div>
+</section>
+
+<section class="section" id="workflow"><div class="section-head"><span class="section-no">04</span><h2>从结果到完整论文</h2></div><p class="lead">这条路径适合已有真实研究结果的项目。如果还没有结果，应先做选题、研究设计或文献综述，不能直接补写不存在的实验和发现。</p>
+<div class="grid"><article class="card"><h3>开始前准备这些材料</h3><ul><li>研究问题、研究类型和拟解决的具体问题。</li><li>已确认的方法记录：纳排、处理、分析、仪器或实验条件等。</li><li>最终结果表、图表、图注信息及统计输出。</li><li>已有主稿、真实参考文献和作者已做的决定。</li><li>目标语言、文章类型、目标期刊（如有）及输出目录。</li></ul><p class="small">材料不齐也可以开始整理，但影响正文真实性的缺项必须补齐或明确标记。</p></article><article class="card"><h3>定义一个实际完成标准</h3><p>例如：完成主文各章节和图注，数字与结果表一致，关键外部论断有可核验引用，输出指定格式，并列出剩余作者待办。</p><p>“保证录用”“一定达到顶刊水平”或“提高到显著”不能作为可保证的完成标准。目标应对应可检查的文稿和证据。</p><p class="small">完整交付可以包括正文、修改说明和待补信息表；没有必要的文件不强制生成。</p></article></div>
+<div class="workflow">
+<div class="flow-item"><h3>识别材料与事实依据</h3><p>确认当前主稿、最终数据/结果、图表与方法记录；辨明哪些文件只是风格参考。列出会影响写作的真实缺项。</p></div>
+<div class="flow-item"><h3>形成论文逻辑和章节大纲</h3><p>确定研究问题、核心结果顺序、图表与正文的对应关系，并给出 Methods / Results 大纲。</p><span class="checkpoint">新起草完整 Methods / Results：大纲未确认时先确认；已有确认直接沿用。</span></div>
+<div class="flow-item"><h3>先写方法、结果和图注</h3><p>以真实研究过程和实际结果为依据。缺失参数不能补猜，图表中的符号、单位、分组和分析口径须一致。</p></div>
+<div class="flow-item"><h3>完成前言与讨论</h3><p>围绕问题、已有证据、研究增量与局限组织论证。需要补引时实际核验文献，区分关联、因果与假设。</p></div>
+<div class="flow-item"><h3>完成标题、摘要、结论和 Highlights</h3><p>根据完整正文提炼信息，确保摘要数字、主要结果与结论没有超出正文。</p></div>
+<div class="flow-item"><h3>按需要翻译、润色或精简</h3><p>优先选择当前缺少的一步。中文稿不会仅因选择期刊风格就自动变为英文；翻译和润色可以明确串联。</p></div>
+<div class="flow-item"><h3>整稿核对与可选审改</h3><p>核对正文、图表、引用和声明。若希望不同实例反复审改，应另行明确开启审稿—返修循环并给轮数。</p></div>
+<div class="flow-item"><h3>导出和交付</h3><p>保存当前可编辑稿、必要附属材料与真实待办。根据可用工具核查指定格式；投稿材料准备完成不会自动发送投稿。</p></div>
+</div>
+<div class="grid"><article class="card"><h3>第一阶段：整理与确认大纲</h3><div class="prompt"><span class="prompt-label">完整论文 · 启动指令</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，根据 D:\论文项目 中已完成的真实研究结果组织一篇英文研究论文。
+先核对当前结果表、图表和方法记录，给出论文主线、Methods/Results大纲及必须补齐的事实。
+已提供的统计结果和分析方案不重算、不更改。
+本阶段完成材料核对与大纲，不补写未知数据或方法参数。
+输出保存到 D:\论文项目\输出。</pre></div></article><article class="card"><h3>第二阶段：确认后连续完成</h3><p class="small">仅在你实际审阅并认可刚才的大纲后使用。</p><div class="prompt"><span class="prompt-label">完整论文 · 连续执行</span><button class="copy">复制</button><pre>我确认刚才的Methods/Results大纲，并已补充这些事实：［填写实际补充；无则说明］。
+请使用 $paper-writing-agent，按这个大纲连续完成方法、结果与图注、前言、讨论、标题、摘要和结论，再做整稿一致性核查。
+保持既定结果、引用、术语和结论边界；仅对真实缺失的作者信息暂停依赖步骤。
+输出英文Word和简短待办，不逐段重复询问。现在继续完成已确认范围。</pre></div></article></div>
+<div class="note amber"><strong>图形摘要是单独的确认点。</strong> 若要加入图形摘要，先让 agent 给出布局、标签及关系的文字方案；你确认方案后再生成。方案已经明确给出或确认时，直接沿用。</div>
+</section>
+
+<section class="section" id="automation"><div class="section-head"><span class="section-no">05</span><h2>连续执行、分批处理与恢复</h2></div><p class="lead">自动化的关键是事先说明执行范围、已有确认和完成标准。普通可核查步骤可以连续完成，作者事实与科学取舍仍由实际信息决定。</p>
+<div class="grid"><article class="card"><div class="label">同一任务内连续执行</div><h3>把依赖链写进一条指令</h3><p>例如“翻译 → 润色 → 引用/数字核对 → Word交付”。材料和授权齐全后，agent 会完成这些明确阶段；不会自动增加选刊、投稿或新分析。</p></article><article class="card"><div class="label">已有稿件反复改进</div><h3>明确开启审稿—返修循环</h3><p>给定轮数、审稿可见材料、允许改动和目标。普通润色或单次审稿不会自行升级为循环。</p></article><article class="card"><div class="label">多篇材料分批处理</div><h3>每篇独立输入、独立输出</h3><p>先按清单识别每篇主稿和对应附件，再逐篇处理。同一项目的信息不能串入另一篇。某篇缺材料时，记录缺项并继续独立可做部分。</p></article><article class="card"><div class="label">长稿与跨任务续作</div><h3>先核当前文件，再继续</h3><p>让 agent 保存必要的已完成阶段、当前稿、受保护部分和下一步。恢复时沿用最新人工修改，检查已有结果是否仍可用，不从头无差别重做。</p></article></div>
+<div class="table-wrap"><table><thead><tr><th>情况</th><th>会如何处理</th><th>怎样减少不必要中断</th></tr></thead><tbody><tr><td>Methods / Results 新稿</td><td>缺少已确认大纲时先提交大纲。</td><td>提供你已经确认的具体大纲；确认过的不重问。</td></tr><tr><td>Proof 校样</td><td>未说明模式时默认逐节确认。</td><td>明确写“自动连续检查全文”。</td></tr><tr><td>真实参数或作者声明缺失</td><td>暂停依赖部分，完成其余可做内容。</td><td>提供实际伦理、方法、作者和投稿声明信息。</td></tr><tr><td>需要新分析或新实验</td><td>列出需要什么，不写成已经完成。</td><td>另行明确批准方案并提供数据或实际执行结果。</td></tr><tr><td>可逆文字修改已获授权</td><td>按范围继续，不重复逐句确认。</td><td>明确章节、可改程度、不可改字段和输出。</td></tr></tbody></table></div>
+<div class="grid"><article class="card"><h3>批量处理模板</h3><div class="prompt"><span class="prompt-label">多篇论文 · 独立处理</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，处理 D:\论文批次 中清单所列的每篇论文。
+先确认每篇主稿及附件对应关系，再逐篇执行英文润色与数字/引用核对。
+每篇输出到自己的子目录，不混用数据、文献和作者信息。
+缺关键材料的论文记录具体缺项；继续其他可以独立完成的论文。
+完成后给出各篇状态和实际文件位置，不自动投稿。</pre></div></article><article class="card"><h3>恢复工作模板</h3><div class="prompt"><span class="prompt-label">中断后继续</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，继续 D:\论文项目 中的写作任务。
+先读取已有任务记录和当前实际稿件，核对我后来的人工修改。
+沿用已确认大纲、方法和受保护结果，只补做失败、缺失或受本次变更影响的阶段。
+请从最后可用阶段继续，并明确当前交付的是哪个版本。</pre></div></article></div>
+<div class="note"><strong>Proof 的“自动全文”指连续完成指定范围。</strong> 默认核查标题、摘要、关键词与正文叙述；作者单位、声明、参考文献列表、补充材料和独立图表内容不默认纳入。需要检查这些部分时，请在任务中明确列出。</div>
+<div class="note"><strong>定时执行由宿主提供。</strong> 本包可以在当前任务里连续工作，但关闭任务后不会自行唤醒。若需要“每天检查一次”或“今晚继续”，必须由支持定时任务的宿主实际创建并确认计划；仅在提示词里写了时间，不代表已经安排。恢复记录也不等于后台进程。</div>
+</section>
+
+<section class="section" id="loop"><div class="section-head"><span class="section-no">06</span><h2>审稿—返修循环</h2></div><p class="lead">先审一次，再进行最多 N 次“返修 + 再审”。审稿者和返修者必须是实际不同的子 agent，最后返修稿也必须经过审查。</p>
+<article class="card"><h3>先看懂轮数</h3><div class="loop-controls"><label for="roundExplorer">最多返修轮数</label><input id="roundExplorer" type="range" min="0" max="6" value="3"><output id="roundValue" for="roundExplorer">3</output><span class="small">拖动查看执行上限</span></div><div id="loopStrip" class="loop-strip" aria-label="审稿返修流程"></div><p id="loopExplanation" aria-live="polite"></p><p class="small">这是上限示意。基线审稿已满足目标时，可以 0 次返修结束；没有必要用完所有轮数。</p></article>
+<div class="table-wrap"><table><thead><tr><th>可配置内容</th><th>默认或规则</th><th>自然语言示例</th></tr></thead><tbody><tr><td>最大轮数</td><td>明确开启但未指定时，最多 3 次返修及其再审。</td><td>最多 2 轮；或者 0 轮，仅做基线审稿。</td></tr><tr><td>完成目标</td><td>范围内实质问题有真实修正或证据回应，最终稿经复核。</td><td>解决重大一致性问题，创新性表述与文献证据一致。</td></tr><tr><td>创新性评估</td><td>默认不开启；明确要求后加入。</td><td>加入 PubMed 近似文献与逐篇创新性比较。</td></tr><tr><td>每轮人工确认</td><td>默认不逐轮等待；你可以要求开启。</td><td>每轮审稿后先让我确认修改策略，再返修。</td></tr><tr><td>可见范围与改动范围</td><td>沿用实际指定材料和作者约束。</td><td>审稿只看正文/补充；只改工作副本文字，不重算统计。</td></tr><tr><td>模型设置</td><td>继承当前宿主和用户设置。</td><td>只有宿主支持且你明确指定时，才使用不同模型。</td></tr></tbody></table></div>
+<div class="grid"><article class="card"><h3>一条完整的循环指令</h3><div class="prompt"><span class="prompt-label">可直接修改后使用</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，开启审稿—返修循环，最多3轮。
+当前主稿：D:\论文项目\manuscript.docx；可见附件：正文图表与supplement.pdf。
+审稿和返修使用不同的真实子agent，每次返修后用新的审稿上下文复核。
+只修改工作副本，保留全部统计结果、协变量、引用和作者已确认方法。
+加入PubMed近似文献及创新性评估，允许公开术语检索，不上传未发表全文。
+目标：范围内重大问题解决或有证据回应，贡献表述准确，最终稿完成再审。
+不必逐轮等我批准；需要新分析或作者事实时列明。
+交付最终稿、最后审稿意见、逐条回应与轮次总结。</pre></div></article><article class="card"><h3>创新性评估会做什么</h3><ol><li>提取稿件具体主张：问题、对象、数据、方法与发现。</li><li>进行互补的宽窄检索，结合真实相关论文查近邻。</li><li>实际阅读摘要；关键细节需要时再查可取得全文。</li><li>逐篇说明已有先例、本稿新增点及未能判断的部分。</li><li>据证据保留、收窄或修正创新表述，再交回审稿/返修。</li></ol><p class="small">相似分用于找到候选文献；有限检索不能证明全球首次。禁网时可以整理已有证据，但不能声称完成了实时查新。</p></article></div>
+<h3 style="margin-top:26px">结束时，状态必须说清楚</h3><div class="status-list"><div class="status-item"><b>目标已达成</b><span>当前实际稿件已完成所需审查，满足本次目标。</span></div><div class="status-item"><b>轮数上限已到</b><span>最后稿已审查，仍有问题时明确保留；不等于通过。</span></div><div class="status-item"><b>需要作者信息</b><span>缺少真实参数、决定或新的分析授权。</span></div><div class="status-item"><b>能力或证据阻塞</b><span>关键材料、网络或真实子agent工具不可用。</span></div><div class="status-item"><b>用户停止</b><span>按你的要求结束，保留已完成阶段和当前版本。</span></div></div>
+<div class="note amber">如果宿主没有真实子 agent 工具，agent 会说明限制，并在得到你的同意后才改成单 agent 顺序审改。两个角色口吻不能冒充两个独立实例；达到轮数上限也不能跳过最后再审。</div>
+</section>
+
+<section class="section" id="builder"><div class="section-head"><span class="section-no">07</span><h2>生成你的任务指令</h2></div><p class="lead">填好需求，复制右侧指令到模型宿主。这个页面仅生成文字，不会读取、上传文件或执行论文任务。</p>
+<div class="grid"><article class="card"><form id="promptForm"><div class="form-grid">
+<div class="field wide"><label for="taskType">本次任务</label><select id="taskType"><option value="full">已有真实结果 → 完整论文</option><option value="polish">已有稿件 → 润色与一致性检查</option><option value="translate">中文稿 → 英文翻译与润色</option><option value="review">已有稿件 → 多视角审稿</option><option value="revise">审稿意见 → 返修稿与逐条回应</option><option value="literature">研究主题 → 文献整理与综述证据</option><option value="proof">整份 Proof → 自动全文核查</option></select></div>
+<div class="field wide"><label for="projectPath">项目 / 输出位置</label><input id="projectPath" value="D:\论文项目" autocomplete="off"></div>
+<div class="field wide"><label for="materials">当前材料</label><textarea id="materials">manuscript.docx 为当前主稿；results.xlsx 和正文图表为事实依据；methods.md 为已确认方法。</textarea></div>
+<div class="field"><label for="language">目标语言</label><select id="language"><option>英文</option><option>中文</option><option>保持原文语言</option></select></div><div class="field"><label for="format">输出格式</label><select id="format"><option>Word</option><option>Markdown</option><option>Word + Markdown</option><option>HTML报告</option></select></div>
+<div class="field wide"><label for="constraints">必须保留</label><textarea id="constraints">全部数字、单位、引用、协变量、研究方法、结果方向及作者已确认内容。</textarea></div>
+<div class="field wide"><label for="goalText">完成标准</label><textarea id="goalText">完成本次指定范围；正文、图表和引用一致；列出具体缺项及未完成事项。</textarea></div>
+<div class="field"><label for="roundLimit">循环最大返修轮数</label><input id="roundLimit" type="number" min="0" max="20" value="3" disabled></div>
+<div class="field"><label for="networkMode">网络使用</label><select id="networkMode"><option value="public">允许公共文献检索</option><option value="offline">仅用已提供资料</option></select></div>
+</div><div class="checks"><label><input type="checkbox" id="enableLoop">明确开启审稿—返修循环</label><label><input type="checkbox" id="enableNovelty">加入创新性评估</label><label><input type="checkbox" id="humanCheckpoint" disabled>循环每轮由我确认</label></div><p id="builderWarning" class="note amber" hidden></p></form><p class="builder-hint">页面不保存输入；关闭或刷新后请重新填写。轮数输入范围用于本页生成器，实际执行仍以你明确的任务和宿主条件为准。</p></article>
+<article class="card"><h3>复制到模型宿主</h3><p class="small">预览随输入更新，可滚动查看；复制会包含全部文字。替换示例文件名后再发送。</p><div class="prompt"><span class="prompt-label">我的任务简报</span><button class="copy" data-target="generatedPrompt">复制</button><label class="sr-only" for="generatedPrompt">生成的任务指令</label><textarea class="generated" id="generatedPrompt" readonly></textarea><pre class="generated-print" id="generatedPrint"></pre></div><p class="privacy">表单内容只在当前页面内处理，不发送到外部服务。</p><noscript><p>你的浏览器未启用脚本。请使用本页其他可手动复制的任务模板。</p></noscript></article></div>
+</section>
+
+<section class="section" id="features"><div class="section-head"><span class="section-no">08</span><h2>全部功能查询</h2></div><p class="lead">共 50 项功能与内部支持：48 个直接功能分支与 2 个内部支持项。点击卡片查看所需材料、交付物、调用示例和使用边界。日常使用只需描述目标，通常无需指定这些细分功能。</p>
+<div class="filter-tools"><div class="search-row"><label class="sr-only" for="featureSearch">搜索功能或关键词</label><input id="featureSearch" type="search" placeholder="搜索：摘要、PubMed、返修、Word、润色……"><button class="small-btn" id="expandAll">展开当前结果</button><button class="small-btn" id="collapseAll">收起当前结果</button></div><div class="filters" role="group" aria-label="按功能类别筛选"><button class="filter active" data-category="all" aria-pressed="true">全部 50</button><button class="filter" data-category="research" aria-pressed="false">选题与研究设计 3</button><button class="filter" data-category="literature" aria-pressed="false">文献与证据 7</button><button class="filter" data-category="drafting" aria-pressed="false">论文章节写作 6</button><button class="filter" data-category="editing" aria-pressed="false">翻译与表达 9</button><button class="filter" data-category="review" aria-pressed="false">审稿与返修 10</button><button class="filter" data-category="submission" aria-pressed="false">投稿与回复材料 7</button><button class="filter" data-category="outputs" aria-pressed="false">图表与成果制作 4</button><button class="filter" data-category="support" aria-pressed="false">文档与项目支持 4</button></div><div class="results-meta"><span id="featureCount" aria-live="polite">显示 50 / 50 项</span><button class="small-btn" id="clearFilters">清除筛选</button></div></div>
+<div class="feature-grid" id="featureGrid"><details class="feature" id="feature-01" data-category="research">
+<summary><span class="feature-num">01</span><span class="pill">选题与研究设计</span><h3>选题与主题地图</h3><p>从已有文献中梳理主要主题、交叉方向和未充分回答的问题，再结合你的数据与资源提出可实施选题。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>有研究领域或文献库，希望筛选课题、寻找可验证的创新方向。</p><h4>需要提供</h4><ul><li>标题、摘要、年份等文献列表，或可读论文</li><li>可用数据的字段定义、测量时间、样本范围或实验资源</li><li>研究兴趣与资源限制</li></ul><h4>你会得到</h4><ul><li>主题分析摘要或主题表</li><li>默认 6—10 张选题卡：问题、新意依据、可行性、方法和限制</li><li>候选排序理由；选定题目后的深化方案</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，分析我提供的文献表和数据字典，生成主题地图与 6 个选题卡，按真实数据可行性排序。先交付候选及理由，等我选定题目后再细化研究方案。</pre></div>
+<h4>使用边界</h4><ul><li>文献关键词未共现，只能说明当前语料未找到，不能证明全球首次。</li><li>候选选题需由你选择后再深化；不会仅凭选题任务启动数据分析。</li></ul></div></details>
+<details class="feature" id="feature-02" data-category="research">
+<summary><span class="feature-num">02</span><span class="pill">选题与研究设计</span><h3>研究设计与图表规划</h3><p>把选定的研究问题转为研究方案、统计思路和逐图逐表的呈现计划。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>已经选定课题，准备实验、数据分析或整篇论文的证据布局。</p><h4>需要提供</h4><ul><li>研究问题、假设与真实数据或实验资源</li><li>已确定的纳排、结局、分析方法与限制</li><li>可选参考论文及目标期刊</li></ul><h4>你会得到</h4><ul><li>设计与实施步骤</li><li>统计方案及需要记录的信息</li><li>逐图逐表的科学问题、数据来源、分组、轴与单位规划</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，根据我已选课题和数据字典制定研究设计、统计方案及图表计划。保留我已确定的分析口径，标出真正缺失的资源与变量，不运行分析。</pre></div>
+<h4>使用边界</h4><ul><li>设计方案与已经实施的研究分开，不把计划实验写成已完成。</li><li>方案授权不包含实验执行、重新分析、安装环境或正式投稿。</li></ul></div></details>
+<details class="feature" id="feature-03" data-category="research">
+<summary><span class="feature-num">03</span><span class="pill">选题与研究设计</span><h3>PubMed 近似文献与创新性评估</h3><p>把创新主张拆为可检验条目，通过宽窄检索和种子近邻逐篇比较问题、对象、方法、验证及发现，确定证据支持的增量。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>选题查新、投稿前检查贡献表述，或在审稿返修中核验创新性时。</p><h4>需要提供</h4><ul><li>稿件或明确的创新主张</li><li>已知相近研究、PMID 或 DOI（可选）</li><li>检索范围、网络条件与比较重点</li></ul><h4>你会得到</h4><ul><li>检索式、日期、命中与实际取回记录</li><li>最接近研究的逐篇比较表</li><li>可保留、需要收窄或尚未证实的贡献表述</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，对【稿件】做 PubMed 近似文献与创新性评估。拆分本稿的核心创新主张，结合宽窄查询、同义词及已知论文近邻，比较最接近研究的问题、对象、方法和发现。输出证据比较表及可保留或需收窄的贡献表述，不用相似分当创新分。</pre></div>
+<h4>使用边界</h4><ul><li>有限检索不能证明不存在先例；零命中不等于首次，新人群或更大样本也不自动等于突破。</li><li>只读取摘要时会注明证据范围，关键判断需要全文时不能猜测。</li><li>用于外部检索的默认是公开通用术语，不发送未发表全文或私人评审意见。</li></ul></div></details>
+<details class="feature" id="feature-04" data-category="literature">
+<summary><span class="feature-num">04</span><span class="pill">文献与证据</span><h3>论文精读与证据梳理</h3><p>按研究论文或综述的实际结构精读，逐图逐表或逐章节提取证据，帮助理解研究逻辑并整理可追溯的论据。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>需要读懂一篇论文、梳理综述、核实引用或把文献转成可用于写作的证据表。</p><h4>需要提供</h4><ul><li>论文 PDF、Word 或可读全文</li><li>精读范围与输出语言</li><li>需要检索时提供研究问题及范围</li></ul><h4>你会得到</h4><ul><li>研究问题、设计、关键概念与量化结果</li><li>全图表证据表，或综述层级摘要与争议比较</li><li>可选证据矩阵、Markdown 思维导图、Word 报告</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，完整精读这篇论文，用中文逐图逐表解释研究设计与证据，保留原始数字和页码，区分作者发现、解释和你的评议，并输出证据表及 Markdown 思维导图。</pre></div>
+<h4>使用边界</h4><ul><li>只有摘要或片段时，交付相应范围的解读，不标称全文精读。</li><li>图表需要实际查看；无法从图片准确读出的数值不会估成精确结果。</li></ul></div></details>
+<details class="feature" id="feature-05" data-category="literature">
+<summary><span class="feature-num">05</span><span class="pill">文献与证据</span><h3>多源学术检索与引用整理</h3><p>围绕研究问题检索可用学术数据库，核对文献身份，去重并整理引用格式与正文编号。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>需要找参考文献、补引、批量核对 PMID/DOI，或统一参考文献格式时。</p><h4>需要提供</h4><ul><li>研究问题、关键词或已有文献清单</li><li>时间范围与数据库偏好</li><li>目标期刊或指定引用格式</li></ul><h4>你会得到</h4><ul><li>带 PMID/DOI、摘要与检索记录的文献表</li><li>去重后的参考文献与编号映射</li><li>身份不明、缺失或待核实的引用清单</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，围绕【研究问题】检索学术文献，优先 PubMed，必要时补充适合本领域的可用数据库。整理真实 PMID/DOI、检索日期和文献摘要，去重后按【目标期刊格式】输出引用表，明确已查和未查的数据库。</pre></div>
+<h4>使用边界</h4><ul><li>数据库覆盖和实际工具可用性决定检索范围；PubMed 不能代表所有领域与预印本。</li><li>不会编造引文信息；无法解析的引用会保留为待核实项。</li></ul></div></details>
+<details class="feature" id="feature-06" data-category="literature">
+<summary><span class="feature-num">06</span><span class="pill">文献与证据</span><h3>文献证据全流程</h3><p>衔接问题定义、检索式、检索取回、去重筛选、必要全文阅读和证据综合，让写作依据能够追溯。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>要为前言、讨论、综述或返修补引建立一套有记录的证据流程时。</p><h4>需要提供</h4><ul><li>研究问题与最终写作用途</li><li>检索范围、日期与筛选要求</li><li>已有文献和允许的下载范围</li></ul><h4>你会得到</h4><ul><li>检索策略和实际检索记录</li><li>筛选后的文献与证据比较表</li><li>面向指定章节或回复任务的证据综述</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，为【研究问题】建立文献证据流程，目标是支持论文讨论。按问题设计检索式，记录去重与筛选理由，对关键研究阅读全文后比较证据，最后交付文献表、证据表和可用于讨论的综合提纲。</pre></div>
+<h4>使用边界</h4><ul><li>快速查新或常规文献整理不自动等同系统综述；系统综述需要明确数据库覆盖、纳排标准与筛选流程。</li><li>全文下载只在任务需要且范围已授权时进行，网络失败会与零命中分开记录。</li></ul></div></details>
+<details class="feature" id="feature-07" data-category="literature">
+<summary><span class="feature-num">07</span><span class="pill">文献与证据</span><h3>文献任务自动调度</h3><p>判断当前需要检索、筛选、精读、补引还是证据比较，并组合必要功能完成文献任务。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>知道文献任务的目标，但不想自己逐个选择检索与阅读功能时。</p><h4>需要提供</h4><ul><li>希望解决的文献问题</li><li>已有材料与最终交付要求</li><li>检索、阅读和下载范围</li></ul><h4>你会得到</h4><ul><li>与目标匹配的文献处理结果</li><li>使用过的检索及阅读范围说明</li><li>未取得证据和下一步缺项</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，自动安排完成【文献任务，例如核查讨论中的三个争议观点】所需的检索、精读与证据比较。复用我提供的文献，最终输出每个观点可引用的证据和需要收窄的表述，不扩展成整篇综述。</pre></div>
+<h4>使用边界</h4><ul><li>自动调度会按当前目标选择必要步骤，不默认批量下载、查询影响因子或扩写整篇论文。</li><li>任务范围与已经给出的限制在各步骤间持续有效。</li></ul></div></details>
+<details class="feature" id="feature-08" data-category="literature">
+<summary><span class="feature-num">08</span><span class="pill">文献与证据</span><h3>全文双语精读与图表公式解读</h3><p>对论文正文、图表和公式进行有原文位置对应的精读，可制作中英文对照阅读稿并统一术语。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>需要完整阅读或翻译一篇论文，理解其图表、公式与补充内容时。</p><h4>需要提供</h4><ul><li>可访问的论文 PDF、HTML、DOI、arXiv 链接或粘贴正文</li><li>补充材料（如需纳入）</li><li>全文精读、指定章节或摘要解读的范围</li></ul><h4>你会得到</h4><ul><li>与实际读取内容对应的双语 Markdown 阅读稿</li><li>图表、公式解读和术语表</li><li>原文位置索引及缺失页面、低置信度识别说明</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，精读我提供的【论文 PDF】，制作中英文对照阅读稿，结合相关正文解释每张图表与关键公式，保留原文位置和术语表。补充材料也纳入；无法读取的部分单独说明。</pre></div>
+<h4>使用边界</h4><ul><li>仅凭 DOI 或摘要不能保证取得全文；扫描 PDF 还取决于可用 OCR 与图像处理能力。</li><li>图表和公式解释以实际看见内容为依据；全文翻译仍需满足材料访问及适用使用限制。</li></ul></div></details>
+<details class="feature" id="feature-09" data-category="literature">
+<summary><span class="feature-num">09</span><span class="pill">文献与证据</span><h3>PubMed 检索、摘要与近邻查询</h3><p>执行关键词、MeSH 和字段检索，批量读取摘要与文献标识，并根据指定 PMID 发现相关论文。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>需要可追溯的生物医学文献记录，或从已知论文继续寻找相似研究时。</p><h4>需要提供</h4><ul><li>检索问题或 PubMed 检索式</li><li>PMID 清单或种子 PMID（按任务选择）</li><li>取回上限、日期或文献类型范围</li></ul><h4>你会得到</h4><ul><li>真实标题、完整可得摘要、PMID/DOI 等字段</li><li>检索式、总命中、实际取回数和截断说明</li><li>种子对应的相关文献及失败或缺失状态</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，在 PubMed 检索【主题】，构造包括 MeSH 与同义词的检索式，取回最多 30 条相关记录并读取摘要。再以其中最相关的论文为种子查询近似文献，保存检索式、总命中数、PMID/DOI 与实际取回范围。</pre></div>
+<h4>使用边界</h4><ul><li>需要联网和可用 Python；常规检索的 API key 可选。</li><li>PubMed 检索的是索引与书目信息，不等于已取得论文全文；近似排序只用于发现候选。</li><li>取回上限可能截断结果，网络失败不会记成零命中。</li></ul></div></details>
+<details class="feature" id="feature-10" data-category="literature">
+<summary><span class="feature-num">10</span><span class="pill">文献与证据</span><h3>论文与参考文献批量下载</h3><p>核对明确论文清单，批量取得可访问的全文；也可提取一篇论文的参考文献后按范围下载。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>已经确定需要阅读的文献，希望准备本地 PDF 文件集时。</p><h4>需要提供</h4><ul><li>明确的 DOI、PMID 或带作者年份的题名清单</li><li>或一篇论文及“下载其参考文献”的明确范围</li><li>新的下载目录和可用访问方式</li></ul><h4>你会得到</h4><ul><li>实际成功取得的 PDF 与可得补充文件</li><li>文献身份核对结果</li><li>逐篇成功、失败、待登录或未取得的状态报告</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，核对并下载【明确论文清单】中的全文，保存到新的目录【路径】。优先开放获取及我有权访问的正式渠道，逐篇报告成功与缺失。标题匹配不明确或需要登录时先指出，不把失败标成完成。</pre></div>
+<h4>使用边界</h4><ul><li>批量浏览器下载需要适用的 Python、Playwright 和浏览器环境；普通文献检索无需因此安装浏览器。</li><li>登录由用户操作，不自动读取账户凭据或占用个人浏览器配置。</li><li>不能保证取得所有全文；下载任务使用新目录，避免影响已有原件。</li></ul></div></details>
+<details class="feature" id="feature-11" data-category="drafting">
+<summary><span class="feature-num">11</span><span class="pill">论文章节写作</span><h3>前言框架与正文</h3><p>围绕研究问题和具体知识缺口，衔接框架、文献论证与 Introduction 正文。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>需要从零起草前言、重新组织叙事，或沿现有框架完成正文。</p><h4>需要提供</h4><ul><li>研究问题、实际结果或可靠摘要</li><li>既有前言、已定框架和参考文献</li><li>目标语言、篇幅、期刊或受众</li></ul><h4>你会得到</h4><ul><li>需要时提供 3 种框架及取舍</li><li>分主题文献论证材料</li><li>完整前言与尚待补证据的具体位置</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，依据我的研究问题、结果和参考文献起草英文 Introduction，约 800 words。先提供 3 种有实质差异的框架；我选定后，核查所需文献并完成正文，保留已有引文编号。</pre></div>
+<h4>使用边界</h4><ul><li>已定框架可直接续写；需要选择不同叙事方向时先确定框架。</li><li>不以范文事实充当本研究结果；未核实的新事实明确标记缺少引用。</li></ul></div></details>
+<details class="feature" id="feature-12" data-category="drafting">
+<summary><span class="feature-num">12</span><span class="pill">论文章节写作</span><h3>Methods 方法写作</h3><p>依据真实实验记录、代码和分析输出，把研究过程写成清楚、可复现的方法章节。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>从零写 Methods、补全方法细节，或修改已确定的一节方法。</p><h4>需要提供</h4><ul><li>真实实验、数据处理与分析记录</li><li>图表、图注及对应方法</li><li>期刊要求与已确认大纲</li></ul><h4>你会得到</h4><ul><li>方法大纲及图表对应关系</li><li>按确认大纲完成的方法正文</li><li>参数、伦理或记录缺失项清单</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，根据我的实验记录、分析代码和图表起草 Methods。先交付章节大纲及缺失信息，等我明确确认大纲后再写正文；无法核实的参数用中文方括号标出，不猜测数值。</pre></div>
+<h4>使用边界</h4><ul><li>全新完整 Methods 的大纲需明确确认后才能写正文；已有确认或局部修改不重复确认。</li><li>不凭结果倒推未知方法，不虚构伦理号、参数、样本或执行记录。</li></ul></div></details>
+<details class="feature" id="feature-13" data-category="drafting">
+<summary><span class="feature-num">13</span><span class="pill">论文章节写作</span><h3>Results 与图注</h3><p>逐图逐分图组织图注，再依据真实结果与定稿图注形成 Results 主线。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>图表已完成，需要补图注、写结果正文或检查二者一致性。</p><h4>需要提供</h4><ul><li>实际图像、表格及分图标记</li><li>精确统计输出、样本和单位</li><li>方法记录、已有图注与 Results 大纲</li></ul><h4>你会得到</h4><ul><li>按图号排列的图注</li><li>Results 小标题与图表映射</li><li>确认大纲后的完整结果正文及真实缺口</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，读取这些图表、统计结果和方法记录，先补齐所有图注，再提出 Results 大纲及各节对应图表。等我确认新大纲后写正文，保持样本量、效应值、CI 和 P 值原样。</pre></div>
+<h4>使用边界</h4><ul><li>全新完整 Results 需先确认大纲；局部图注修改不会自动扩成全文改写。</li><li>不从图像猜精确数字，不遗漏阴性或不确定结果，不擅自重新分析。</li></ul></div></details>
+<details class="feature" id="feature-14" data-category="drafting">
+<summary><span class="feature-num">14</span><span class="pill">论文章节写作</span><h3>Discussion 讨论写作</h3><p>让真实结果与既有研究对话，说明一致性、差异、合理解释、局限和未来方向。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>需要讨论框架、补证据、写讨论正文或改掉泛泛而谈的段落。</p><h4>需要提供</h4><ul><li>当前前言、结果和图表</li><li>已定讨论框架、文献材料与作者解释</li><li>目标语言、篇幅及允许补证据范围</li></ul><h4>你会得到</h4><ul><li>需要时提供讨论组织方案</li><li>分主题文献比较材料</li><li>完整 Discussion 与具体证据缺口</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，按我提供的讨论框架完成英文 Discussion，约 1,500 words。围绕真实主要结果比较支持和相反文献，保留已有引用，不新增未经验证的机制或因果结论。</pre></div>
+<h4>使用边界</h4><ul><li>明确区分本研究发现、外部证据和推测，正文只使用可支持的内容。</li><li>不会为了回应假想审稿人堆叠不存在的弱点，也不会删除决定证据上限的局限。</li></ul></div></details>
+<details class="feature" id="feature-15" data-category="drafting">
+<summary><span class="feature-num">15</span><span class="pill">论文章节写作</span><h3>标题、摘要、结论与关键词</h3><p>从完整研究内容中提取核心信息，生成适配篇幅和文章类型的标题、摘要、结论或关键词。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>主体已经明确，需要投稿门户信息、摘要压缩或更准确的标题。</p><h4>需要提供</h4><ul><li>真实正文、摘要或足够完整的研究事实</li><li>关键 Methods 与 Results</li><li>目标语言、结构式要求、字数及关键词数量</li></ul><h4>你会得到</h4><ul><li>默认 3 个标题候选及侧重点</li><li>按指定结构完成的摘要</li><li>所需结论段与关键词</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，根据完整稿件生成 3 个英文标题、250 words 的结构式摘要和 5 个关键词，最后核对样本量、主要效应值及结论强度；不要新增正文未报告的发现。</pre></div>
+<h4>使用边界</h4><ul><li>只处理你要求的项目，不因只要标题而自动扩写其他部分。</li><li>标题、摘要和结论不能比研究设计及真实结果支持的范围更强。</li></ul></div></details>
+<details class="feature" id="feature-16" data-category="drafting">
+<summary><span class="feature-num">16</span><span class="pill">论文章节写作</span><h3>Nature 风格写作与首次投稿材料</h3><p>从研究事实、图表和已有笔记建立论证结构，按论文类型与章节撰写正文，并可准备首次投稿材料。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>准备首稿、重构论文叙事，或制作投稿附信、标题页、贡献与可用性声明等首次投稿文件时。</p><h4>需要提供</h4><ul><li>研究问题、主要贡献及实际证据</li><li>结果表、图、方法事实或中文笔记</li><li>具体目标期刊、论文类型、语言和所需文件</li></ul><h4>你会得到</h4><ul><li>论文论证与章节安排</li><li>指定章节或正文草稿</li><li>按任务需要的首次投稿材料与缺项说明</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，根据【研究事实、结果表和图表】按 Nature Communications 研究论文风格组织写作，输出英文。先明确主张与证据链，再按章节完成草稿；Methods 和 Results 的完整章节先给大纲供我确认。最终检查术语、引用、数字和主文与补充材料分工，并准备我要求的首次投稿材料。</pre></div>
+<h4>使用边界</h4><ul><li>事实与证据不足处保留待补项，不为完成首稿虚构结果、注册或作者声明。</li><li>新写完整 Methods/Results 需要按流程确认大纲；已确认内容无需反复批准。</li><li>首次投稿材料与审后返修文件分开处理；写作任务不会自动提交。</li></ul></div></details>
+<details class="feature" id="feature-17" data-category="editing">
+<summary><span class="feature-num">17</span><span class="pill">翻译与表达</span><h3>论文中译英</h3><p>逐段完成忠实翻译、问题诊断和精修，再统一术语并拼接整篇英文稿。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>中文论文或章节已写好，希望保留科学含义完成英文稿。</p><h4>需要提供</h4><ul><li>完整中文稿或明确的待译片段</li><li>标题摘要及必要领域背景</li><li>既定术语、期刊和英美拼写偏好（如有）</li></ul><h4>你会得到</h4><ul><li>完整、顺序一致的英文译稿</li><li>按需要提供分段三步翻译报告</li><li>术语与实际待确认事项</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，将这份中文 Word 论文完整翻译成英文，按小段完成直译、诊断和精修后再统一合稿。沿用我给的术语表，保留所有数字、单位、公式、引用、图表编号和段落结构。</pre></div>
+<h4>使用边界</h4><ul><li>会实质改变科学含义的歧义术语需先确认；普通标准术语不要求逐个批准。</li><li>翻译不兼任扩写、补数据或增强创新性，未发表全文不自动上传外部服务。</li></ul></div></details>
+<details class="feature" id="feature-18" data-category="editing">
+<summary><span class="feature-num">18</span><span class="pill">翻译与表达</span><h3>英文全文精细润色</h3><p>逐段改善学术英语的准确性、逻辑衔接与可读性，再完成整篇术语和风格统一。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>已有英文完整稿，需要保留研究内容与作者声音的语言精修。</p><h4>需要提供</h4><ul><li>英文 Markdown 或 Word 稿件</li><li>允许修改的范围及作者固定内容</li><li>期刊、文章类型、英美拼写偏好（可选）</li></ul><h4>你会得到</h4><ul><li>与原稿范围一致的完整润色稿</li><li>修改说明与一致性核查结果</li><li>按需求生成对照或修订文件</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，完整润色这份英文稿，保留科学含义、章节结构、全部数字、引用和限定语。按小段完成后合并成一个 Word 工作副本，不覆盖原稿。</pre></div>
+<h4>使用边界</h4><ul><li>语言润色不应暗中删减科学内容、改统计方法或改变结论。</li><li>期刊未指定时可用通用学术英语，不因缺少目标期刊阻塞；润色不保证接收。</li></ul></div></details>
+<details class="feature" id="feature-19" data-category="editing">
+<summary><span class="feature-num">19</span><span class="pill">翻译与表达</span><h3>精简与字数控制</h3><p>先判断各章节的压缩空间，再在保护核心数据与论证的前提下精简，并报告实际计数。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>超过期刊字数，或指定章节冗长但不希望丢失方法与证据。</p><h4>需要提供</h4><ul><li>当前全文或目标章节</li><li>目标词数／字符数及纳入计数的范围</li><li>必须保留内容与允许删减的范围</li></ul><h4>你会得到</h4><ul><li>必要时提供分节字数预算和具体取舍</li><li>完整精简文本</li><li>前后计数、减少量和目标完成情况</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，将 Discussion 从当前长度压到 1,200 words。先核算英文词数，直接完成不改变科学含义的表达压缩；涉及删除独立论点、结果或必要局限时先列具体取舍，等我决定。</pre></div>
+<h4>使用边界</h4><ul><li>实质内容删除、移入附录或删复现信息需有明确授权；普通删冗余可连续执行。</li><li>计数必须说明口径；不会通过删引用或关键限定语强行满足目标。</li></ul></div></details>
+<details class="feature" id="feature-20" data-category="editing">
+<summary><span class="feature-num">20</span><span class="pill">翻译与表达</span><h3>重复表达与指定片段改写</h3><p>通过句法和信息结构调整改写授权文本，保持学术内容，并可严格限定只修改标出的片段。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>自己的论文存在重复表达，或查重报告标出了需重写的句子。</p><h4>需要提供</h4><ul><li>自有或获授权的原文</li><li>明确的整段范围，或与引文区分的修改标记</li><li>相关上下文及需要保护的术语</li></ul><h4>你会得到</h4><ul><li>可直接使用的完整改写文本</li><li>只有必要时说明保留短语、歧义或比较范围</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，仅改写文中 &lt;改写&gt; 与 &lt;/改写&gt; 之间的内容，输出时去掉这两个标记。标记外的文字、空格、标点、引用和换行必须原样保留；标记内也要保持数字、术语和证据强度。</pre></div>
+<h4>使用边界</h4><ul><li>只改标记内容时，标记外逐字符保留；引用方括号不能自动当作修改范围。</li><li>不帮助隐藏未署名抄袭，不承诺查重百分比或 AI 检测结果。</li></ul></div></details>
+<details class="feature" id="feature-21" data-category="editing">
+<summary><span class="feature-num">21</span><span class="pill">翻译与表达</span><h3>Proof 校样与正文校对</h3><p>先核实页面真实文字，再逐项校对，避免把 PDF 抽取、换行或上下标问题误报为稿件错误。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>出版校样或 Word 稿需要精确语言、符号和呈现核查，而非整篇重写。</p><h4>需要提供</h4><ul><li>可读 PDF 或 Word 稿件</li><li>逐节确认或明确的自动全文模式</li><li>是否包含图表、参考文献和声明等额外范围</li></ul><h4>你会得到</h4><ul><li>核实过的正文转录与覆盖说明</li><li>更正、疑问、作者决定三类六列表格</li><li>与报告内容一致的 Word 校对报告</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，以“自动全文模式”校对这份 PDF 校样，连续完成标题、摘要、关键词和所有正文章节，不逐节等待确认。先核实原文再报告问题，生成完整 Word 校对报告，保持原校样只读。</pre></div>
+<h4>使用边界</h4><ul><li>默认逐节完成并等待确认；想连续处理全文，需明确说“自动全文模式”。</li><li>默认不含作者信息、致谢、声明、参考文献、补充材料和独立图表内容；需要时请明确加入。</li><li>校对报告不直接修改主稿；不可读片段和未经视觉核实的排版疑点不算已确认错误。</li></ul></div></details>
+<details class="feature" id="feature-22" data-category="editing">
+<summary><span class="feature-num">22</span><span class="pill">翻译与表达</span><h3>Nature 风格深度润色</h3><p>按论文类型、章节、语言和具体期刊改进论证结构与表达，压缩重复叙述，并检查全文术语和事实一致性。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>已经有稿件，希望改善 Nature 风格的简洁表达、段落逻辑、主文与补充材料分配，或修整 LaTeX 版面时。</p><h4>需要提供</h4><ul><li>现有稿件或指定段落</li><li>具体目标期刊、语言及修改范围</li><li>必须保留的术语、数字、论断和结构</li></ul><h4>你会得到</h4><ul><li>结构和表达更清晰的修改稿</li><li>重要改动及证据缺口说明</li><li>按任务需要提供的主文压缩或版面调整结果</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，按 Nature Communications 风格润色【稿件】，保持英文输出。优先修复段落论证、结果与讨论重复和冗余限定，保护数字、引用、研究条件及结论强度；只在确有必要时调整结构，交付修改稿和简短说明。</pre></div>
+<h4>使用边界</h4><ul><li>Nature、Nature Communications 和 Nature Machine Intelligence 的具体要求分别处理；风格润色不保证录用。</li><li>事实不足会被指出，不能靠语言补造结果；中文输出也不会自动变成英文。</li><li>LaTeX 版面验收需要实际编译与页面查看能力。</li></ul></div></details>
+<details class="feature" id="feature-23" data-category="editing">
+<summary><span class="feature-num">23</span><span class="pill">翻译与表达</span><h3>学术文风与作者声音编辑</h3><p>按任务选择中文自然表达、局部保真修补或保结构翻译，减少模板化表达，同时保留科学事实与作者语气。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>论文读起来重复、空泛或过度模板化，希望表达自然但保持正式学术语域时。</p><h4>需要提供</h4><ul><li>待编辑正文与明确范围</li><li>目标语言、用途和保留项</li><li>作者文风样本（可选）</li></ul><h4>你会得到</h4><ul><li>指定范围的文风修改稿</li><li>必要时的简短改动理由与事实缺口说明</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，改善【正文】的学术文风，减少重复模板和空泛表达，保留我的作者声音与正式语域。只修改【范围】，保护数字、单位、P 值、引用、论证强度和必要限制；如需参考文风，只学习【样本】的表达方式。</pre></div>
+<h4>使用边界</h4><ul><li>文风编辑不冒充科学审稿，不改变研究事实和证据上限。</li><li>不保证 AIGC 检测率或降重率，不制造个人经历、错别字或随机变化。</li><li>默认一次针对性编辑，只有存在不同职责的具体问题才追加互补修订。</li></ul></div></details>
+<details class="feature" id="feature-24" data-category="editing">
+<summary><span class="feature-num">24</span><span class="pill">翻译与表达</span><h3>局部保真表达修补</h3><p>以最小改动修复指定范围的冗余、含混指代、空泛拔高和逻辑衔接，保护结构与原有信息量。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>只想改几段或几句，不希望整篇文风和结构被重写时。</p><h4>需要提供</h4><ul><li>明确的句段或保护范围</li><li>需要解决的阅读问题</li><li>必须逐字保留的内容（如有）</li></ul><h4>你会得到</h4><ul><li>最小改动的局部修订稿</li><li>按需要提供的实际问题与修法说明</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，对【指定段落】进行局部保真修补，只处理真实冗余、含混指代和逻辑衔接。保留原段落结构、信息量、术语、引用和语气；【保护文字】逐字不改，不重写全文。</pre></div>
+<h4>使用边界</h4><ul><li>这是由主入口按需选用的文风子功能，无需单独调用内部名称。</li><li>不机械删除连接词或限定语；原文已经清楚时可以保持原样。</li></ul></div></details>
+<details class="feature" id="feature-25" data-category="editing">
+<summary><span class="feature-num">25</span><span class="pill">翻译与表达</span><h3>中文学术自然表达</h3><p>改善中文论文的论证层次、具体归因和段落节奏，减少重复概括和空泛高频表达。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>中文论文存在反复理论起笔、模板段尾、模糊归因或句式单一等可读性问题时。</p><h4>需要提供</h4><ul><li>中文论文正文及上下文</li><li>论文类型、语域和修改范围</li><li>受保护的术语、引文、统计和必要限制</li></ul><h4>你会得到</h4><ul><li>保持正式学术语域的中文修改稿</li><li>需要时的论证、归因或缺引问题说明</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，改善【中文论文段落】的自然表达，先修论证层次和归因，再处理重复总结与冗词。保持中文期刊的正式语域，不加入反问、口语或虚构经历，保护统计结果、引用和必要局限，直接输出修改稿。</pre></div>
+<h4>使用边界</h4><ul><li>表达特征不能证明文本由 AI 生成，也不承诺降低检测率。</li><li>缺少引文或事实会明确标记，不能用个人判断或虚构作者年份填补。</li></ul></div></details>
+<details class="feature" id="feature-26" data-category="review">
+<summary><span class="feature-num">26</span><span class="pill">审稿与返修</span><h3>通用同行预审与期刊校准</h3><p>阅读完整稿件，给出有具体位置、影响和修改方向的预审意见；有目标期刊范文时可校准该期刊的实际呈现水平。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>投稿前需要通用科学评审，或想按目标期刊的真实文章比较差距。</p><h4>需要提供</h4><ul><li>当前完整稿件和补充材料</li><li>目标期刊与文章类型（可选）</li><li>用于期刊校准的相关完整范文（如需）</li></ul><h4>你会得到</h4><ul><li>总体评价</li><li>有证据定位的主要与次要意见</li><li>适用时提供期刊匹配与修订优先级</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，对我的当前稿做投稿前同行预审，并用附上的 2 篇目标期刊论文校准呈现水平。每条主要意见说明稿件位置、依据、影响和可行修正；没有实质问题时直接说明。</pre></div>
+<h4>使用边界</h4><ul><li>没有范文也可做一般预审，但不声称已校准期刊标准或预测接收概率。</li><li>范文与待审稿按你标注的角色区分；审稿不等于获得改稿授权。</li></ul></div></details>
+<details class="feature" id="feature-27" data-category="review">
+<summary><span class="feature-num">27</span><span class="pill">审稿与返修</span><h3>逐条审稿回复</h3><p>把审稿意见逐项对应到真实证据、修改和位置，形成中文处理策略与英文回复信。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>处理单条意见、整理完整回复，或核对回复是否与当前修订稿一致。</p><h4>需要提供</h4><ul><li>原始投稿稿、当前修订稿和原始审稿意见</li><li>实际补充实验／分析结果与作者事实答复</li><li>已有回复草稿及允许改动范围</li></ul><h4>你会得到</h4><ul><li>稳定编号的意见与处理状态</li><li>逐条中文策略和英文回复</li><li>事实齐全时的完整英文回复信及剩余待办</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，根据原稿、当前修订稿和审稿意见，逐条写中文策略与英文回复。用当前稿的真实章节和引文定位修改；尚未完成的实验、分析或文字修改明确标记，最后汇总完整英文回复信。</pre></div>
+<h4>使用边界</h4><ul><li>计划、作者报告完成和文件中可核实完成分别处理，不把“可以做”写成“We have performed”。</li><li>只要求写回复时不自动改主稿；需要整篇返修可明确要求同步改稿与回信。</li><li>只有明确开启才进入多轮循环，普通逐条回复不会自动反复审稿。</li></ul></div></details>
+<details class="feature" id="feature-28" data-category="review">
+<summary><span class="feature-num">28</span><span class="pill">审稿与返修</span><h3>多视角论文审稿</h3><p>从方法、统计、创新性、图表和论断强度等适用视角审稿，为实质问题提供证据位置、影响与解决标准。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>投稿前预审、发现方法学弱点，或希望获得一份可执行审稿报告时。</p><h4>需要提供</h4><ul><li>当前稿件及明确允许审阅的附件</li><li>目标期刊或评审目标</li><li>是否允许查文献、是否包括指定代码或数据</li></ul><h4>你会得到</h4><ul><li>优点、重大与次要问题及证据位置</li><li>按视角组织的审稿意见和综合修改重点</li><li>按要求交付的 Word 与 Markdown 报告</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，对【当前稿件】开展多视角论文审稿。审阅范围仅为正文、主图和补充材料，不包括代码。重点检查研究设计、统计报告和结论强度，允许联网核查关键引文。给出有证据位置的重大与次要意见，并生成 Word 和 Markdown 报告；本次只审稿。</pre></div>
+<h4>使用边界</h4><ul><li>同一上下文内的多个视角不等于互相独立的审稿人；需要真实独立评审时请明确提出。</li><li>未提供或未报告的材料会标明缺口，不直接推定相关研究步骤未实施。</li><li>普通审稿不会自动改稿或开启多轮循环。</li></ul></div></details>
+<details class="feature" id="feature-29" data-category="review">
+<summary><span class="feature-num">29</span><span class="pill">审稿与返修</span><h3>论文代码可信度审计</h3><p>检查论文代码是否支持其研究结论，重点追踪数据泄漏、训练与评估、基线公平性和可复现性问题。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>希望把代码纳入审稿，或在投稿前检查分析与实验实现时。</p><h4>需要提供</h4><ul><li>明确指定的代码目录、脚本或 notebook</li><li>对应论文方法、结果或实验说明</li><li>可供检查的配置、日志和结果文件</li></ul><h4>你会得到</h4><ul><li>按严重程度排序的可信度风险</li><li>具体文件、函数或配置位置及修改建议</li><li>已验证与尚未运行验证的说明</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，审计【代码目录】与【论文方法和结果】的一致性，重点看数据泄漏、评估指标和基线公平性。审阅范围包括所列脚本、配置和已有日志。本次只做代码审查，输出位置、影响和建议，不修改代码或启动训练。</pre></div>
+<h4>使用边界</h4><ul><li>只有明确纳入范围的代码才会被读取；论文里出现一个仓库链接不等于整仓审计。</li><li>审计请求不自动授权安装环境、修改代码或重新训练。</li></ul></div></details>
+<details class="feature" id="feature-30" data-category="review">
+<summary><span class="feature-num">30</span><span class="pill">审稿与返修</span><h3>学术代码与复现实验细查</h3><p>进一步检查数据预处理、模型输入输出、训练逻辑、指标实现、配置管理及实验结果能否复核。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>需要对机器学习或深度学习实验代码开展系统审查，或核对复现是否忠实于论文设定时。</p><h4>需要提供</h4><ul><li>待审代码与原论文设定</li><li>数据划分、模型、指标和基线配置</li><li>README、环境说明、日志与结果产物</li></ul><h4>你会得到</h4><ul><li>实现偏差、泄漏与公平比较问题清单</li><li>复现条件和交接文档的具体缺项</li><li>适用于该项目的轻量验证建议与实际验证状态</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，对【实验代码目录】进行学术代码与复现实验细查。将模型输入输出、预处理、训练、指标、数据划分和基线配置逐项对照【论文】；区分忠实实现、简化部分和未验证部分，给出具体修复建议。</pre></div>
+<h4>使用边界</h4><ul><li>检查以实际项目结构和研究目标为准，不要求所有仓库采用同一种框架。</li><li>静态审查和建议命令不能当作已经复现成功；运行检查需符合已授权范围和资源条件。</li></ul></div></details>
+<details class="feature" id="feature-31" data-category="review">
+<summary><span class="feature-num">31</span><span class="pill">审稿与返修</span><h3>Nature 风格独立模拟评审</h3><p>围绕原创性、科学意义、技术可靠性和跨领域可读性分别评审，独立意见完成后再汇总共识与分歧。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>希望获得 Nature 风格的投稿前模拟评审，尤其需要多个独立审稿上下文时。</p><h4>需要提供</h4><ul><li>所有审稿者可见的相同稿件与附件</li><li>具体期刊及评审重点</li><li>期望审稿人数与报告格式</li></ul><h4>你会得到</h4><ul><li>分别完成的审稿报告</li><li>带证据位置和解决标准的重大/次要问题</li><li>评审完成后形成的共识、重要单人发现及分歧汇总</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，对【稿件和附件】开展 Nature 风格模拟评审，使用 3 个真正独立的审稿上下文。先确定各自关注点，审稿人不互看意见，全部报告完成后再汇总共识与分歧；本次不返修。</pre></div>
+<h4>使用边界</h4><ul><li>独立评审需要宿主提供真实隔离上下文；不具备该能力时会说明，不能把同一上下文改写称作互盲评审。</li><li>不保证期刊适配、录用或编辑决定，也不为凑数量制造负面问题。</li></ul></div></details>
+<details class="feature" id="feature-32" data-category="review">
+<summary><span class="feature-num">32</span><span class="pill">审稿与返修</span><h3>统计报告与图文一致性核查</h3><p>核查独立分析单位、重复层级、样本量、检验或模型、效应量、区间、P 值和图注统计说明是否准确一致。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>检查统计方法段、结果段与图注，或回应审稿人的统计报告问题时。</p><h4>需要提供</h4><ul><li>统计方法、结果文字及图表图注</li><li>已确定的分析方案和实际结果表</li><li>研究设计、独立实验单位及重复测量说明</li></ul><h4>你会得到</h4><ul><li>具体统计报告问题及其证据</li><li>可直接使用的统计方法、结果或图注修订文字</li><li>需要作者补充的真实设计或分析信息</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，核查【统计方法、结果表和图注】。重点检查独立样本单位、重复层级、效应量、置信区间、P 值和结论用词是否一致；沿用已确定分析方案，给出可直接替换的报告文字，不重新分析数据。</pre></div>
+<h4>使用边界</h4><ul><li>默认属于统计报告与审查，不代替基于原始数据的重新分析。</li><li>不编造检验、样本量或分析设置；不会为了使结论显著而改变方案。</li><li>关联、统计显著性、实际意义与因果结论分别判断。</li></ul></div></details>
+<details class="feature" id="feature-33" data-category="review">
+<summary><span class="feature-num">33</span><span class="pill">审稿与返修</span><h3>自动审稿—返修循环</h3><p>显式开启后，由真实且不同的审稿与返修子 agent 顺序协作，修改工作副本并逐轮复核，达到目标或轮数上限时停止。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>已经有可审稿件，希望按明确范围连续发现并修正问题，减少手动交接时。</p><h4>需要提供</h4><ul><li>当前稿件、可见附件和输出目录</li><li>允许修改范围及不可改事实</li><li>最大返修轮数、质量目标、是否查新和是否逐轮批准</li></ul><h4>你会得到</h4><ul><li>最后一次受审的实际稿件</li><li>逐轮意见、修改回应与版本记录</li><li>已完成轮数、停止原因、剩余问题及创新性证据范围</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，明确开启审稿—返修循环，最多 3 轮返修，并加入 PubMed 创新性评估。审阅范围为【正文、图表和附件】，允许修改【范围】，保护【数字、分析方案和其他固定项】。使用不同的真实审稿与返修子 agent；每次返修后再审，不需要每轮批准。目标是解决范围内重大问题，使贡献与证据一致，并完成最终稿复审。保留原稿，输出到【目录】。</pre></div>
+<h4>使用边界</h4><ul><li>N 轮指最多 N 次返修及其再审，加上基线审稿最多 N+1 次审稿；最后一次修改必须再审。</li><li>需要真实子 agent 能力；达到轮数上限不等于质量通过，也不代表期刊录用。</li><li>缺少关键作者事实、新实验或研究方案决定时会停在相应步骤；需要逐轮控制时请写明“每轮返修前等我批准”。</li></ul></div></details>
+<details class="feature" id="feature-34" data-category="review">
+<summary><span class="feature-num">34</span><span class="pill">审稿与返修</span><h3>研究设计与证据质量评审</h3><p>按研究设计和中心论断检查方法、统计、对照、图表、伦理与报告完整性，提出建设性的实质评审意见。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>需要聚焦某类科学问题开展专项审查，或补充全文审稿的技术深度时。</p><h4>需要提供</h4><ul><li>稿件全文或指定章节</li><li>相关研究设计与可见图表</li><li>关注的问题和适用报告要求</li></ul><h4>你会得到</h4><ul><li>有证据支持的优势与问题</li><li>对中心结论的影响及修正建议</li><li>因缺少材料而无法判断的事项</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，对【方法、结果和图表】做研究设计与证据质量专项评审，重点看对照是否支撑核心论断、统计与设计是否匹配、结论是否越界。按实际研究设计判断报告要求，给出证据位置和可执行修改建议。</pre></div>
+<h4>使用边界</h4><ul><li>检查项目按研究类型和中心论断选择，不机械要求所有研究实施同一套实验或分析。</li><li>缺少报告与没有实施分开表述，不为了显得严格制造问题。</li></ul></div></details>
+<details class="feature" id="feature-35" data-category="review">
+<summary><span class="feature-num">35</span><span class="pill">审稿与返修</span><h3>返修实施与一致性审计</h3><p>依据当前审稿意见实施已授权修改，联动检查正文、图表、统计、引用和回复信是否一致。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>希望真正修改稿件并形成可核查回应，而不只是获得回复建议时。</p><h4>需要提供</h4><ul><li>当前稿与真实或明确模拟的审稿意见</li><li>已经完成的结果与作者说明</li><li>可改范围、受保护项目及指定回复模板</li></ul><h4>你会得到</h4><ul><li>实际修订稿与按要求制作的标改稿</li><li>逐条回应及真实修改位置</li><li>已完成、部分完成、有依据不采纳和待补事项</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，根据【审稿意见】实施返修。当前稿为【路径】，只修改【范围】，保护【固定数字和分析方案】。同步核对受影响图表、引用与回复信，使用【模板或格式】，输出修订稿、逐条回应和真实待办清单。</pre></div>
+<h4>使用边界</h4><ul><li>只修改授权工作稿或副本，保留原件；不会为了通过审稿改变统计显著性。</li><li>完成状态必须有实际产物支持；需要新实验、额外分析或作者承诺时，相关项保留待办。</li><li>在循环中，返修者不能自行宣布自己的版本审稿通过。</li></ul></div></details>
+<details class="feature" id="feature-36" data-category="submission">
+<summary><span class="feature-num">36</span><span class="pill">投稿与回复材料</span><h3>Highlights 研究亮点</h3><p>把最主要、彼此独立的研究发现压缩为可单独阅读的投稿亮点，并检查长度。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>期刊要求 Highlights，或希望精简已有亮点并校准表述。</p><h4>需要提供</h4><ul><li>标题、摘要和完整 Results；综述需相应综合发现章节</li><li>期刊要求或自定条数、字数／字符数</li><li>已有 Highlights（修改时）</li></ul><h4>你会得到</h4><ul><li>通常 3—5 条有证据支持的亮点</li><li>逐条长度核算及必要的合规说明</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，根据标题、摘要和完整 Results 生成 4 条英文 Highlights，每条不超过 85 个字符，含空格。逐条核算长度，突出不同的实质发现，避免重复和夸大。</pre></div>
+<h4>使用边界</h4><ul><li>85 字符只是可明确采用的工作默认值，具体期刊以提供或核实的规则为准。</li><li>只给摘要时可做明确标记的预览；证据不足不会为凑条数编造亮点。</li></ul></div></details>
+<details class="feature" id="feature-37" data-category="submission">
+<summary><span class="feature-num">37</span><span class="pill">投稿与回复材料</span><h3>期刊推荐与选刊报告</h3><p>结合论文内容、费用与投稿偏好比较期刊，核实可获取的当前指标和政策，形成中文选刊报告。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>需要投稿候选、JCR 分区比较、OA／APC 信息或完整 HTML 选刊报告。</p><h4>需要提供</h4><ul><li>标题与足够的研究摘要；初筛可只给摘要</li><li>候选数量、JCR／中科院口径、费用及 OA 偏好</li><li>是否允许联网及其他排除条件</li></ul><h4>你会得到</h4><ul><li>符合要求的候选比较与投稿顺序建议</li><li>范围、分区、费用、时效与证据状态</li><li>联网核实模式下的自包含中文 HTML 报告</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，根据我的标题和摘要推荐 6 本适合的期刊，优先 JCR Q1／Q2，OA 预算不超过 3,000 美元。联网核实范围、文章类型、指标年份、APC 和风险状态，标明未查到的项目，生成中文 HTML 选刊报告。</pre></div>
+<h4>使用边界</h4><ul><li>离线初筛只给暂定候选，不把记忆中的影响因子、费用或审稿时长当作当前事实。</li><li>JCR 分区与中科院分区分别报告；名单核查有时间范围，不等于期刊绝对无风险。</li><li>不把首次编辑决定时间当作首次外审意见时间，不预测接收率。</li></ul></div></details>
+<details class="feature" id="feature-38" data-category="submission">
+<summary><span class="feature-num">38</span><span class="pill">投稿与回复材料</span><h3>投稿附信 Cover Letter</h3><p>围绕主要发现、具体贡献及期刊契合度写出简洁附信，并核对作者身份和投稿声明。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>选定期刊后准备投稿信，或需要改写已有 Cover Letter。</p><h4>需要提供</h4><ul><li>稿件标题、摘要及确切期刊和文章类型</li><li>明确通讯作者与署名信息</li><li>真实的作者批准、利益冲突、一稿多投及预印本状态</li></ul><h4>你会得到</h4><ul><li>需要时提供发现、贡献与期刊契合分析</li><li>干净的英文附信及匹配文件</li><li>尚待确定的事实或声明</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，根据我的标题、摘要和目标期刊生成英文 Cover Letter。只使用我确认的通讯作者信息和投稿声明；缺失项先标为待完善，输出可审阅草稿，不发送或提交。</pre></div>
+<h4>使用边界</h4><ul><li>通讯作者不能按最后一位作者推断；作者批准、利益冲突和非一稿多投不能套用虚假默认声明。</li><li>信息不足时可完成明确标记的草稿，但不称为已满足最终投稿要求。</li></ul></div></details>
+<details class="feature" id="feature-39" data-category="submission">
+<summary><span class="feature-num">39</span><span class="pill">投稿与回复材料</span><h3>期刊指标查询</h3><p>按期刊全名、缩写或 ISSN 查询影响因子、五年影响因子、JCR 分区及学科排名等可用字段。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>比较候选期刊指标，或核对期刊简称对应的正式刊名时。</p><h4>需要提供</h4><ul><li>期刊全名、缩写或 ISSN</li><li>要查询的指标及年份</li><li>默认使用安装包内置的 2025 年期刊索引；需要替换为自己的数据时再用 <code>--data-file</code> 显式指定本地索引</li></ul><h4>你会得到</h4><ul><li>匹配期刊的指标记录与明确年份</li><li>跨学科分区信息（记录包含时）</li><li>存在歧义时的真实候选期刊列表</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，查询【期刊名称或 ISSN】的影响因子、五年影响因子、JCR 分区和学科排名，明确每项指标对应年份。如果刊名存在歧义，先列出候选；如需判断当前投稿条件，请另核查现行期刊信息。</pre></div>
+<h4>使用边界</h4><ul><li>安装包附带 <code>2025IF.xlsx</code> 和 <code>journals_index.json</code>，解压后位于 <code>skills/journal-if-lookup/data/</code>；内置快照按年份使用，当前指标仍需另行核验。需要时可以用 <code>--data-file</code> 覆盖为自己的有权数据。</li><li>离线指标不等于实时指标，报告必须注明数据年份；当前年份信息需另行核验。</li><li>JCR 分区不等于中科院分区；期刊指标也不能代替单篇论文的质量或创新性评价。</li></ul></div></details>
+<details class="feature" id="feature-40" data-category="submission">
+<summary><span class="feature-num">40</span><span class="pill">投稿与回复材料</span><h3>Nature 风格返修文件包</h3><p>根据编辑决定和真实审稿意见制作逐条回复、返修附信、净稿与标改稿，并检查各文件一致性。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>已收到正式编辑决定，需要组织大修、小修、修后重投等返修材料时。</p><h4>需要提供</h4><ul><li>编辑决定信及审稿意见</li><li>当前稿件和作者已完成的修改证据</li><li>目标期刊格式、截止日期和文件要求</li></ul><h4>你会得到</h4><ul><li>按审稿人分开的逐条回复与作者内部任务表</li><li>需要时的返修附信、净稿与标改稿</li><li>Word 或 LaTeX 等要求格式的返修包及未完成项</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，根据【编辑决定信】和【审稿意见】准备 Nature 风格返修包。当前稿为【路径】，已完成工作见【说明和结果】。生成逐条回复、返修附信及净稿/标改稿，核对回复中的引用文本和修订位置；待补实验或作者信息单列。</pre></div>
+<h4>使用边界</h4><ul><li>正式返修策略以真实决定信为准，不从语气猜测大修或小修；模拟审改会明确标为模拟。</li><li>互盲审稿人的单独回复不会透露另一位审稿人的意见。</li><li>未完成工作不写成已完成，交付文件不等于已经投稿或发送。</li></ul></div></details>
+<details class="feature" id="feature-41" data-category="submission">
+<summary><span class="feature-num">41</span><span class="pill">投稿与回复材料</span><h3>审稿意见拆解与逐条回复</h3><p>保留审稿意见原文和编号，拆解子问题，为每一项组织直接回应、证据、实际改动、修订位置和待办。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>需要起草或改善回复信，尤其是意见较长、含多个子问或需要有依据不同意时。</p><h4>需要提供</h4><ul><li>真实审稿意见及编辑决定（正式返修时）</li><li>当前稿件与已完成修改</li><li>作者解释、不能实施的事项和所需格式</li></ul><h4>你会得到</h4><ul><li>完整覆盖原意见的逐条回复</li><li>意见与实际修改位置对应表</li><li>作者待办及尚未完成的分析或实验项</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，拆解【审稿意见】中的所有子问，保留原编号与含义。结合【当前稿件和修改记录】起草逐条回复，每条写清直接回应、证据、实际修改和位置；对无法实施或有依据不同意的建议给出克制说明，待办留在作者内部清单。</pre></div>
+<h4>使用边界</h4><ul><li>自动拆分之后仍需核对原文，避免漏掉子问或错分审稿人。</li><li>“计划补做”不能写成“已经完成”；申诉需要明确任务，不由正面评语自动触发。</li></ul></div></details>
+<details class="feature" id="feature-42" data-category="outputs">
+<summary><span class="feature-num">42</span><span class="pill">图表与成果制作</span><h3>图形摘要</h3><p>将研究对象、过程与核心发现转为图像主导的摘要图，先确定布局和标签，再制作并检查成图。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>投稿需要 Graphical Abstract，或想把论文核心逻辑凝练为一张图。</p><h4>需要提供</h4><ul><li>标题、摘要、Highlights 或核心结果</li><li>必须表达的对象与证据关系</li><li>期刊尺寸、配色偏好及可用图形素材</li></ul><h4>你会得到</h4><ul><li>文字布局方案、标签和连接关系</li><li>确认后的图形摘要文件</li><li>需要时提供可编辑标签或可执行生成提示</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，根据我的摘要和 Highlights 设计图形摘要。先给布局、全部英文标签、证据关系和画幅方案，等我确认后生成图像并逐字核对标签。</pre></div>
+<h4>使用边界</h4><ul><li>新方案必须先明确确认再生成最终图；已有明确布局或已确认方案可以直接执行。</li><li>没有可用图像生成工具时，交付完整方案和提示词，并说明尚未出图。</li><li>示意关系需区分已证实与推测，不得生成虚构实验结果。</li></ul></div></details>
+<details class="feature" id="feature-43" data-category="outputs">
+<summary><span class="feature-num">43</span><span class="pill">图表与成果制作</span><h3>Word 文档与修订交付</h3><p>读取、生成或在工作副本上编辑 Word 文稿与报告，尽量保留已有公式、域、图片、表格和修订。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>需要 Word 成品、原生跟踪修订、内容提取或文件级修改。</p><h4>需要提供</h4><ul><li>Word 原稿或待生成的正文与表格</li><li>需要修改的明确范围</li><li>模板、作者标签与输出位置（如有）</li></ul><h4>你会得到</h4><ul><li>新 Word 报告或工作副本</li><li>按要求的原生跟踪修订稿</li><li>内容核查结果和版面核验状态</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，将已确认的语言修改写入这份 Word 的新工作副本，用原生跟踪修订并标记作者为“编辑助手”。保留公式、参考文献域、图片、表格及既有修订，完成后核对内容与可用的版面预览。</pre></div>
+<h4>使用边界</h4><ul><li>复杂文档不能抽取为纯文本后重建覆盖原件；不会擅自接受已有修订。</li><li>版面渲染依赖可用的 Word／LibreOffice 等能力；没有渲染时明确说明版面未核验。</li></ul></div></details>
+<details class="feature" id="feature-44" data-category="outputs">
+<summary><span class="feature-num">44</span><span class="pill">图表与成果制作</span><h3>科研表格、图表、PPT 与 HTML 阅读页</h3><p>把真实研究材料转为可编辑证据表、投稿图表、学术汇报、本地交互解释或自包含 HTML 阅读页。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>写作过程中需要 Excel 文献矩阵、数据图、PPT 汇报、HTML 思维导图，或便于电脑与手机阅读的长篇 HTML 页面。</p><h4>需要提供</h4><ul><li>真实数据、证据记录或已确认的图表计划</li><li>需要的表格字段、科学问题、单位和分组</li><li>输出格式、模板、尺寸或演讲时长</li><li>制作阅读页时，说明全文范围、图表与来源定位要求，以及是否需要单文件离线阅读</li></ul><h4>你会得到</h4><ul><li>可编辑 CSV／XLSX 证据表</li><li>基于真实数据的图像与生成代码</li><li>按请求制作的 PPTX、Markdown 导图或 HTML</li><li>HTML 阅读页可包含明暗主题切换、移动端折叠目录、章节锚点、阅读进度与回到顶部</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，把已核实文献整理为 XLSX 证据矩阵，包含研究设计、样本、方法、结果、局限、可支持论点和页码；再用这些证据制作 10 分钟学术汇报 PPT，保留可编辑文字和来源定位。</pre></div>
+<div class="prompt"><span class="prompt-label">HTML 阅读页 · 长文与手机阅读</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，把这份已确认的论文解读内容制作成一个自包含 HTML 阅读页。
+保留正文、图表、图注和原文位置，加入明暗主题切换、移动端折叠目录、可跳转的章节锚点、阅读进度和回到顶部。
+长页在手机上应便于阅读；样式和脚本写入文件，需要的图片尽量内嵌，不依赖外部 CDN 才能显示正文。
+本次只生成本地文件。请实际检查目录跳转、主题切换、复制按钮及窄屏布局；未能验证的项目明确说明。</pre></div>
+<h4>使用边界</h4><ul><li>定量图必须使用真实数据，不依据叙述编造曲线、实验图或精确数值。</li><li>文件生成与版面／交互实测分开报告；渲染器或浏览器不可用时不会声称已完成视觉验收。</li><li>阅读页整理已有内容，不自动补写新研究结论或改变翻译流程。单文件阅读页需内置必要样式、脚本与展示资源；链接到外部文献仍可能需要联网。</li><li>制作本地 HTML 不代表已经上传、部署或公开发布。</li></ul></div></details>
+<details class="feature" id="feature-45" data-category="outputs">
+<summary><span class="feature-num">45</span><span class="pill">图表与成果制作</span><h3>结构化审稿报告生成</h3><p>将有证据的审稿内容整理为结构化报告，同步生成 Word 与 Markdown；也可提取用户指定评审材料中的可用要点。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>需要保存、分享和归档正式格式的内部审稿报告，或整理新提供的审稿材料时。</p><h4>需要提供</h4><ul><li>当前稿件与已确认的审稿范围</li><li>已有审稿意见或待整理的 PDF、DOCX、TXT、Markdown 材料</li><li>所需报告内容和输出目录</li></ul><h4>你会得到</h4><ul><li>内容对应的 DOCX 与 Markdown 审稿报告</li><li>按需形成的任务内材料提取结果与要点草稿</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，将【审稿意见】整理为结构化审稿报告，逐条保留证据位置、严重程度和解决标准，同时生成内容一致的 Word 与 Markdown 文件，保存到【输出目录】。</pre></div>
+<h4>使用边界</h4><ul><li>报告内容由实际稿件和评审材料支撑，排版工具本身不生成研究证据。</li><li>Word 生成需要文档运行依赖；只有经过实际页面查看才会声明完成版面验收。</li></ul></div></details>
+<details class="feature" id="feature-46" data-category="support">
+<summary><span class="feature-num">46</span><span class="pill">文档与项目支持</span><h3>PDF 读取与页面核验</h3><p>按真实 PDF 页码提取文字并查看页面，支持图表、公式和扫描文字的证据定位。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>输入是论文 PDF、扫描件或校样，需要可靠读取而非仅抽取一串文字。</p><h4>需要提供</h4><ul><li>原始 PDF 文件</li><li>需要读取的章节、页码、图表或校对范围</li></ul><h4>你会得到</h4><ul><li>按页定位的提取内容</li><li>需要的页面图与视觉核验记录</li><li>不可读文字、图表及其他具体缺项</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，读取这份 PDF 的第 2—8 页及全部正文图表，对照页面核实双栏顺序、上下标、单位与图例。给出带页码的内容整理，保留无法确认的字符，不猜测。</pre></div>
+<h4>使用边界</h4><ul><li>文本层或 OCR 结果需回查页面，解析错误不等于作者错误。</li><li>原 PDF 保持只读；合并、拆页、旋转或标注仅在你明确要求时生成副本。</li></ul></div></details>
+<details class="feature" id="feature-47" data-category="support">
+<summary><span class="feature-num">47</span><span class="pill">文档与项目支持</span><h3>项目接手、续作与自动化支持</h3><p>识别当前稿和有效成果，恢复中断任务，必要时修复研究代码，并在宿主允许时协调并行或定时工作。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>项目文件多、任务中断后续写、脚本报错，或希望配置明确的持续任务。</p><h4>需要提供</h4><ul><li>项目目录及当前任务目标</li><li>当前稿、人工固定内容和已确认的方法</li><li>需要自动化时提供频率、数据源、通知及停止条件</li></ul><h4>你会得到</h4><ul><li>当前输入与产物索引、下一步工作</li><li>复用有效阶段后的续作结果</li><li>已授权且工具支持时的任务安排或实际操作说明</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，接手这个论文项目，先识别当前稿、分析结果、图表和未完成事项，再从上次有效阶段继续已授权的写作。保留人工固定稿和既定统计口径，把阶段成果及下一步记录在项目目录。</pre></div>
+<h4>使用边界</h4><ul><li>安装此 agent 不会自动获得账户、连接器、远程或定时服务；相关操作以宿主实际能力为准。</li><li>定时和后台任务需明确请求并真实配置，不承诺聊天结束后自动醒来。</li><li>任务恢复不意味着获准移动原件、改变科学方法、提交、发送或正式投稿。</li></ul></div></details>
+<details class="feature" id="feature-48" data-category="support">
+<summary><span class="feature-num">48</span><span class="pill">文档与项目支持</span><h3>全文术语与期刊格式协同</h3><p>为写作、润色和返修统一术语、统计表达、主文与补充材料安排，以及具体期刊格式要求。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>全文多轮修改后出现术语、单位、数字精度或章节定位不一致，或需按具体期刊统一材料时。</p><h4>需要提供</h4><ul><li>正在写作或修改的稿件</li><li>术语表与作者已经确定的表达</li><li>具体期刊和投稿阶段</li></ul><h4>你会得到</h4><ul><li>与当前写作或润色任务一并交付的一致性修正</li><li>主文、图注和补充材料的分配建议</li><li>与目标期刊相关的格式缺项</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，在润色【当前稿件】时同步检查全文术语、单位、统计精度、图表编号和主文/补充材料分配，按【具体期刊与投稿阶段】统一要求，保留已经确定的术语和分析方案。</pre></div>
+<h4>使用边界</h4><ul><li>这是写作和润色时自动使用的支持能力，无需单独安装或独立启动。</li><li>通用写作建议不能代替具体期刊现行官方要求。</li></ul></div></details>
+<details class="feature" id="feature-49" data-category="support">
+<summary><span class="feature-num">49</span><span class="pill">文档与项目支持</span><h3>可复现性与开放研究报告核查</h3><p>检查读者能否从现有材料了解数据、代码、环境、实验材料、分析方案和适用报告规范。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>投稿前补全可复现性说明，或回应数据、代码和报告标准方面的意见时。</p><h4>需要提供</h4><ul><li>方法章节、代码与数据可用性声明</li><li>真实注册、伦理、许可和材料信息</li><li>相关环境说明或适用报告指南</li></ul><h4>你会得到</h4><ul><li>适用于本研究的报告缺项</li><li>数据、代码和可复现性声明修订建议</li><li>已报告、未报告及无法核实的区分</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，核查【稿件和可用性声明】的可复现性报告。按真实研究设计检查数据字典、代码环境、分析说明、实验材料与适用报告规范，指出具体缺项并帮助补写已知事实，不新增不存在的注册或开放承诺。</pre></div>
+<h4>使用边界</h4><ul><li>没有预注册或受限数据不能自动判为研究错误；按设计、许可和真实状态判断。</li><li>不强制公开受限数据，不据通用清单擅自改变既定统计方案。</li></ul></div></details>
+<details class="feature" id="feature-50" data-category="submission">
+<summary><span class="feature-num">50</span><span class="pill">投稿与回复材料</span><h3>编辑部沟通与进度询问信</h3><p>根据真实稿件状态，起草审稿状态询问信，或正式接收后的校样与制作进度询问信。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>希望了解投稿或返修后的处理状态，或者稿件正式接收后需要询问校样、制作与出版安排。</p>
+<h4>两种模式</h4><ul><li><strong>审稿状态询问：</strong>依据投稿或修回日期、稿件系统原始状态和已有沟通，简洁询问当前处理情况。</li><li><strong>校样／制作进度询问：</strong>已有正式接收信息，依据当前制作记录询问校样发送、作者材料或后续制作安排。</li></ul>
+<h4>需要提供</h4><ul><li>期刊、稿号、标题、作者署名及已知联系对象</li><li>相关投稿、修回或接收日期；当前系统状态及此前沟通</li><li>本次想问的问题、语言和实际输出位置</li></ul>
+<h4>你会得到</h4><ul><li>可审阅的邮件主题与正文草稿</li><li>未知信息的明确占位及必要待核项</li><li>与实际阶段对应、简洁克制的询问内容</li></ul>
+<div class="prompt"><span class="prompt-label">模式一 · 审稿状态询问</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，帮我拟一封英文审稿状态询问信，只生成草稿，不发送。
+期刊：【名称】；稿号：【稿号】；稿件标题：【标题】；投稿或修回日期：【日期】。
+系统当前显示：【原样粘贴状态，例如 With Editor】；最近一次状态变化：【已知日期或未知】；此前联系记录：【有则说明】。
+请简要说明真实情况，礼貌询问当前处理状态及是否需要我补充材料。未知事实保留明确占位，不把 With Editor 写成已进入外审，也不按固定天数判断编辑部已延误。</pre></div>
+<div class="prompt"><span class="prompt-label">模式二 · 接收后校样与制作进度</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，帮我拟一封英文接收后校样与制作进度询问信，只生成草稿，不发送。
+期刊：【名称】；稿号：【稿号】；稿件标题：【标题】；正式接收日期：【日期】。
+当前制作或校样状态：【原样提供状态或说明尚未收到校样】；制作稿号及联系对象：【已知信息或未知】；此前沟通：【如有】。
+请礼貌询问下一步校样或制作安排，以及作者是否还需提供文件。不要虚构已付款、已签协议、已提交校样修改或编辑部承诺的完成日期；缺项留占位。</pre></div>
+<h4>使用边界</h4><ul><li>本功能只拟草稿，不发送邮件、不代为提交表单，也不自动安排定时追问。</li><li><code>With Editor</code> 不等于已经外审；<code>Under Review</code> 等状态按系统实际说明理解，不能猜测审稿人数、完成情况或决定。</li><li>不固定等待多少天就“催稿”，也不虚构编辑部承诺。若希望引用期刊承诺的时限，应提供原文或核实其出处。</li><li>事实缺失使用占位或列出待核，不编造接收、付款、协议、校样更正、投稿声明或作者批准。</li></ul></div></details></div><div class="empty" id="emptyState" hidden>没有匹配结果。试试“摘要”“引用”“审稿”，或清除分类筛选。</div>
+</section>
+
+<section class="section" id="recipes"><div class="section-head"><span class="section-no">09</span><h2>常用任务模板</h2></div><p class="lead">以下模板可以单独使用，也可以按依赖关系组合。只写你这次真正要完成的阶段。</p>
+<div class="grid">
+<article class="card"><span class="pill">现有稿 → 投稿准备</span><h3 style="margin-top:12px">整稿处理与投稿材料</h3><div class="prompt"><span class="prompt-label">连续执行</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，处理当前完整稿件。
+依次做英文润色、摘要与正文一致性核对、图表/引用核对，并按［目标期刊与文章类型］核查当前要求。
+在真实作者信息齐备后准备Cover Letter与投稿材料清单；缺失声明列出待补。
+保持既定统计结果，保存可编辑Word工作副本和必要修改说明。
+本次只准备投稿材料，不发送或提交。</pre></div></article>
+<article class="card"><span class="pill">中文稿 → 英文稿</span><h3 style="margin-top:12px">全文翻译后统一润色</h3><div class="prompt"><span class="prompt-label">保留结构与事实</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，将这篇中文稿完整译为英文，再统一术语和学术表达。
+保持章节、图表指代、全部数值、符号、引文和科学含义，不省略长段落。
+按自然章节分批完成，合并时核对漏段和重复内容。
+输出英文Word与术语表；只有影响含义的歧义才集中列出。</pre></div></article>
+<article class="card"><span class="pill">讨论 → 期刊风格</span><h3 style="margin-top:12px">调整论证与表达</h3><div class="prompt"><span class="prompt-label">指定风格，控制范围</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，按Nature Communications的论证风格润色Discussion。
+保留原语言、现有数据、引用、结论边界与作者声音。
+加强论点衔接，压缩重复解释和空泛措辞，但保留必要局限。
+本次只改Discussion，不扩展为全文重构；输出修改稿与关键修改说明。</pre></div></article>
+<article class="card"><span class="pill">外部评语 → 正式返修</span><h3 style="margin-top:12px">逐条回应并同步改稿</h3><div class="prompt"><span class="prompt-label">事实、行动、回应一致</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，根据这份编辑决定和审稿意见返修当前工作稿。
+先对应每条意见、实际依据和修改范围，再修改获授权的正文并准备逐条回复。
+每条说明已完成、部分完成、有依据不采纳或待补，并标出实际位置。
+未做的新分析不能写成完成。输出修订稿、回复信和剩余作者待办。</pre></div></article>
+<article class="card"><span class="pill">主题 → 文献证据</span><h3 style="margin-top:12px">检索、精读与综述准备</h3><div class="prompt"><span class="prompt-label">真实文献与阅读范围</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，围绕［研究主题与具体问题］检索并整理文献。
+允许公开文献检索，兼顾近期研究与更早的关键先例。
+实际阅读相关摘要或可取得全文，输出检索记录、证据表和综述大纲。
+注明PMID/DOI及实际阅读范围，区分文献发现、综合推断和未解决问题。
+本次不编写尚不存在的本研究实验结果。</pre></div></article>
+<article class="card"><span class="pill">校样 → 全文核查</span><h3 style="margin-top:12px">自动连续完成 Proof</h3><div class="prompt"><span class="prompt-label">显式指定自动全文</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，自动连续核查整份Proof，不逐节等待确认。
+检查作者信息、标题层级、正文文字、图表指代、单位、数字、公式和参考文献。
+对照当前认可稿件核对内容，按页码和位置列出具体问题与修正建议。
+不进行无关重写；不能看清或没有核验的页面明确列出。</pre></div></article>
+</div>
+</section>
+
+<section class="section" id="environment"><div class="section-head"><span class="section-no">10</span><h2>运行条件与交付格式</h2></div><p class="lead">独立文件夹包含功能规则和所用资源。模型服务、网络、文档软件和工具能力仍由实际运行环境提供；按任务检查即可，不必为普通文字工作先安装所有工具。</p>
+<div class="table-wrap"><table><thead><tr><th>要完成的工作</th><th>需要具备</th><th>缺少时</th></tr></thead><tbody><tr><td>文字写作、翻译、审阅</td><td>能读取包内文件和任务材料的模型宿主。</td><td>先解决入口或材料读取；不把“已安装”当作模型已执行。</td></tr><tr><td>实时文献 / 创新性 / 现行期刊信息</td><td>可用网络和对应检索能力；PubMed执行器可用Python 3.10+标准库。</td><td>只处理已有证据，说明截止范围与未完成检索。</td></tr><tr><td>真实审稿—返修循环</td><td>宿主提供真实子agent委派工具与可用槽位。</td><td>报告限制；只有你同意后才用单agent顺序处理。</td></tr><tr><td>Word、PDF内容处理</td><td>可用文档工具；部分脚本需要python-docx、lxml、pypdf等库。</td><td>说明具体缺项；只有符合你的要求时才交替代格式。</td></tr><tr><td>页面视觉验收</td><td>可用Word/LibreOffice、PDF渲染或等效页面查看能力。</td><td>明确版面未核验，不能把文件能解析当作版式合格。</td></tr><tr><td>全文下载</td><td>可访问的全文渠道；条件批量下载还需Python 3.11+、浏览器与相应工具。</td><td>交付文献身份和缺项；机构登录由你掌握。</td></tr><tr><td>定量图表、表格、幻灯片</td><td>真实数据及对应图表/办公库或宿主工具。</td><td>说明实际可交格式；不能用图像生成冒充统计结果。</td></tr><tr><td>图形摘要与图像编辑</td><td>实际图像工具，或可编辑示意图支持。</td><td>先交文字方案；仅在符合目标时采用示意图替代。</td></tr><tr><td>定时或后台运行</td><td>宿主支持且已经实际创建的定时任务。</td><td>保存恢复记录，并由你在新任务里继续。</td></tr></tbody></table></div>
+<div class="note"><strong>交付时看这几件事：</strong> 当前稿件位置、实际覆盖范围、是否核对数字/引用、是否做了页面查看、还有哪些真实缺项。模型应该明确说“完成了什么”，也明确说“哪部分没有验证”。</div>
+</section>
+
+<section class="section" id="faq"><div class="section-head"><span class="section-no">11</span><h2>常见问题</h2></div>
+<details class="faq"><summary>安装了，为什么仍然不识别调用名？</summary><div><p>检查目标skills目录是否属于当前宿主/账户，主SKILL.md是否位于正确层级，整个文件夹是否完整。按宿主方式刷新或开新任务，再让它核对入口。必要时提供你实际安装的主SKILL.md完整路径供它读取。复制文件不会保证当前对话热加载，也不会自动给本包增加一个全局角色编号。</p></div></details>
+<details class="faq"><summary>我要记住所有内部功能名称吗？</summary><div><p>不需要。始终从 $paper-writing-agent 开始，描述当前任务即可。功能查询用于理解能力和选择更精确的范围；内部支持一般由主入口按需要调用，不必全部执行。</p></div></details>
+<details class="faq"><summary>为什么要求自动写作，它还在等待我？</summary><div><p>先看具体等待事项。未确认的新Methods/Results大纲、图形摘要文字方案、真实方法参数和作者声明可能需要你的决定；已经给出的确认会复用。如果只是Proof逐节等待，可明确切换为“自动连续核查全文”。</p></div></details>
+<details class="faq"><summary>能否从一个选题直接全自动写出研究论文？</summary><div><p>可以协助检索、设计研究、组织综述证据和起草已有依据的部分。没有真实研究数据和执行记录时，不能补出实验结果、统计值或伦理信息。完整原创研究论文需要对应的真实材料。</p></div></details>
+<details class="faq"><summary>为什么设置3轮，会有4次审稿？</summary><div><p>先有基线审稿R0，再有最多3次返修及各自再审R1、R2、R3。只有“返修+再审”完成才算一个往返；目标提前达成可以提前结束。</p></div></details>
+<details class="faq"><summary>轮数用完，但问题仍存在怎么办？</summary><div><p>查看最后受审稿、未解决问题及停止原因。如果你决定继续，可明确增加总轮数和允许处理的范围；如果问题需要新数据、分析或作者事实，先补足相应条件。不能仅为通过而降级问题或夸大贡献。</p></div></details>
+<details class="faq"><summary>没有找到近似文献，是否证明创新性很强？</summary><div><p>不能这样判断。要区分检索式过窄、数据库覆盖不足、接口失败、只读摘要与真实缺少近似研究。结论应具体限定在实际检索和阅读范围内；创新主张靠逐篇比较和本研究证据支持。</p></div></details>
+<details class="faq"><summary>能否保证查重率、AI检测率或期刊录用？</summary><div><p>不能。文风调整和重复表达改写用于改善表达，不解除引用义务，不保证检测器结果。模拟审稿用于发现问题，不代表编辑决定或录用承诺。</p></div></details>
+<details class="faq"><summary>期刊信息和投稿要求是否总是最新的？</summary><div><p>应在实际任务中核查当前年份、文章类型和期刊官方要求。历史数据可以帮助查询，但不能自动当作现行JIF/JCR、收费、政策或审稿周期。</p></div></details>
+<details class="faq"><summary>它会自动重新分析数据、投稿或上传全文吗？</summary><div><p>普通写作和返修范围不包含未经授权的新分析、投稿或外发稿件。公共查新可使用一般研究术语；未发表全文和敏感材料不应自动发送。若确实需要这些操作，应先有明确范围和实际授权。</p></div></details>
+<details class="faq"><summary>生成Word后，为什么还注明“版面未核验”？</summary><div><p>内容写入或文件能打开，并不等于看过每一页。字体、分页、表格和公式需要实际渲染或页面查看；环境缺少该能力时，应保留这个明确说明。</p></div></details>
+<details class="faq"><summary>这个HTML能离线阅读、打印、修改指令吗？</summary><div><p>能。本页样式、目录、筛选和指令生成均在单个文件内；无需加载外部字体或脚本。表单仅在页面内处理，不会执行任务。点击“打印/另存PDF”可打开浏览器打印；复制按钮不可用时，直接选中文字复制即可。</p></div></details>
+</section>
+<footer class="footer"><span>论文写作综合 agent · v1.1.3 · 用户使用说明</span><span>单文件 HTML · 无需联网阅读 · <a href="#start">返回顶部 ↑</a></span></footer>
+</main><div id="toast" class="toast" role="status" hidden></div>
+<script>
+(() => {
+'use strict';
+const $=id=>document.getElementById(id);let toastTimer;
+function toast(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,2200)}
+async function copyText(text){try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);return true}}catch(e){}const field=document.createElement('textarea');field.value=text;field.style.cssText='position:fixed;left:-9999px;top:0';document.body.append(field);field.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}field.remove();return ok}
+document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async()=>{const node=btn.dataset.target?$(btn.dataset.target):btn.parentElement.querySelector('pre');const ok=await copyText(node.value??node.textContent);toast(ok?'指令已复制，可粘贴到模型宿主':'请直接选择指令文字，手动复制');}));
+$('menuToggle').addEventListener('click',()=>{const open=$('sidebar').classList.toggle('open');$('menuToggle').setAttribute('aria-expanded',String(open))});
+document.querySelectorAll('.side nav a,.brand').forEach(a=>a.addEventListener('click',()=>{$('sidebar').classList.remove('open');$('menuToggle').setAttribute('aria-expanded','false')}));
+if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){document.querySelectorAll('.side nav a').forEach(a=>a.classList.toggle('current',a.hash==='#'+entry.target.id))}})},{rootMargin:'-5% 0px -75% 0px'});document.querySelectorAll('section[id]').forEach(s=>observer.observe(s));}
+const cards=[...document.querySelectorAll('.feature')];let category='all';
+function filter(){const words=$('featureSearch').value.toLowerCase().trim().split(/\s+/).filter(Boolean);let visible=0;cards.forEach(card=>{const ok=(category==='all'||card.dataset.category===category)&&words.every(w=>card.textContent.toLowerCase().includes(w));card.hidden=!ok;if(ok)visible++});$('featureCount').textContent=`显示 ${visible} / ${cards.length} 项`;$('emptyState').hidden=visible!==0;}
+$('featureSearch').addEventListener('input',filter);
+document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{category=btn.dataset.category;document.querySelectorAll('.filter').forEach(b=>{const active=b===btn;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});filter()}));
+$('clearFilters').addEventListener('click',()=>{category='all';$('featureSearch').value='';document.querySelectorAll('.filter').forEach(b=>{const active=b.dataset.category==='all';b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});filter();$('featureSearch').focus()});
+$('expandAll').addEventListener('click',()=>cards.filter(c=>!c.hidden).forEach(c=>c.open=true));$('collapseAll').addEventListener('click',()=>cards.filter(c=>!c.hidden).forEach(c=>c.open=false));
+function drawLoop(){const n=Number($('roundExplorer').value);$('roundValue').value=String(n);const strip=$('loopStrip');strip.replaceChildren();function node(text,cls){const e=document.createElement('span');e.className='loop-node '+cls;e.textContent=text;strip.append(e)}function arrow(){const e=document.createElement('span');e.className='loop-arrow';e.textContent='→';e.setAttribute('aria-hidden','true');strip.append(e)}node('基线审稿 R0','review');for(let i=1;i<=n;i++){arrow();node('返修 V'+i,'');arrow();node('再审 R'+i,'review')}$('loopExplanation').textContent=n===0?'仅做基线审稿，不进入返修。':`最多 ${n} 次返修、${n+1} 次审稿；每次返修后都有再审。最后一稿不会因达到上限而跳过审查。`;}
+$('roundExplorer').addEventListener('input',drawLoop);drawLoop();
+const taskText={full:'根据已有真实研究结果组织完整论文。先核对材料并提交Methods/Results大纲；已有确认大纲直接沿用，否则待我确认后再连续完成方法、结果与图注、前言、讨论、标题、摘要和结论，最后做整稿一致性核查。',polish:'润色当前稿件，默认保持结构和科学含义，完成数字、术语、图表指代与引用的一致性核对。',translate:'把当前中文稿完整译为英文，再统一术语和学术表达；保持章节、引文、符号及全部信息，分批处理时核对漏段与重复。',review:'根据明确可见的稿件和附件做多视角审稿，指出实际实质问题、证据位置和可执行修正；没有问题的部分明确说明。',revise:'对照实际编辑决定和审稿意见，修改获授权工作稿并逐条回应；区分已完成、部分完成、有依据不采纳与待补，标出实际修改位置。',literature:'围绕我的具体研究问题检索、筛选并阅读文献，输出检索记录、证据表和综述大纲；明确PMID/DOI及实际阅读范围，不编造本研究结果。',proof:'自动连续核查整份Proof，不逐节等待。按页码和位置检查文字、作者、数字、公式、图表和引用问题，不做无关重写。'};
+function buildPrompt(){const type=$('taskType').value,loop=$('enableLoop').checked,novelty=$('enableNovelty').checked,offline=$('networkMode').value==='offline';$('roundLimit').disabled=!loop;$('humanCheckpoint').disabled=!loop;if(!loop)$('humanCheckpoint').checked=false;if(type==='translate')$('language').value='英文';let round=Number($('roundLimit').value);round=Number.isInteger(round)?Math.max(0,Math.min(20,round)):3;
+const lines=['请使用 $paper-writing-agent。','任务：'+taskText[type],'项目及输出位置：'+($('projectPath').value.trim()||'［填写实际项目/输出位置］')+'。','当前材料：'+($('materials').value.trim()||'［填写主稿、事实依据及必要附件］'),'必须保留：'+($('constraints').value.trim()||'现有事实、数字、引用与已确认作者决定。'),'输出：'+$('language').value+'；'+$('format').value+'。','完成标准：'+($('goalText').value.trim()||'完成本次范围，并列出真实缺项。')];
+if(type==='review'||type==='revise'||loop)lines.push('审稿可见材料：［填写明确的正文、补充材料等；作者内部笔记不默认可见］。');
+lines.push(offline?'联网：本次仅用已提供资料，不做新的联网检索；说明证据覆盖与未完成部分。':'联网：允许公共文献检索，只用一般研究术语或已公开信息，不上传未发表全文和敏感材料。');
+if(novelty)lines.push(offline?'创新性：整理已有文献并逐篇比较，拟定补充检索式；实时查新未执行，不能声称已完成。':'创新性：加入PubMed互补检索、真实种子近邻和逐篇比较，注明检索范围、PMID/DOI及实际阅读范围；有限检索不证明首次。');
+if(loop){lines.push(`在具备当前稿及必要材料后，明确开启审稿—返修循环，最多${round}次返修及各自再审；先做基线审稿。`,'用不同的真实子agent审稿和返修，每次返修后用新的审稿上下文复核；只修改工作副本，不重算既定分析。', $('humanCheckpoint').checked?'每轮审稿后先等我确认修改策略，再执行该轮返修。':'不必逐轮等我批准；遇到真实作者信息或新的分析授权缺项时，暂停依赖步骤。','交付最终实际稿件、最后审稿意见、逐条回应和轮次总结。目标达成与轮数用完分别报告。');if(offline&&novelty)lines.push('实时创新性核查是未完成项；不能将其标为通过或宣称全部目标达成。');}
+lines.push('复用已有确认，自动选择必要功能并完成指定范围。需要新实验、新分析或作者声明时列出真实缺项，不编造完成情况。','按实际可用工具检查交付格式；未做页面视觉验收时明确说明。');$('generatedPrompt').value=lines.join('\n');$('generatedPrint').textContent=lines.join('\n');const warnings=[];if(offline&&novelty)warnings.push('已选择禁网：指令只要求整理已有创新性证据，并明确实时查新未完成。');if(loop&&type==='literature')warnings.push('当前任务以文献为主：循环须等实际稿件和审稿范围齐备后才能启动。');$('builderWarning').hidden=!warnings.length;$('builderWarning').textContent=warnings.join(' ');}
+$('promptForm').addEventListener('submit',e=>e.preventDefault());$('promptForm').addEventListener('input',buildPrompt);$('promptForm').addEventListener('change',buildPrompt);buildPrompt();
+let beforePrint=[];function preparePrint(){beforePrint=[...document.querySelectorAll('details')].map(e=>({e,open:e.open,hidden:e.hidden}));beforePrint.forEach(x=>{x.e.open=true;x.e.hidden=false})}function restorePrint(){beforePrint.forEach(x=>{x.e.open=x.open;x.e.hidden=x.hidden});beforePrint=[]}window.addEventListener('beforeprint',preparePrint);window.addEventListener('afterprint',restorePrint);document.querySelectorAll('.print-btn').forEach(b=>b.addEventListener('click',()=>window.print()));
+})();
+</script>
+</body></html>

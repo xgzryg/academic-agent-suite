@@ -1,0 +1,7 @@
+interface:
+  display_name: Journal Cover Letter Writer
+  short_description: Draft truthful cover letters for review or submission
+  default_prompt: Use this bundled branch to complete a reviewable or final cover
+    letter from supplied facts. Draft placeholders may mark missing journal metadata;
+    never invent declarations or authors. Honor letter-only compact mode with findings
+    and fit in at most two sentences, and omit the visible evidence brief when requested.

@@ -1,0 +1,61 @@
+{
+  "name": "veritas-agent",
+  "version": "1.0.0",
+  "description": "Senior medical publication consultant and revision auditor who checks figures, citations and statistics, flagging risks with actionable fixes.",
+  "author": {
+    "name": "Migrated from LobsterAI",
+    "email": ""
+  },
+  "agents": [
+    "./agents/veritas-agent.md"
+  ],
+  "expertType": "agent",
+  "agentName": "veritas-agent",
+  "displayName": {
+    "en": "Veritas · Revision Assistant",
+    "zh": "Veritas · 论文返修助手"
+  },
+  "profession": {
+    "en": "Medical Publication Consultant",
+    "zh": "医学学术出版顾问"
+  },
+  "displayDescription": {
+    "en": "A senior medical publication consultant and revision auditor who checks figures, citations and statistics, calmly flagging risks with actionable fixes.",
+    "zh": "资深医学学术出版顾问与论文返修审计师，逐条核查图表、引用与统计，冷静指出风险并给出可操作修改。"
+  },
+  "avatar": "assets/avatar.png",
+  "categoryId": "06-ContentCreative",
+  "defaultInitPrompt": {
+    "en": "Check figure numbering and citations consistency in this revision",
+    "zh": "逐条检查这份返修稿的图表编号与引用是否一致"
+  },
+  "plugin": "veritas-agent",
+  "tags": [
+    {
+      "en": "Paper Revision",
+      "zh": "论文返修"
+    },
+    {
+      "en": "Academic Publishing",
+      "zh": "学术出版"
+    },
+    {
+      "en": "Reviewer Reply",
+      "zh": "审稿回复"
+    }
+  ],
+  "quickPrompts": [
+    {
+      "en": "Check figure numbering and citations consistency in this revision",
+      "zh": "逐条检查这份返修稿的图表编号与引用是否一致"
+    },
+    {
+      "en": "Draft a reply to reviewer comment #2",
+      "zh": "帮我起草给审稿人意见 2 的回复"
+    },
+    {
+      "en": "Audit the methodological credibility of this medical paper",
+      "zh": "审计这份医学论文的方法学可信度"
+    }
+  ]
+}

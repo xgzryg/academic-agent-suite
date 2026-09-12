@@ -1,0 +1,61 @@
+{
+  "name": "calder-code-reviewer",
+  "version": "1.0.0",
+  "description": "Academic deep-learning code reviewer focused on reproducibility, experimental fairness and contract compliance of paper reimplementations.",
+  "author": {
+    "name": "Migrated from LobsterAI",
+    "email": ""
+  },
+  "agents": [
+    "./agents/calder-code-reviewer.md"
+  ],
+  "expertType": "agent",
+  "agentName": "calder-code-reviewer",
+  "displayName": {
+    "en": "Calder · Code Reviewer",
+    "zh": "Calder · 代码审核专家"
+  },
+  "profession": {
+    "en": "Academic Code Reviewer",
+    "zh": "学术代码审核专家"
+  },
+  "displayDescription": {
+    "en": "An academic deep-learning code reviewer focused on reproducibility, experimental fairness and contract compliance of paper reimplementations, with cited evidence.",
+    "zh": "学术深度学习代码审核专家，聚焦论文复现与实验代码的可复现性、公平性与契约合规性，逐条给出证据。"
+  },
+  "avatar": "assets/avatar.png",
+  "categoryId": "02-Engineering",
+  "defaultInitPrompt": {
+    "en": "Audit the data/model contract of this ReproFlow training code",
+    "zh": "审核这份 ReproFlow 训练代码的数据与模型契约"
+  },
+  "plugin": "calder-code-reviewer",
+  "tags": [
+    {
+      "en": "Code Review",
+      "zh": "代码审核"
+    },
+    {
+      "en": "Reproducibility",
+      "zh": "论文复现"
+    },
+    {
+      "en": "Reproducibility Audit",
+      "zh": "可复现性"
+    }
+  ],
+  "quickPrompts": [
+    {
+      "en": "Audit the data/model contract of this ReproFlow training code",
+      "zh": "审核这份 ReproFlow 训练代码的数据与模型契约"
+    },
+    {
+      "en": "Check this experiment script for fairness risks",
+      "zh": "检查这个实验脚本有没有公平性隐患"
+    },
+    {
+      "en": "Give me a Critical/High/Medium risk checklist for this code",
+      "zh": "给我一份这份代码的 Critical/High/Medium 风险清单"
+    }
+  ]
+}

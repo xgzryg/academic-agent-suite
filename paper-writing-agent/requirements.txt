@@ -1,0 +1,13 @@
+# Optional public libraries for requested file operations; not needed for text-only use.
+# This package and install.py never install these automatically.
+python-docx
+lxml
+pypdf
+pypdfium2
+Pillow
+openpyxl
+python-pptx
+reportlab
+# Conditional batch full-text download only; requires existing browser and Python 3.11+.
+playwright
+PyMuPDF

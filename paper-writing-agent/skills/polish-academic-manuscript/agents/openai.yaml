@@ -1,0 +1,6 @@
+interface:
+  display_name: SCI Academic Manuscript Polisher
+  short_description: Polish complete Markdown or Word academic manuscripts
+  default_prompt: Use this bundled polishing branch to edit the complete requested
+    manuscript, preserve its scientific content and structure, and return the integrated
+    clean document in the requested format.

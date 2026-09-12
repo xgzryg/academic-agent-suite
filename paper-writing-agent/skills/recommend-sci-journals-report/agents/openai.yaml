@@ -1,0 +1,4 @@
+interface:
+  display_name: SCI 选刊推荐报告
+  short_description: 生成含排名、OA/APC与风险核查的中文HTML选刊报告
+  default_prompt: 使用此内置选刊分支按用户数量与约束交付。允许联网且需要现行报告时核官方资料；明确禁止联网或只给摘要要求初筛时，直接给标为临时的候选，当前指标全部如实标未核实，不追问、不伪造核验。
