@@ -6,9 +6,9 @@
 
 ### 1. 论文写作综合助手（`paper-writing-agent`）
 
-覆盖选题、文献检索与精读、研究设计、论文各章节写作、翻译润色、创新性评估、投稿准备、同行评审与返修回复。支持在用户明确开启后，由不同子 agent 执行有轮次上限的审稿—返修流程。
+覆盖选题、文献检索与精读、研究设计、论文各章节写作、翻译润色、创新性评估、投稿准备、同行评审与返修回复。新增跨期刊首次投稿信息总表：先从手稿抽取资料，以 Excel 为唯一结构化主表补齐作者、贡献、伦理及声明信息，再生成中英双语 Word 投稿参照文档。支持在用户明确开启后，由不同子 agent 执行有轮次上限的审稿—返修流程。
 
-- 当前版本：1.1.3
+- 当前版本：1.2.0
 - 入口文件：[`paper-writing-agent/SKILL.md`](paper-writing-agent/SKILL.md)
 - 安装说明：[`paper-writing-agent/INSTALL.md`](paper-writing-agent/INSTALL.md)
 - 用户手册：[`manuals/论文写作综合Agent_用户使用说明书.html`](manuals/论文写作综合Agent_用户使用说明书.html)
@@ -59,4 +59,3 @@ academic-agent-suite/
 - 模型、联网、文档处理、Office/PDF 工具及子 agent 能力取决于实际运行宿主。
 - Agent 不会把缺失数据、文献、实验结果或申报证明自动视为真实事实。
 - 第三方组件及其许可信息保留在各 Agent 包内；再分发时请同时保留相应 NOTICE、许可证与来源说明。
-

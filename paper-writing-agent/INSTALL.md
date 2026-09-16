@@ -24,11 +24,12 @@ python <解压目录>/paper-writing-agent/scripts/install.py --destination <目�
 
 ## 使用示例
 
-本包内置 48 个直接功能分支和 2 个嵌套支持技能，覆盖审稿、返修、文献检索、编辑询问信及 Nature 风格写作润色。主入口根据任务选择分支，无需分别安装其他 agent 或 skill。具体见[融合路由](references/integration-v1.1.md)。
+本包内置 49 个直接功能分支和 2 个嵌套支持技能，覆盖审稿、返修、文献检索、投稿信息总表、编辑询问信及 Nature 风格写作润色。主入口根据任务选择分支，无需分别安装其他 agent 或 skill。具体见[融合路由](references/integration-v1.1.md)。
 
 - `请使用 $paper-writing-agent，精读这篇研究论文，逐图逐表解释，附原文页码。`
 - `请使用 $paper-writing-agent，把这份已完成的论文精读结果做成一个可离线打开的 HTML 阅读页，保留全部图表与来源定位，支持明暗主题、手机目录和长页导航。`
 - `请使用 $paper-writing-agent，根据我提供的稿号、投稿日期和系统状态，拟一封简洁礼貌的英文邮件询问稿件进度；未知字段留占位符。`
+- `请使用 $paper-writing-agent，扫描当前手稿和标题页，预填跨期刊首次投稿信息总表；缺失声明先分组询问，交付 Excel 主表和由它生成的中英双语 Word 参照文档。`
 - `请使用 $paper-writing-agent，我的论文已经接收但尚未收到校样，请根据接收通知拟一封英文邮件询问制作进度和下一步需要完成的事项。`
 - `请使用 $paper-writing-agent，根据这批真实结果写 Methods，先给大纲，缺参数明确列出。`
 - `请使用 $paper-writing-agent，翻译这篇中文稿，保持引文、数值、章节和术语，输出 Word。`

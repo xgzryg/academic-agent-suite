@@ -10,7 +10,21 @@ metadata:
 
 Read [shared rules](../../references/shared-rules.md) before this branch. Resolve all paths from this skill directory, never the shell working directory. Use [paper-documents](../paper-documents/SKILL.md) for Word and [paper-pdf](../paper-pdf/SKILL.md) for PDF; these are bundled dependencies. Source attribution is retained in metadata, not inserted as the author of new user deliverables.
 
+When Methods or Supplementary Methods are within scope, read [Methods directness and cross-section redundancy](../../references/methods-directness-and-redundancy.md) before editing those chunks. Preserve load-bearing method facts, keep interpretation in its necessary Discussion location, and remove only redundant explanation after checking the relevant cross-section context.
+
 Polish the entire manuscript from beginning to end while preserving scientific meaning and document structure. Work chunk by chunk, maintain a manuscript-wide style sheet, and deliver one recombined document in the input format.
+
+Apply the shared rules' figure-order and Discussion convention to all steps
+below and the editorial standard. Within authorized Discussion editing, replace
+own-study main/SI figure/table callouts with self-contained prose, including
+their links or cross-reference fields; preserve literature citations, necessary
+numbers and scientific meaning. Do not insert figures, tables or legends into
+Discussion. This is an explicit exception to generic cross-reference preservation,
+not permission to renumber displays, move/delete existing display objects or
+restructure outside scope. Check Results first-introduction order and thematic
+continuity; report any repair requiring broader authorization. Read-only and
+translation-only tasks report the issue outside the unchanged source/faithful
+translation. Local edits remain local.
 
 ## Apply the editorial standard
 
@@ -81,7 +95,7 @@ Maintain stable chunk IDs and record source boundaries so every source element a
 For every chunk:
 
 1. Read the immediately preceding polished chunk and the next source chunk for local continuity.
-2. Preserve the claims, degree of certainty, logical relationships, numbers, units, equations, sample sizes, statistical notation, citations, cross-references, and authorial intent.
+2. Preserve the claims, degree of certainty, logical relationships, numbers, units, equations, sample sizes, statistical notation, literature citations and authorial intent. Preserve cross-references except own-study display callouts in authorized Discussion edits, as specified above.
 3. Correct grammar, syntax, spelling, punctuation, articles, agreement, modifiers, parallelism, and sentence boundaries.
 4. Improve clarity, logical flow, precision, concision, formality, and readability. Retain accurate original wording wherever it is already effective.
 5. Resolve unnecessary repetition and awkward transitions within the chunk without deleting substantive content.
@@ -107,7 +121,7 @@ Do not stop for approval after each chunk unless the user explicitly requests st
 After all chunks are polished:
 
 1. Recombine fragments strictly by the manifest's source order.
-2. Preserve heading hierarchy, paragraph order, lists, tables, equations, captions, footnotes/endnotes, hyperlinks, citation fields, cross-references, page elements, and reference order.
+2. Preserve heading hierarchy, paragraph order, lists, tables, equations, captions, footnotes/endnotes, hyperlinks, citation fields, cross-references, page elements, and reference order, except the authorized Discussion display-callout edits specified above. Do not restore removed display links or fields during reassembly; literature citation fields remain protected.
 3. Use the original file format:
    - For Markdown, produce `<source-stem>_polished.md` with valid Markdown and preserved non-prose blocks.
    - For Word, produce a clean `<source-stem>_polished.docx`, preserve usable styling and document objects, and follow the bundled [paper-documents skill](../paper-documents/SKILL.md)'s render-and-verify workflow. Add tracked changes or comments only when the user explicitly requests them.

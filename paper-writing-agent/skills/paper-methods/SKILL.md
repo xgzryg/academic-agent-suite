@@ -5,7 +5,7 @@ description: "基于真实实验和分析记录、图表图注起草或修订Met
 
 # Methods方法写作
 
-先读取并遵守[共享规则](../../references/shared-rules.md)。方法必须描述真实执行内容；拟议方案明确标为计划，不能把计划实验写成已完成。
+先读取并遵守[共享规则](../../references/shared-rules.md)和[方法直接陈述与跨章节去重规则](../../references/methods-directness-and-redundancy.md)。方法必须描述真实执行内容；拟议方案明确标为计划，不能把计划实验写成已完成。优先直接陈述可复现事实，不在 Methods 中重复 Discussion 已承担的解释限制或写入结果判断。
 
 ## 复用输入和任务状态
 

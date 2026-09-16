@@ -15,6 +15,7 @@
 | PDF 表格/OCR（任务需要时） | 可用 pdfplumber/OCR 服务或软件 | 回到原始表格/可读页面；不编缺失单元格 |
 | Word/PPT 页面排版渲染 | 现有 Word/PowerPoint 或 LibreOffice | 交付时注明版面未验；必须版面验收的任务保留此缺项 |
 | XLSX、PPTX | openpyxl、python-pptx 或当前宿主相应工具 | 可先交 CSV/结构稿，仅在符合用户交付要求时使用；不把替代格式称原格式 |
+| 投稿信息总表与 Word 参照文档 | openpyxl、python-docx；可选 Word/LibreOffice 用于版面渲染 | 依赖缺失时保留已抽取事实和缺项清单，明确不能生成要求的 XLSX/DOCX；不自动安装，不把临时 JSON 当第二资料源 |
 | 定量图/PDF生成 | 按实际方案使用 Matplotlib/R/ggplot2/ReportLab | 不能仅凭 skill 文本生成真实统计结果；已有数据/库决定可运行方案 |
 | 最新文献/选刊与数据库 | 实际联网搜索/浏览器/机构数据库权限 | 使用本地证据并标截止日期；不伪造当前 JIF、APC、风险状态 |
 | AI 图像生成与图像编辑 | 当前宿主实际图像工具和相应权限 | 可交文字方案或可编辑 SVG 示意；不虚称 AI 生图已执行 |

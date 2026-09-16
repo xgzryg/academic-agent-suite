@@ -14,6 +14,16 @@ answers take precedence over generic examples or historical local defaults.
 Task-related files stay in the user's project/output directory. Do not modify
 the installed skill while processing a manuscript.
 
+Apply the shared rules' figure-order and Discussion convention throughout the
+loaded fragments: Results follows the established figure/table sequence;
+Discussion contains no figures, tables, legends or own-study main/SI display
+callouts, including links and cross-reference fields. Preserve literature
+citations, necessary numbers and scientific meaning. Generic structure or
+cross-reference preservation defaults do not override this convention within
+authorized editing; read-only, translation-only and local tasks keep their
+shared-rule scope boundaries. This is the user's package convention, not a
+universal journal policy.
+
 Explicit `../` references resolve from the file containing them. Shorthand
 `references/`, `static/`, `templates/` and `scripts/` paths in prose are relative
 to this skill's own folder; manifest paths are relative to its manifest.
@@ -31,6 +41,13 @@ still applies to new full sections. Do not manufacture claims or limitations.
 If the requested output is Chinese, keep it Chinese; the `zh-to-en` fragment
 applies only when English translation/drafting is requested. For a Chinese
 academic style edit use [wordpolish-academic](../wordpolish-academic/SKILL.md).
+
+When the detected section is `methods`, or a whole-manuscript polish includes
+Methods or Supplementary Methods, also read
+[Methods directness and cross-section redundancy](../../references/methods-directness-and-redundancy.md).
+Use it before sentence-level Nature styling so concision removes repeated
+defence without deleting timing, scope, model differences, calculations, or
+other reproducibility facts.
 
 
 This skill is split into two layers:

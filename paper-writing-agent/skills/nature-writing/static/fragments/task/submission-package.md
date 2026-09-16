@@ -2,6 +2,8 @@
 
 Use this task only before the first editorial decision. Read `references/submission-package.md` for the full intake contract, templates, and readiness checklist.
 
+When the user asks for one reusable Excel master plus a Word reference for copying administrative fields into submission systems, route that deliverable to `../../../../paper-submission-reference/SKILL.md`. This Nature task continues to own journal-specific title pages, declarations, cover letters and file-package decisions; it may reuse only confirmed facts from that workbook.
+
 ## Core workflow
 
 1. Identify the target journal, article type, manuscript title, corresponding author, and requested deliverables.

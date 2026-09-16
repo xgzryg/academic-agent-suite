@@ -1,6 +1,6 @@
 ---
 name: paper-writing-agent
-description: Coordinate academic paper writing, Nature-style drafting and polishing, literature research and reading HTML, PubMed novelty assessment, peer review, manuscript revision, submission materials, editorial status inquiries and proof checking. Select the relevant bundled skills; run separate real reviewer and reviser subagents with bounded rounds only when the user requests a review-revision loop. Preserve evidence, author decisions and task scope.
+description: Coordinate academic paper writing, Nature-style drafting and polishing, literature research and reading HTML, PubMed novelty assessment, peer review, manuscript revision, submission-information workbooks and materials, editorial status inquiries and proof checking. Select the relevant bundled skills; run separate real reviewer and reviser subagents with bounded rounds only when the user requests a review-revision loop. Preserve evidence, author decisions and task scope.
 ---
 
 # 论文写作综合助手
@@ -15,7 +15,7 @@ description: Coordinate academic paper writing, Nature-style drafting and polish
 4. 先读取能改变下一步决策的材料。确认点继承具体分支和当前用户授权；缺关键信息只暂停依赖它的部分，继续可独立完成的工作。长任务用[任务简报](references/task-brief.md)记录必要衔接，不为短任务创建额外档案。
 5. 交付前核对研究事实、引用、受保护字段、覆盖范围及实际格式。发现图表/正文/回复不一致时，在授权范围内同步修正；超范围项具体列出。完成用户任务后停止。
 
-v1.1.3 内置 48 个直接功能分支及 2 个嵌套支持技能。按任务深度选择基础分支与专家分支，见[融合路由](references/integration-v1.1.md)；它们都是当前主 agent 的辅助分支，不要求用户重新选择主角色。
+v1.2.0 内置 49 个直接功能分支及 2 个嵌套支持技能。按任务深度选择基础分支与专家分支，见[融合路由](references/integration-v1.1.md)；它们都是当前主 agent 的辅助分支，不要求用户重新选择主角色。
 
 ## 常用入口
 
@@ -29,7 +29,7 @@ v1.1.3 内置 48 个直接功能分支及 2 个嵌套支持技能。按任务深
 | 图形摘要 | [Graphical Abstract](skills/paper-graphical-abstract/SKILL.md) |
 | 中译英、润色、缩写、重复表达改写 | [翻译](skills/translate-academic-manuscript-zh-to-en/SKILL.md)、[润色](skills/polish-academic-manuscript/SKILL.md)、[精简](skills/paper-compression/SKILL.md)、[改写](skills/rewrite-academic-overlap/SKILL.md) |
 | 正式多视角预审、局部预审 | [多视角审稿](skills/aequitas/SKILL.md)、[局部预审](skills/academic-peer-review/SKILL.md) |
-| 选刊、投稿信 | [选刊](skills/recommend-sci-journals-report/SKILL.md)、[Cover Letter](skills/write-journal-cover-letter/SKILL.md) |
+| 选刊、投稿信息总表、投稿信 | [选刊](skills/recommend-sci-journals-report/SKILL.md)、[投稿信息总表](skills/paper-submission-reference/SKILL.md)、[Cover Letter](skills/write-journal-cover-letter/SKILL.md) |
 | 询问审稿状态、接收后校样或制作进度 | [编辑询问信](skills/editorial-correspondence/SKILL.md) |
 | 返修审计、逐条回复、校样检查 | [返修审计](skills/veritas-agent/SKILL.md)、[返修回复](skills/paper-reviewer-response/SKILL.md)、[Proof](skills/proofread-journal-manuscripts/SKILL.md) |
 | 开启审稿—返修循环、按轮数反复改到目标 | [真实双子 agent 循环](skills/paper-review-revision-loop/SKILL.md) |
@@ -42,6 +42,8 @@ v1.1.3 内置 48 个直接功能分支及 2 个嵌套支持技能。按任务深
 
 - 事实、作者解释、综合推断、待验证假设分别表达；不得编造文献、参数、数据、声明或执行记录。引用支持相邻论断，范文不能成为本研究事实。
 - 现有数值、符号、单位、方向、引用、限定词、作者身份与人工固定内容受保护；发现错误时指出依据，在授权范围内更正，不能以“润色”名义改变研究结论。
+- 起草、修订、润色、精简或审查 Methods 与补充方法时，读取[方法直接陈述与跨章节去重规则](references/methods-directness-and-redundancy.md)：Methods 保留可复现事实，Results 承担观察结果，Discussion 承担解释限制；删的是重复辩护，不是测量顺序、范围、模型差异、计算方法或筛选规则。
+- 遵守[共享规则中的图表顺序与讨论正文约定](references/shared-rules.md#图表顺序与讨论正文约定)：新完整 Results 或获授权整体重组先审查图表逻辑，必要时提出调整顺序及理由，与大纲一并确认后按确认顺序推进；已有有效确认直接复用。Discussion 不放图表、不引用本研究主/补充图表编号，保留文献引用和科学含义。包内写作、润色和返修均继承，纯翻译、只读与局部任务按授权范围处理。
 - 新写完整 Methods/Results 保留大纲确认；图形摘要保留文字方案确认。已经明确确认的内容直接沿用。Proof 未指定模式时先按逐节确认流程；用户明确自动全文时连续完成。
 - 示例中的具体模型、字数、候选数量和历史名单不固定为普适规则。不得凑审稿问题、保证录用/查重率，或将模板中的声明当作者已确认事实。
 - 请求可检查的理由、修订策略与证据；不输出或索取隐藏内部思维链。

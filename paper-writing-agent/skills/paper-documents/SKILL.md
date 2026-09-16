@@ -15,6 +15,7 @@ description: Read, create and carefully edit Word manuscript artifacts using the
 
 ## 创建和编辑
 
+- 投稿信息总表及其由 Excel 生成的中英双语 Word 参照文档使用[投稿信息总表分支](../paper-submission-reference/SKILL.md)的专用结构和脚本；不要用通用 `from-json` 重新实现或反向覆盖其 Excel 主表。
 - 新报告可用 `from-json`，输入 `title`、`author`（仅真实提供时）、`blocks`，块类型为 paragraph/heading/table。输出文件必须为新文件。图像、参考文献域、目录等复杂对象由 agent 按真实需求通过可用 OOXML/Office 工具构造，再回读与渲染；不假称简易生成器保留了它们。
 - 单一文本 run 内的精确替换可用 `replace`：每项 `{old,new}` 必须在稿件中唯一匹配。工具在一次工作副本中完成全部匹配才写出；跨 run 文本会说明不适用，不能静默漏改。
 - 用户要求修订时加入 `--track --author <真实指定姓名或助手标签>`。该帮助程序支持新插入/删除修订，不自动接受或抹掉既有作者修订。需要批注时用 OOXML 的评论主体、锚点和关系或宿主文档接口实现，并验证双向对应；不把旁边的对照表叫 Word 原生修订。

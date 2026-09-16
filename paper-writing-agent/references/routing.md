@@ -20,6 +20,7 @@
 | 重复表达改写 | [rewrite-academic-overlap](../skills/rewrite-academic-overlap/SKILL.md) | 限定片段；不承诺检测结果 |
 | 同行预审与期刊校准 | [academic-peer-review](../skills/academic-peer-review/SKILL.md) | 文档角色由用户指定；不凑意见 |
 | 选刊和HTML报告 | [recommend-sci-journals-report](../skills/recommend-sci-journals-report/SKILL.md) | 现行指标查证；历史快照有截止日期 |
+| 投稿信息总表、投稿系统填报资料、投稿参照文档、作者信息总表 | [paper-submission-reference](../skills/paper-submission-reference/SKILL.md) | 先抽取后追问；Excel 为唯一主表；关键项未确认只能生成草稿 |
 | 投稿附信 | [write-journal-cover-letter](../skills/write-journal-cover-letter/SKILL.md) | 声明、作者与预印本按实际情况 |
 | 审稿状态、接收后校样/制作进度询问 | [editorial-correspondence](../skills/editorial-correspondence/SKILL.md) | 按实际阶段拟邮件；不要求返修决定或整篇稿件；未知事实留待补 |
 | 返修与逐条回复 | [paper-reviewer-response](../skills/paper-reviewer-response/SKILL.md) | 原意见/作者回答/修订证据分隔 |
@@ -34,7 +35,7 @@
 - 新论文：选题/文献→按已选问题设计→真实结果与图注→分章节写作→所需摘要/标题/Highlights；仅执行当前已授权阶段。
 - 中文全文：翻译→必要时另行润色→所需Word/PDF交付；不把翻译自动变成补写。
 - 已有英文稿：按请求选择润色、精简、改写或Proof；这些分支不互相替代。
-- 投稿：选刊→已选期刊适配→Cover Letter/Highlights/图形摘要；未知作者声明不能自动填肯定句。
+- 投稿：通用投稿信息总表可先从当前稿件抽取并补齐→选刊→已选期刊适配→Cover Letter/Highlights/图形摘要；未知作者声明不能自动填肯定句，投稿信息总表中的未确认值也不能作为确定声明。
 - 返修：当前主稿+真实评语+已完成改动→逐条回复→必要的引用/统计证据核对→同步授权范围内文稿。
 - 编辑询问信：实际稿件阶段与已知事实→审稿状态或接收后进度模式→可复制主题与正文。写信不自动触发返修、Proof检查或发送。
 - 精读网页：按请求完成文献精读及证据定位→科研产物分支的阅读HTML预设→检查全文覆盖、图表、来源锚点及阅读交互。

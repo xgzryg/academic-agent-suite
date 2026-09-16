@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="论文写作综合 agent v1.1.3 用户使用说明：安装、功能、调用示例、连续写作、审稿返修循环与任务恢复。">
-<title>论文写作综合 agent · v1.1.3 使用说明</title>
+<meta name="description" content="论文写作综合 agent v1.2.0 用户使用说明：安装、功能、调用示例、连续写作、审稿返修循环与任务恢复。">
+<title>论文写作综合 agent · v1.2.0 使用说明</title>
 <style>
 :root{--ink:#172e34;--muted:#5d7074;--paper:#f6f7f3;--card:#fff;--line:#dbe3df;--teal:#166956;--teal-soft:#e8f2ec;--gold:#e4b75c;--shadow:0 12px 36px #18392e0a;--radius:18px;--nav:242px}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:26px}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;font-size:15px;line-height:1.85}button,input,select,textarea{font:inherit}button,a,input,select,textarea,summary{outline-offset:4px}a{color:var(--teal);text-underline-offset:4px}button{cursor:pointer}button:disabled{cursor:default}h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{line-height:1.35}h1{font-size:clamp(32px,4vw,51px);letter-spacing:-1.5px;margin-bottom:18px}h2{font-size:28px;letter-spacing:-.6px;margin-bottom:16px}h3{font-size:19px;margin-bottom:12px}h4{font-size:16px;margin-bottom:8px}p{margin-bottom:14px}ul,ol{padding-left:1.45em;margin-top:8px;margin-bottom:16px}li+li{margin-top:5px}code{font:13px/1.65 Consolas,"SFMono-Regular",monospace;background:#edf1ee;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.85 Consolas,"Microsoft YaHei",monospace;color:#e9f2ec}pre code{font:inherit;background:none;padding:0;color:inherit}small,.small{font-size:12px;color:var(--muted)}[hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.skip{position:absolute;left:12px;top:-100px;z-index:99;background:#fff;padding:12px}.skip:focus{top:12px}
@@ -20,7 +20,7 @@
 <a class="skip" href="#main">跳到正文</a>
 <div class="mobile-top"><b>论文写作综合 agent</b><button id="menuToggle" aria-controls="sidebar" aria-expanded="false">目录</button></div>
 <aside class="side" id="sidebar">
-<a class="brand" href="#start">论文写作<br>综合 agent</a><div class="brand-sub">USER GUIDE / v1.1.3</div>
+<a class="brand" href="#start">论文写作<br>综合 agent</a><div class="brand-sub">USER GUIDE / v1.2.0</div>
 <nav aria-label="说明书目录">
 <a href="#start"><span>01</span>快速开始</a><a href="#install"><span>02</span>安装与检查</a><a href="#invoke"><span>03</span>如何下达任务</a><a href="#workflow"><span>04</span>从结果到完整论文</a><a href="#automation"><span>05</span>连续执行与恢复</a><a href="#loop"><span>06</span>审稿—返修循环</a><a href="#builder"><span>07</span>生成任务指令</a><a href="#features"><span>08</span>全部功能查询</a><a href="#recipes"><span>09</span>常用任务模板</a><a href="#environment"><span>10</span>运行条件</a><a href="#faq"><span>11</span>常见问题</a>
 </nav>
@@ -32,9 +32,9 @@
 <h1>让论文工作<br>按步骤连续完成。</h1>
 <p>这份说明书带你完成安装、准备材料、调用功能，并把写作、润色、审稿与返修串成清楚的工作流程。通常只需告诉 <strong>$paper-writing-agent</strong> 你的目标，它会选择需要的功能。</p>
 <div class="hero-actions"><a class="button" href="#install">开始安装 <span aria-hidden="true">↗</span></a><a class="button secondary" href="#builder">生成我的任务指令</a><a class="button secondary" href="#features">查询全部功能</a></div>
-<div class="hero-stats"><div><b>1 个入口</b>自然语言调用</div><div><b>48 + 2</b>功能与内部支持</div><div><b>按目标停止</b>可设返修轮数</div></div>
+<div class="hero-stats"><div><b>1 个入口</b>自然语言调用</div><div><b>49 + 2</b>功能与内部支持</div><div><b>按目标停止</b>可设返修轮数</div></div>
 </section>
-<div class="note"><strong>v1.1.3 新增与增强：</strong> <a href="#feature-50">审稿状态与接收后制作进度的询问信草稿</a>，以及<a href="#feature-44">带明暗主题、移动端目录和长页导航的自包含 HTML 阅读页</a>。这两项均可从同一个主入口用自然语言调用。</div>
+<div class="note"><strong>v1.2.0 新增：</strong> <a href="#feature-51">跨期刊首次投稿信息总表</a>，先从稿件抽取资料，再补齐作者与声明信息，以 Excel 为主表生成中英双语 Word 投稿参照文档。</div>
 <div class="note"><strong>第一次使用，先做一个小任务。</strong> 给出一段真实文字，请它润色并解释修改。确认能读取材料、保存文件后，再启动完整论文流程。本文中的路径、主题与目标期刊示例，请替换为你的实际信息。</div>
 <div class="grid three">
 <article class="card"><div class="label">已有研究结果</div><h3>组织成一篇论文</h3><p>准备结果表、图表和方法说明。从材料核对与大纲开始，确认后连续完成章节、摘要及整稿核查。</p><a href="#workflow">查看完整写作路径 →</a></article>
@@ -43,7 +43,7 @@
 </div>
 
 <section class="section" id="install"><div class="section-head"><span class="section-no">02</span><h2>安装与检查</h2></div><p class="lead">把一个完整文件夹放入宿主实际使用的 skills 目录。内部功能不需要逐个安装。</p>
-<div class="grid"><article class="card"><span class="step-number">1</span><h3>解压并检查层级</h3><p>安装包文件名为 <code>paper-writing-agent-v1.1.3.zip</code>。解压后找到 <code>paper-writing-agent</code> 文件夹，主 <code>SKILL.md</code> 应在该文件夹第一层。</p><div class="prompt"><span class="prompt-label">正确的安装结构</span><pre>目标 skills 目录/
+<div class="grid"><article class="card"><span class="step-number">1</span><h3>解压并检查层级</h3><p>安装包文件名为 <code>paper-writing-agent-v1.2.0.zip</code>。解压后找到 <code>paper-writing-agent</code> 文件夹，主 <code>SKILL.md</code> 应在该文件夹第一层。</p><div class="prompt"><span class="prompt-label">正确的安装结构</span><pre>目标 skills 目录/
 └─ paper-writing-agent/
    ├─ SKILL.md
    ├─ INSTALL.md
@@ -52,7 +52,7 @@
    └─ scripts/</pre></div><p class="small" style="margin-top:12px">避免多套一层同名目录，或只复制 SKILL.md 而漏掉内部文件。</p></article>
 <article class="card"><span class="step-number">2</span><h3>放入当前宿主的目录</h3><p>先确认当前应用或账户实际读取哪个 skills 目录，再放入整个文件夹。Windows 上可能是 <code>D:\Codex\.codex\skills</code> 或其他配置位置，不要只凭示例猜路径。</p><p>若已有同名安装，先确认旧版身份并做好备份，再按宿主方式处理旧安装、腾出目标位置后放入新版。不要把新版嵌套在旧版里面。</p><p class="small">安装脚本拒绝覆盖同名目标；本说明书不会替你修改任何安装或配置。</p></article>
 <article class="card"><span class="step-number">3</span><h3>刷新发现并试调用</h3><p>按宿主提供的方式刷新技能，或开启新任务。输入下面的指令，让宿主检查当前入口和包内路由是否可读。</p><div class="prompt"><span class="prompt-label">安装后检查</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent。
-先检查当前是否可以读取主入口、安装说明和包内功能路由，确认版本是否为 v1.1.3。
+先检查当前是否可以读取主入口、安装说明和包内功能路由，确认版本是否为 v1.2.0。
 然后说明如何提交我的第一份稿件；本次不修改任何论文。</pre></div></article>
 <article class="card"><span class="step-number">4</span><h3>用一个片段确认输出</h3><p>把真实段落贴入指令，指定保存位置。这个小任务能确认文件读取、调用和交付方式。</p><div class="prompt"><span class="prompt-label">第一次真实任务</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，润色下面这段论文文字，保持原语言。
 保留全部数字、引用和科学含义，给出修改稿和必要的修改说明。
@@ -151,8 +151,8 @@ python "D:\工具包\paper-writing-agent\scripts\install.py" --destination "D:\C
 <article class="card"><h3>复制到模型宿主</h3><p class="small">预览随输入更新，可滚动查看；复制会包含全部文字。替换示例文件名后再发送。</p><div class="prompt"><span class="prompt-label">我的任务简报</span><button class="copy" data-target="generatedPrompt">复制</button><label class="sr-only" for="generatedPrompt">生成的任务指令</label><textarea class="generated" id="generatedPrompt" readonly></textarea><pre class="generated-print" id="generatedPrint"></pre></div><p class="privacy">表单内容只在当前页面内处理，不发送到外部服务。</p><noscript><p>你的浏览器未启用脚本。请使用本页其他可手动复制的任务模板。</p></noscript></article></div>
 </section>
 
-<section class="section" id="features"><div class="section-head"><span class="section-no">08</span><h2>全部功能查询</h2></div><p class="lead">共 50 项功能与内部支持：48 个直接功能分支与 2 个内部支持项。点击卡片查看所需材料、交付物、调用示例和使用边界。日常使用只需描述目标，通常无需指定这些细分功能。</p>
-<div class="filter-tools"><div class="search-row"><label class="sr-only" for="featureSearch">搜索功能或关键词</label><input id="featureSearch" type="search" placeholder="搜索：摘要、PubMed、返修、Word、润色……"><button class="small-btn" id="expandAll">展开当前结果</button><button class="small-btn" id="collapseAll">收起当前结果</button></div><div class="filters" role="group" aria-label="按功能类别筛选"><button class="filter active" data-category="all" aria-pressed="true">全部 50</button><button class="filter" data-category="research" aria-pressed="false">选题与研究设计 3</button><button class="filter" data-category="literature" aria-pressed="false">文献与证据 7</button><button class="filter" data-category="drafting" aria-pressed="false">论文章节写作 6</button><button class="filter" data-category="editing" aria-pressed="false">翻译与表达 9</button><button class="filter" data-category="review" aria-pressed="false">审稿与返修 10</button><button class="filter" data-category="submission" aria-pressed="false">投稿与回复材料 7</button><button class="filter" data-category="outputs" aria-pressed="false">图表与成果制作 4</button><button class="filter" data-category="support" aria-pressed="false">文档与项目支持 4</button></div><div class="results-meta"><span id="featureCount" aria-live="polite">显示 50 / 50 项</span><button class="small-btn" id="clearFilters">清除筛选</button></div></div>
+<section class="section" id="features"><div class="section-head"><span class="section-no">08</span><h2>全部功能查询</h2></div><p class="lead">共 51 项功能与内部支持：49 个直接功能分支与 2 个内部支持项。点击卡片查看所需材料、交付物、调用示例和使用边界。日常使用只需描述目标，通常无需指定这些细分功能。</p>
+<div class="filter-tools"><div class="search-row"><label class="sr-only" for="featureSearch">搜索功能或关键词</label><input id="featureSearch" type="search" placeholder="搜索：摘要、PubMed、返修、Word、润色……"><button class="small-btn" id="expandAll">展开当前结果</button><button class="small-btn" id="collapseAll">收起当前结果</button></div><div class="filters" role="group" aria-label="按功能类别筛选"><button class="filter active" data-category="all" aria-pressed="true">全部 51</button><button class="filter" data-category="research" aria-pressed="false">选题与研究设计 3</button><button class="filter" data-category="literature" aria-pressed="false">文献与证据 7</button><button class="filter" data-category="drafting" aria-pressed="false">论文章节写作 6</button><button class="filter" data-category="editing" aria-pressed="false">翻译与表达 9</button><button class="filter" data-category="review" aria-pressed="false">审稿与返修 10</button><button class="filter" data-category="submission" aria-pressed="false">投稿与回复材料 8</button><button class="filter" data-category="outputs" aria-pressed="false">图表与成果制作 4</button><button class="filter" data-category="support" aria-pressed="false">文档与项目支持 4</button></div><div class="results-meta"><span id="featureCount" aria-live="polite">显示 51 / 51 项</span><button class="small-btn" id="clearFilters">清除筛选</button></div></div>
 <div class="feature-grid" id="featureGrid"><details class="feature" id="feature-01" data-category="research">
 <summary><span class="feature-num">01</span><span class="pill">选题与研究设计</span><h3>选题与主题地图</h3><p>从已有文献中梳理主要主题、交叉方向和未充分回答的问题，再结合你的数据与资源提出可实施选题。</p></summary>
 <div class="feature-body"><h4>什么时候用</h4><p>有研究领域或文献库，希望筛选课题、寻找可验证的创新方向。</p><h4>需要提供</h4><ul><li>标题、摘要、年份等文献列表，或可读论文</li><li>可用数据的字段定义、测量时间、样本范围或实验资源</li><li>研究兴趣与资源限制</li></ul><h4>你会得到</h4><ul><li>主题分析摘要或主题表</li><li>默认 6—10 张选题卡：问题、新意依据、可行性、方法和限制</li><li>候选排序理由；选定题目后的深化方案</li></ul>
@@ -416,7 +416,12 @@ python "D:\工具包\paper-writing-agent\scripts\install.py" --destination "D:\C
 期刊：【名称】；稿号：【稿号】；稿件标题：【标题】；正式接收日期：【日期】。
 当前制作或校样状态：【原样提供状态或说明尚未收到校样】；制作稿号及联系对象：【已知信息或未知】；此前沟通：【如有】。
 请礼貌询问下一步校样或制作安排，以及作者是否还需提供文件。不要虚构已付款、已签协议、已提交校样修改或编辑部承诺的完成日期；缺项留占位。</pre></div>
-<h4>使用边界</h4><ul><li>本功能只拟草稿，不发送邮件、不代为提交表单，也不自动安排定时追问。</li><li><code>With Editor</code> 不等于已经外审；<code>Under Review</code> 等状态按系统实际说明理解，不能猜测审稿人数、完成情况或决定。</li><li>不固定等待多少天就“催稿”，也不虚构编辑部承诺。若希望引用期刊承诺的时限，应提供原文或核实其出处。</li><li>事实缺失使用占位或列出待核，不编造接收、付款、协议、校样更正、投稿声明或作者批准。</li></ul></div></details></div><div class="empty" id="emptyState" hidden>没有匹配结果。试试“摘要”“引用”“审稿”，或清除分类筛选。</div>
+<h4>使用边界</h4><ul><li>本功能只拟草稿，不发送邮件、不代为提交表单，也不自动安排定时追问。</li><li><code>With Editor</code> 不等于已经外审；<code>Under Review</code> 等状态按系统实际说明理解，不能猜测审稿人数、完成情况或决定。</li><li>不固定等待多少天就“催稿”，也不虚构编辑部承诺。若希望引用期刊承诺的时限，应提供原文或核实其出处。</li><li>事实缺失使用占位或列出待核，不编造接收、付款、协议、校样更正、投稿声明或作者批准。</li></ul></div></details>
+<details class="feature" id="feature-51" data-category="submission">
+<summary><span class="feature-num">51</span><span class="pill">投稿与回复材料</span><h3>投稿信息总表与 Word 参照文档</h3><p>从当前稿件和标题页抽取投稿资料，补齐作者、贡献、伦理及声明信息，以 Excel 为主表生成中英双语 Word 参照文档。</p></summary>
+<div class="feature-body"><h4>什么时候用</h4><p>首次投稿前需要集中保存投稿系统字段，避免在完整手稿和投稿门户之间反复查找时。</p><h4>需要提供</h4><ul><li>当前手稿、标题页、补充材料及既有作者资料</li><li>作者明确确认的基金、利益冲突、伦理、贡献、预印本和 AI 使用情况</li><li>项目输出目录；如已有 Excel 主表则直接提供当前版本</li></ul><h4>你会得到</h4><ul><li>可继续维护的《论文投稿信息总表.xlsx》</li><li>由当前 Excel 生成的中英双语《论文投稿信息参照文档.docx》</li><li>区分阻塞项与非阻塞待办的缺项清单，以及草稿版或最终版状态</li></ul>
+<div class="prompt"><span class="prompt-label">调用示例 · 替换实际材料</span><button class="copy">复制</button><pre>请使用 $paper-writing-agent，扫描【当前手稿和标题页】，预填跨期刊首次投稿信息总表。先保留稿件中已有的作者、单位、伦理和数据声明，再分组询问真正缺失的作者贡献、基金、利益冲突、预印本和 AI 使用信息。以 Excel 为唯一主表，并从它生成中英双语 Word 参照文档；关键项未确认时标为草稿版。</pre></div>
+<h4>使用边界</h4><ul><li>未找到某项信息不等于“无”；不得自动生成无基金、无利益冲突或未使用 AI 等否定声明。</li><li>姓名和单位不能用于推断性别、国籍、学位、贡献或通讯作者；个人字段标为仅投稿系统使用。</li><li>本功能不保存密码或支付凭据，不替代目标期刊现行指南，也不执行实际投稿或发送。</li></ul></div></details></div><div class="empty" id="emptyState" hidden>没有匹配结果。试试“摘要”“引用”“审稿”，或清除分类筛选。</div>
 </section>
 
 <section class="section" id="recipes"><div class="section-head"><span class="section-no">09</span><h2>常用任务模板</h2></div><p class="lead">以下模板可以单独使用，也可以按依赖关系组合。只写你这次真正要完成的阶段。</p>
@@ -469,7 +474,7 @@ python "D:\工具包\paper-writing-agent\scripts\install.py" --destination "D:\C
 <details class="faq"><summary>生成Word后，为什么还注明“版面未核验”？</summary><div><p>内容写入或文件能打开，并不等于看过每一页。字体、分页、表格和公式需要实际渲染或页面查看；环境缺少该能力时，应保留这个明确说明。</p></div></details>
 <details class="faq"><summary>这个HTML能离线阅读、打印、修改指令吗？</summary><div><p>能。本页样式、目录、筛选和指令生成均在单个文件内；无需加载外部字体或脚本。表单仅在页面内处理，不会执行任务。点击“打印/另存PDF”可打开浏览器打印；复制按钮不可用时，直接选中文字复制即可。</p></div></details>
 </section>
-<footer class="footer"><span>论文写作综合 agent · v1.1.3 · 用户使用说明</span><span>单文件 HTML · 无需联网阅读 · <a href="#start">返回顶部 ↑</a></span></footer>
+<footer class="footer"><span>论文写作综合 agent · v1.2.0 · 用户使用说明</span><span>单文件 HTML · 无需联网阅读 · <a href="#start">返回顶部 ↑</a></span></footer>
 </main><div id="toast" class="toast" role="status" hidden></div>
 <script>
 (() => {

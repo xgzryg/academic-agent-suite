@@ -31,6 +31,8 @@ Collect or mark as missing:
 
 Do not infer unknown administrative facts. Use `[AUTHOR_INPUT_NEEDED: ...]`.
 
+For a consolidated cross-journal author/declaration master, use `../../paper-submission-reference/SKILL.md`: Excel remains the structured source and the Word reference is regenerated from it. Do not maintain a second competing author database in this Nature submission package.
+
 ## 2. Deliverable matrix
 
 Return a compact table:

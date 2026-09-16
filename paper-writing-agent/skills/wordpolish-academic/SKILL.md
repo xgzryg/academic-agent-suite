@@ -7,6 +7,8 @@ description: Preserve scientific facts, author voice and academic register while
 
 先读[主包共同规则](../../references/shared-rules.md)。本分支融合本机 wordpolish 的学术调度、de-ai-writing 的保真修补，以及 humanizer-zh-academic 的中文学术表达经验；不启动营销、社媒、发布或学位论文工程流水线。
 
+编辑范围包含 Methods 或补充方法时，在选择下游文风分支前先读[方法直接陈述与跨章节去重规则](../../references/methods-directness-and-redundancy.md)。下游改写不得凭 `because`、`rather than`、`nevertheless` 等提示词机械删除内容；应保留方法事实，把重复辩护压缩、删除或留在必要的 Discussion 位置。
+
 ## 按任务读取
 
 | 当前任务 | 实际读取资源 |
